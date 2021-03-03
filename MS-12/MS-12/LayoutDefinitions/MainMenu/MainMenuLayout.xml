@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MainMenuLayout>
+	<!--
+		==Left/Rightタグについて==
+		
+		Left/Right内のGroupBoxの個数が同一でないか、Left内のHeightの合計がRight内のHeightの合計+1と同一でない場合、左右でボタンの高さに差がでてしまいます。
+		なお、MR-32と同等のレイアウトにしたい場合は、Left/Right内のGroupBoxをそれぞれ2個、Heightの合計をそれぞれ5、4にして下さい。
+		
+		IgnoreHeightShortage="True"　…
+		IgnoreHeightExcess="True"　…
+	-->
+	<Left>
+		<GroupBox Header="ＴＲＳ業務" Row="3">
+			<Content GroupName="整理券" GroupSource="../GroupMenu/NumberedTickets.xml" TypicalTicketName="整　理　券" TypicalTicketType="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content GroupName="入場券" GroupSource="../GroupMenu/PlatformTickets.xml" TypicalTicketName="普通入場券" TypicalTicketType="NumberedTickets.NumberedTicket.PluginInfo"/><!--
+			<Content GroupName="入場券" GroupSource="../GroupMenu/PlatformTickets.xml" TypicalTicketName="普通入場券" TypicalTicketType="PlatformTickets.PlatformTicket.TicketPlugin"/>
+			<Content GroupName="利用票" GroupSource="../GroupMenu/OtherTickets.xml" TypicalTicketName="振替利用票" TypicalTicketType="OtherTickets.TransferTicket.TicketPlugin"/>-->
+		</GroupBox>
+		<GroupBox Header="イベント業務" Row="2"><!--
+			<Content GroupName="ｲﾍﾞﾝﾄ券" GroupSource="../GroupMenu/EventTickets.xml" TypicalTicketName="イベント名入力" TypicalTicketType="EventTickets.EventTicket.TicketPlugin"/>
+			<Content GroupName="部　誌" GroupSource="../GroupMenu/ClubMagazines.xml" TypicalTicketName="部誌発売" TypicalTicketType="ClubMagazines.ClubMagazine.TicketPlugin"/>-->
+		</GroupBox>
+	</Left>
+	<Right>
+		<GroupBox Header="共通業務" Row="2"><!--
+			<Content GroupName="集　計" GroupSource="../GroupMenu/Totalization.xml" TypicalTicketName="集計読出し" TypicalTicketType="Totalization.Totalize.TicketPlugin"/>
+			<Content GroupName="特殊操作" GroupSource="" TypicalTicketName="" TypicalTicketType=""/>
+			<Content GroupName="控除／払戻" GroupSource="../GroupMenu/Refund.xml" TypicalTicketName="整理券控除" TypicalTicketType="NumberedTickets.NumberedTicketRefund.TicketPlugin"/>-->
+		</GroupBox>
+		<GroupBox Header="個別業務" Row="2">
+		</GroupBox>
+	</Right>
+</MainMenuLayout>

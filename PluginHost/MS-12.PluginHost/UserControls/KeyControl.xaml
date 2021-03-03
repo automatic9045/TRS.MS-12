@@ -1,0 +1,199 @@
+﻿<UserControl x:Class="TRS.TMS12.Resources.KeyControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:TRS.TMS12.Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="856" d:DesignWidth="640"
+             TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True" SnapsToDevicePixels="True">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PresentationFramework.Classic;component/themes/classic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MS-12.PluginHost;component/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ContentControl Margin="10" Style="{StaticResource ClassicBorder}">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.Resources>
+                    <Style x:Key="Tab2" TargetType="ColumnDefinition">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding TabsHeader[1]}" Value="">
+                                <Setter Property="Width" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style x:Key="Tab4" TargetType="ColumnDefinition">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding TabsHeader[3]}" Value="">
+                                <Setter Property="Width" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource KeyTabEx}">
+                        <Setter Property="Margin" Value="-1,0"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Style.Triggers>
+                            <Trigger Property="Content" Value="">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Setter Property="Focusable" Value="False"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition" BasedOn="{StaticResource Tab2}">
+                                <Setter Property="Width" Value="7*"/>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition" BasedOn="{StaticResource Tab2}">
+                                <Setter Property="Width" Value="1.5*"/>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition" BasedOn="{StaticResource Tab2}">
+                                <Setter Property="Width" Value="7*"/>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition" BasedOn="{StaticResource Tab2}">
+                                <Setter Property="Width" Value="1.5*"/>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition" BasedOn="{StaticResource Tab4}">
+                                <Setter Property="Width" Value="7*"/>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition" BasedOn="{StaticResource Tab4}">
+                                <Setter Property="Width" Value="1.5*"/>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <RadioButton Grid.Column="0" Content="{Binding TabsHeader[0]}" IsChecked="{Binding TabsIsChecked[0], Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <prism:InvokeCommandAction Command="{Binding TabChecked}" CommandParameter="0"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Grid.Column="2" Content="{Binding TabsHeader[1]}" IsChecked="{Binding TabsIsChecked[1], Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <prism:InvokeCommandAction Command="{Binding TabChecked}" CommandParameter="1"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Grid.Column="4" Content="{Binding TabsHeader[2]}" IsChecked="{Binding TabsIsChecked[2], Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <prism:InvokeCommandAction Command="{Binding TabChecked}" CommandParameter="2"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Grid.Column="6" Content="{Binding TabsHeader[3]}" IsChecked="{Binding TabsIsChecked[3], Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <prism:InvokeCommandAction Command="{Binding TabChecked}" CommandParameter="3"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+            </Grid>
+            <UniformGrid Grid.Row="1" Columns="6">
+                <UniformGrid.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource KeyButtonEx}">
+                        <Setter Property="Margin" Value="-1"/>
+                        <Setter Property="Command" Value="{Binding Command}"/>
+                    </Style>
+                </UniformGrid.Resources>
+                <Button Content="{Binding Keys[0]}" CommandParameter="{Binding CommandParameters[0]}"/>
+                <Button Content="{Binding Keys[1]}" CommandParameter="{Binding CommandParameters[1]}"/>
+                <Button Content="{Binding Keys[2]}" CommandParameter="{Binding CommandParameters[2]}"/>
+                <Button Content="{Binding Keys[3]}" CommandParameter="{Binding CommandParameters[3]}"/>
+                <Button Content="{Binding Keys[4]}" CommandParameter="{Binding CommandParameters[4]}"/>
+                <Button Content="{Binding Keys[5]}" CommandParameter="{Binding CommandParameters[5]}"/>
+                <Button Content="{Binding Keys[6]}" CommandParameter="{Binding CommandParameters[6]}"/>
+                <Button Content="{Binding Keys[7]}" CommandParameter="{Binding CommandParameters[7]}"/>
+                <Button Content="{Binding Keys[8]}" CommandParameter="{Binding CommandParameters[8]}"/>
+                <Button Content="{Binding Keys[9]}" CommandParameter="{Binding CommandParameters[9]}"/>
+                <Button Content="{Binding Keys[10]}" CommandParameter="{Binding CommandParameters[10]}"/>
+                <Button Content="{Binding Keys[11]}" CommandParameter="{Binding CommandParameters[11]}"/>
+                <Button Content="{Binding Keys[12]}" CommandParameter="{Binding CommandParameters[12]}"/>
+                <Button Content="{Binding Keys[13]}" CommandParameter="{Binding CommandParameters[13]}"/>
+                <Button Content="{Binding Keys[14]}" CommandParameter="{Binding CommandParameters[14]}"/>
+                <Button Content="{Binding Keys[15]}" CommandParameter="{Binding CommandParameters[15]}"/>
+                <Button Content="{Binding Keys[16]}" CommandParameter="{Binding CommandParameters[16]}"/>
+                <Button Content="{Binding Keys[17]}" CommandParameter="{Binding CommandParameters[17]}"/>
+                <Button Content="{Binding Keys[18]}" CommandParameter="{Binding CommandParameters[18]}"/>
+                <Button Content="{Binding Keys[19]}" CommandParameter="{Binding CommandParameters[19]}"/>
+                <Button Content="{Binding Keys[20]}" CommandParameter="{Binding CommandParameters[20]}"/>
+                <Button Content="{Binding Keys[21]}" CommandParameter="{Binding CommandParameters[21]}"/>
+                <Button Content="{Binding Keys[22]}" CommandParameter="{Binding CommandParameters[22]}"/>
+                <Button Content="{Binding Keys[23]}" CommandParameter="{Binding CommandParameters[23]}"/>
+                <Button Content="{Binding Keys[24]}" CommandParameter="{Binding CommandParameters[24]}"/>
+                <Button Content="{Binding Keys[25]}" CommandParameter="{Binding CommandParameters[25]}"/>
+                <Button Content="{Binding Keys[26]}" CommandParameter="{Binding CommandParameters[26]}"/>
+                <Button Content="{Binding Keys[27]}" CommandParameter="{Binding CommandParameters[27]}"/>
+                <Button Content="{Binding Keys[28]}" CommandParameter="{Binding CommandParameters[28]}"/>
+                <Button Content="{Binding Keys[29]}" CommandParameter="{Binding CommandParameters[29]}"/>
+                <Button Content="{Binding Keys[30]}" CommandParameter="{Binding CommandParameters[30]}"/>
+                <Button Content="{Binding Keys[31]}" CommandParameter="{Binding CommandParameters[31]}"/>
+                <Button Content="{Binding Keys[32]}" CommandParameter="{Binding CommandParameters[32]}"/>
+                <Button Content="{Binding Keys[33]}" CommandParameter="{Binding CommandParameters[33]}"/>
+                <Button Content="{Binding Keys[34]}" CommandParameter="{Binding CommandParameters[34]}"/>
+                <Button Content="{Binding Keys[35]}" CommandParameter="{Binding CommandParameters[35]}"/>
+                <Button Content="{Binding Keys[36]}" CommandParameter="{Binding CommandParameters[36]}"/>
+                <Button Content="{Binding Keys[37]}" CommandParameter="{Binding CommandParameters[37]}"/>
+                <Button Content="{Binding Keys[38]}" CommandParameter="{Binding CommandParameters[38]}"/>
+                <Button Content="{Binding Keys[39]}" CommandParameter="{Binding CommandParameters[39]}"/>
+                <Button Content="{Binding Keys[40]}" CommandParameter="{Binding CommandParameters[40]}"/>
+                <Button Content="{Binding Keys[41]}" CommandParameter="{Binding CommandParameters[41]}"/>
+                <Button Content="{Binding Keys[42]}" CommandParameter="{Binding CommandParameters[42]}"/>
+                <Button Content="{Binding Keys[43]}" CommandParameter="{Binding CommandParameters[43]}"/>
+                <Button Content="{Binding Keys[44]}" CommandParameter="{Binding CommandParameters[44]}"/>
+                <Button Content="{Binding Keys[45]}" CommandParameter="{Binding CommandParameters[45]}"/>
+                <Button Content="{Binding Keys[46]}" CommandParameter="{Binding CommandParameters[46]}"/>
+                <Button Content="{Binding Keys[47]}" CommandParameter="{Binding CommandParameters[47]}"/>
+                <Button Content="{Binding Keys[48]}" CommandParameter="{Binding CommandParameters[48]}"/>
+                <Button Content="{Binding Keys[49]}" CommandParameter="{Binding CommandParameters[49]}"/>
+                <Button Content="{Binding Keys[50]}" CommandParameter="{Binding CommandParameters[50]}"/>
+                <Button Content="{Binding Keys[51]}" CommandParameter="{Binding CommandParameters[51]}"/>
+                <Button Content="{Binding Keys[52]}" CommandParameter="{Binding CommandParameters[52]}"/>
+                <Button Content="{Binding Keys[53]}" CommandParameter="{Binding CommandParameters[53]}"/>
+                <Button Content="{Binding Keys[54]}" CommandParameter="{Binding CommandParameters[54]}"/>
+                <Button Content="{Binding Keys[55]}" CommandParameter="{Binding CommandParameters[55]}"/>
+                <Button Content="{Binding Keys[56]}" CommandParameter="{Binding CommandParameters[56]}"/>
+                <Button Content="{Binding Keys[57]}" CommandParameter="{Binding CommandParameters[57]}"/>
+                <Button Content="{Binding Keys[58]}" CommandParameter="{Binding CommandParameters[58]}"/>
+                <Button Content="{Binding Keys[59]}" CommandParameter="{Binding CommandParameters[59]}"/>
+            </UniformGrid>
+        </Grid>
+    </ContentControl>
+</UserControl>

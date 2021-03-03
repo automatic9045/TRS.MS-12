@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<OneTouchMenuLayout>
+	<Group Header="整理券" Source="Groups/NumberedTickets.xml"/>
+	<Group Header="入場券" Source="Groups/PlatformTickets.xml"/>
+	<Group Header="あはは" Source="Groups/NumberedTickets.xml"/>
+</OneTouchMenuLayout>

@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="TRS.TMS12.GroupMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:r="clr-namespace:TRS.TMS12.Resources;assembly=MS-12.PluginHost"
+             xmlns:local="clr-namespace:TRS.TMS12"
+             mc:Ignorable="d" 
+             d:DesignHeight="856" d:DesignWidth="1280"
+             Visibility="{Binding Visibility, Mode=TwoWay}">
+    <UserControl.Resources>
+        <Style x:Key="Button" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Template" Value="{StaticResource ThicklyBorderedDefButton}"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+    </UserControl.Resources>
+    <ContentControl Margin="10" Style="{StaticResource ClassicBorder}">
+        <DockPanel Margin="10">
+            <Grid DockPanel.Dock="Top">
+                <Grid.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource Button}"/>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label HorizontalAlignment="Left" Height="50" Width="330" Content="{Binding Type}" FontSize="20" Template="{StaticResource LogBox}"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Label VerticalAlignment="Center" Margin="15,0" Content="ガイド番号" FontSize="16"/>
+                    <TextBox HorizontalContentAlignment="Right" Width="70" Text="{Binding GuideNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="3" Template="{StaticResource TextBox}"/>
+                </StackPanel>
+                <Button Grid.Column="1" HorizontalAlignment="Right" Content="中止" Command="{Binding Cancel}"/>
+            </Grid>
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource Button}"/>
+                </Grid.Resources>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="45">
+                    <Button Margin="0,0,10,0" Content="" Command="{Binding NotImplemented}"/>
+                    <Button Content="" Command="{Binding NotImplemented}"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Height="45">
+                    <Button Margin="0,0,10,0" Content="前" Command="{Binding Previous}"/>
+                    <Button Content="次" Command="{Binding Next}"/>
+                </StackPanel>
+            </Grid>
+            <UniformGrid Margin="1,11" Columns="4">
+                <UniformGrid.Resources>
+                    <Style TargetType="UniformGrid">
+                        <Setter Property="Columns" Value="1"/>
+                    </Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource KeyButton}">
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="Margin" Value="-1"/>
+                        <Setter Property="FontSize" Value="20"/>
+                        <Style.Triggers>
+                            <Trigger Property="Content" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </UniformGrid.Resources>
+                <UniformGrid>
+                    <Button Content="{Binding Path=Contents[0], Mode=TwoWay}" Command="{Binding Path=Clicked[0], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[1], Mode=TwoWay}" Command="{Binding Path=Clicked[1], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[2], Mode=TwoWay}" Command="{Binding Path=Clicked[2], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[3], Mode=TwoWay}" Command="{Binding Path=Clicked[3], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[4], Mode=TwoWay}" Command="{Binding Path=Clicked[4], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[5], Mode=TwoWay}" Command="{Binding Path=Clicked[5], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[6], Mode=TwoWay}" Command="{Binding Path=Clicked[6], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[7], Mode=TwoWay}" Command="{Binding Path=Clicked[7], Mode=TwoWay}"/>
+                </UniformGrid>
+                <UniformGrid>
+                    <Button Content="{Binding Path=Contents[8], Mode=TwoWay}" Command="{Binding Path=Clicked[8], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[9], Mode=TwoWay}" Command="{Binding Path=Clicked[9], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[10], Mode=TwoWay}" Command="{Binding Path=Clicked[10], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[11], Mode=TwoWay}" Command="{Binding Path=Clicked[11], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[12], Mode=TwoWay}" Command="{Binding Path=Clicked[12], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[13], Mode=TwoWay}" Command="{Binding Path=Clicked[13], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[14], Mode=TwoWay}" Command="{Binding Path=Clicked[14], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[15], Mode=TwoWay}" Command="{Binding Path=Clicked[15], Mode=TwoWay}"/>
+                </UniformGrid>
+                <UniformGrid>
+                    <Button Content="{Binding Path=Contents[16], Mode=TwoWay}" Command="{Binding Path=Clicked[16], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[17], Mode=TwoWay}" Command="{Binding Path=Clicked[17], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[18], Mode=TwoWay}" Command="{Binding Path=Clicked[18], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[19], Mode=TwoWay}" Command="{Binding Path=Clicked[19], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[20], Mode=TwoWay}" Command="{Binding Path=Clicked[20], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[21], Mode=TwoWay}" Command="{Binding Path=Clicked[21], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[22], Mode=TwoWay}" Command="{Binding Path=Clicked[22], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[23], Mode=TwoWay}" Command="{Binding Path=Clicked[23], Mode=TwoWay}"/>
+                </UniformGrid>
+                <UniformGrid>
+                    <Button Content="{Binding Path=Contents[24], Mode=TwoWay}" Command="{Binding Path=Clicked[24], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[25], Mode=TwoWay}" Command="{Binding Path=Clicked[25], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[26], Mode=TwoWay}" Command="{Binding Path=Clicked[26], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[27], Mode=TwoWay}" Command="{Binding Path=Clicked[27], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[28], Mode=TwoWay}" Command="{Binding Path=Clicked[28], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[29], Mode=TwoWay}" Command="{Binding Path=Clicked[29], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[30], Mode=TwoWay}" Command="{Binding Path=Clicked[30], Mode=TwoWay}"/>
+                    <Button Content="{Binding Path=Contents[31], Mode=TwoWay}" Command="{Binding Path=Clicked[31], Mode=TwoWay}"/>
+                </UniformGrid>
+            </UniformGrid>
+        </DockPanel>
+    </ContentControl>
+</UserControl>

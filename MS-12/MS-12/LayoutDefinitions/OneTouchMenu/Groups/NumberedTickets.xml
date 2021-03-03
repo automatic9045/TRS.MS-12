@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<OneTouchMenuGroup>
+	<Shortcuts>
+		<Shortcut Name="あははははは" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+	</Shortcuts>
+	<Pages>
+		<Page Name="整理券">
+			<Content Name="ＴＳ" Type="NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Service,トレインシミュレーター/SET;Adult,１"/>
+			<Content Name="模型&#10;体験運転" Type="NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Service,模型体験運転/SET;Adult,１"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="あ" Type="NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Adult,１"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+		</Page>
+		<Page Name="整理券２">
+			<Content Name="整理" Type="NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Adult,１"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="い" Type="NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Adult,２"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+		</Page>
+	</Pages>
+</OneTouchMenuGroup>

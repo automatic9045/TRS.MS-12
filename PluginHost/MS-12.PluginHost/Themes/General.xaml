@@ -1,0 +1,229 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:prism="http://prismlibrary.com/"
+                    xmlns:local="clr-namespace:TRS.TMS12.Resources"
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
+                    x:Class="TRS.TMS12.Resources.General">
+
+    <!--<SolidColorBrush x:Key="BackgroundBrush" Color="#D4D0C8"/>-->
+
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#C0C0C0"/>
+
+    <SolidColorBrush x:Key="FocusedBrush" Color="Aqua"/>
+
+    <Color x:Key="BlueColor" A="255" R="10" G="24" B="106"/>
+    <SolidColorBrush x:Key="Blue" Color="{StaticResource BlueColor}"/>
+
+    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Template" Value="{StaticResource DefButton}"/>
+    </Style>
+    <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Template" Value="{StaticResource DefToggleButton}"/>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="#FFFAD8"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#FFFAD8"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Control">
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+    <Style x:Key="FocusDisable" TargetType="Button">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+    </Style>
+    <Style TargetType="TextBlock">
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+    </Style>
+    <Style TargetType="TextBox">
+        <Setter Property="Template" Value="{StaticResource TextBox}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource Blue}"/>
+        <Setter Property="InputMethod.PreferredImeState" Value="On"/>
+        <Setter Property="InputMethod.PreferredImeConversionMode" Value="Katakana,FullShape"/>
+        <Setter Property="local:ElementBehavior.ForceOverride" Value="True"/>
+        <EventSetter Event="UIElement.GotFocus" Handler="TextBox_GotFocus"/>
+        <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="TextBox_MouseLeftButtonDown"/>
+        <EventSetter Event="Control.MouseDoubleClick" Handler="TextBox_DoubleClicked"/>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{StaticResource FocusedBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="ListBox">
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ContentControl Background="White" SnapsToDevicePixels="True" Style="{StaticResource SunkenClassicBorder}">
+                        <ScrollViewer Margin="4" Focusable="False">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </ContentControl>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="True"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ContentControl}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="{StaticResource Blue}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="KeyTab" TargetType="{x:Type RadioButton}">
+        <Setter Property="Grid.ColumnSpan" Value="3"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid>
+                        <Path x:Name="Span" Data="M 0,100 L 15,0 L 85,0 L 100,100 Z" Stretch="Fill" Fill="{StaticResource BackgroundBrush}" Stroke="Black"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Span" Property="Fill" Value="White"/>
+                            <Setter Property="Panel.ZIndex" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="KeyTabEx" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource KeyTab}">
+        <EventSetter Event="UIElement.PreviewMouseDown" Handler="RadioButton_PreviewMouseDown"/>
+    </Style>
+    <Style x:Key="KeyButton" TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="5,0"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" TextBlock.TextAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource FocusedBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="KeyButtonEx" TargetType="{x:Type Button}" BasedOn="{StaticResource KeyButton}">
+        <Setter Property="Focusable" Value="False"/>
+        <EventSetter Event="UIElement.PreviewMouseDown" Handler="Button_PreviewMouseDown"/>
+        <EventSetter Event="UIElement.PreviewMouseUp" Handler="Button_PreviewMouseUp"/>
+    </Style>
+    <Style x:Key="KeyToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Padding" Value="5,0"/>
+        <Setter Property="FontFamily" Value="MS Gothic"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" TextBlock.TextAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="LightYellow"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="LogBox" TargetType="{x:Type Label}">
+        <Grid>
+            <Rectangle Fill="White" Stroke="Black"/>
+            <Label VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0,-5" Content="{TemplateBinding Content}" FontFamily="MS Gothic" FontSize="{TemplateBinding FontSize}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="TextBox" TargetType="{x:Type TextBox}">
+        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+            <ScrollViewer x:Name="PART_ContentHost"/>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>

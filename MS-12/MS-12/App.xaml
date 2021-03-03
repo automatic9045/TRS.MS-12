@@ -1,0 +1,15 @@
+﻿<Application x:Class="TRS.TMS12.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TRS.TMS12">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PresentationFramework.Classic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;component/themes/classic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MS-12.PluginHost;component/Themes/ClassicBorders.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MS-12.PluginHost;component/Themes/ClassicButtons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MS-12.PluginHost;component/Themes/General.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

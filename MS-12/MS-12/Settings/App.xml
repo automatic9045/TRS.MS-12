@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationSettings>
+	<CatchUnobservedExceptions Enabled="true"/>
+	<ShowNotImplementedDialog Enabled="true"/>
+	<Printer Class="TRS.PrinterEmulator" Name="PrinterEmulator"/>
+	<Printer Class="TRS.StarTSP100I" Name="Star TSP143GT Cutter"/>
+</ApplicationSettings>
