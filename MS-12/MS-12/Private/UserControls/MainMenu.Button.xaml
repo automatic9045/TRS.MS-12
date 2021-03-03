@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="TRS.TMS12.MainMenuButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TRS.TMS12"
+             xmlns:r="clr-namespace:TRS.TMS12.Resources;assembly=MS-12.PluginHost"
+             mc:Ignorable="d" 
+             d:DesignHeight="104" d:DesignWidth="291">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="MainButton" Grid.Column="0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="GroupNameLabel" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,15,0,0">
+                    <Label.Style>
+                        <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                            <Setter Property="FontSize" Value="32"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <ContentControl Grid.Row="1" Margin="3" Style="{StaticResource ClassicBorder}">
+                    <Label x:Name="TypicalTicketNameLabel" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Label.Style>
+                            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </ContentControl>
+            </Grid>
+        </Button>
+        <Button x:Name="TabButton" Grid.Column="1" Content="▼">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="FontSize" Value="40"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</UserControl>

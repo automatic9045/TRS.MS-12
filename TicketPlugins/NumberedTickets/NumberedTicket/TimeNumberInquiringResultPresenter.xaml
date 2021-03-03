@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket.TimeNumberInquiringResultPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
+             xmlns:local="clr-namespace:TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket"
+             xmlns:r="clr-namespace:TRS.TMS12.Resources;assembly=MS-12.PluginHost"
+             mc:Ignorable="d" 
+             d:DesignHeight="856" d:DesignWidth="640"
+             TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True" SnapsToDevicePixels="True"
+             FocusManager.IsFocusScope="True"
+             Visibility="{Binding Visibility}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PresentationFramework.Classic;component/themes/classic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MS-12.PluginHost;component/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Template" Value="{StaticResource ThicklyBorderedDefButton}"/>
+                <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+                <Setter Property="FontFamily" Value="MS Gothic"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+            <Style x:Key="CaptionText" TargetType="Label">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="MS Gothic"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="MS Gothic"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <GroupBox Margin="10" Style="{StaticResource ClassicBorder}" Header="時間帯コード照会結果">
+        <GroupBox.Resources>
+            <Style TargetType="ContentControl" BasedOn="{StaticResource ThinPressedClassicBorder}">
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="Focusable" Value="False"/>
+            </Style>
+        </GroupBox.Resources>
+        <DockPanel Margin="10">
+            <StackPanel DockPanel.Dock="Top" Orientation="Vertical" Margin="0,40,0,10">
+                <DockPanel Margin="0,10" Height="42">
+                    <ContentControl Margin="0,0,20,0" DockPanel.Dock="Left">
+                        <Label Content="指定種別" Style="{StaticResource CaptionText}"/>
+                    </ContentControl>
+                    <Label HorizontalContentAlignment="Left" Content="{Binding GameName}" FontSize="20" Template="{StaticResource LogBox}"/>
+                </DockPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Vertical">
+                    <Button Height="50" Width="130" Margin="0,0,0,100" Content="確定" Command="{Binding Finish}"/>
+                    <Button Height="50" Width="130" Margin="0,0,0,50" Content="中止" Command="{Binding Cancel}"/>
+                </StackPanel>
+            </StackPanel>
+            <ContentControl DockPanel.Dock="Top" Style="{StaticResource ClassicBorder}">
+                <ContentControl.Resources>
+                    <Style TargetType="ContentControl" BasedOn="{StaticResource ThinPressedClassicBorder}">
+                        <Setter Property="Width" Value="100"/>
+                        <Setter Property="Focusable" Value="False"/>
+                    </Style>
+                </ContentControl.Resources>
+                <DockPanel Margin="10">
+                    <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal" Height="42">
+                        <Label VerticalContentAlignment="Center" Margin="0,0,10,0" Content="ガイド番号"/>
+                        <TextBox Margin="0,0,10,0" x:Name="GuideNumber1" Text="{Binding Path=TextBoxes[(local:InputControlTextBox)TimeNumberInquiringResultPresenterGuideNumber], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     HorizontalContentAlignment="Right" MaxLength="2" Width="54">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotKeyboardFocus">
+                                    <prism:InvokeCommandAction Command="{Binding GotFocus}" CommandParameter="TimeNumberInquiringResultPresenterGuideNumber"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                    <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="4,20,4,10" Text="　種別・時間帯コード　　　　　　　開始　終了　　予約可計" FontSize="20"/>
+                    <ListBox FontSize="20" ItemsSource="{Binding Times}" SelectedIndex="{Binding SelectedTimeIndex, Mode=OneWayToSource}"/>
+                </DockPanel>
+            </ContentControl>
+        </DockPanel>
+    </GroupBox>
+</UserControl>

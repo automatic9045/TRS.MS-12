@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="TRS.TMS12.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:TRS.TMS12"
+             mc:Ignorable="d" 
+             d:DesignHeight="856" d:DesignWidth="1280"
+             Visibility="{Binding Visibility, Mode=TwoWay}">
+    <UserControl.Resources>
+        <Style TargetType="UniformGrid">
+            <Setter Property="Margin" Value="-10,5,-10,10"/>
+            <Setter Property="Columns" Value="2"/>
+        </Style>
+        <Style x:Key="SingleButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="10,15"/>
+        </Style>
+        <Style TargetType="local:MainMenuButton">
+            <Setter Property="Margin" Value="10,15"/>
+            <Style.Triggers>
+                <Trigger Property="GroupName" Value="">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <GroupBox Margin="10" Header="メインメニュー">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="GroupBox" BasedOn="{StaticResource {x:Type GroupBox}}">
+                    <Setter Property="Margin" Value="0,15"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="LeftGrid" Grid.Column="0">
+            </Grid>
+            <Grid x:Name="RightGrid" Grid.Column="2">
+                <UniformGrid x:Name="CoreButtons" Margin="-5">
+                    <Button Margin="10,10,10,30" Content="ワンタッチ" FontSize="32" Command="{Binding OneTouchClicked}"/>
+                    <UniformGrid Columns="1" Margin="50,0,5,10">
+                        <UniformGrid.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Margin" Value="10"/>
+                            </Style>
+                        </UniformGrid.Resources>
+                        <Button Content="メインテナンス" FontSize="26" Command="{Binding MaintenanceClicked}"/>
+                        <Button Content="終了" FontSize="26" Command="{Binding PowerOffClicked}"/>
+                    </UniformGrid>
+                </UniformGrid>
+            </Grid>
+        </Grid>
+    </GroupBox>
+</UserControl>

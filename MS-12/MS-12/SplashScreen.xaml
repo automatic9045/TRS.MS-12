@@ -1,0 +1,130 @@
+﻿<Window x:Class="TRS.TMS12.SplashScreen" x:Name="Splash"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TRS.TMS12"
+        mc:Ignorable="d"
+        Title="起動中 - MS-12" Width="640" ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="#FFF0F0F0" TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" SnapsToDevicePixels="True">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
+            <Setter Property="Height" Value="400"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsErrorShown}" Value="True">
+                    <Setter Property="Height" Value="640"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.Resources>
+            <Style TargetType="Polyline">
+                <Setter Property="Stretch" Value="Fill"/>
+                <Setter Property="StrokeStartLineCap" Value="Square"/>
+                <Setter Property="StrokeEndLineCap" Value="Square"/>
+            </Style>
+        </Grid.Resources>
+        <Polyline Margin="1" Points="1,0 0,0 0,1" Stroke="White"/>
+        <Polyline Margin="1" Points="1,0 1,1 0,1" Stroke="{StaticResource BorderBrush}"/>
+        <Polyline Margin="0" Points="1,0 1,1 0,1" Stroke="{StaticResource DarkBorderBrush}"/>
+        <DockPanel Margin="4">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="22">
+                <StackPanel.Background>
+                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Color="{StaticResource BlueColor}" Offset="0.0"/>
+                        <GradientStop Color="#A6CAF0" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="6,0" Text="MS-12" Foreground="White" FontFamily="MS UI Gothic" FontWeight="Bold" FontSize="14"/>
+            </StackPanel>
+            <DockPanel>
+                <Border DockPanel.Dock="Top" Background="White">
+                    <Image Margin="0,10,0,6" Width="420" Source="./Resources/Images/logo.png" Stretch="Uniform" SnapsToDevicePixels="True"/>
+                </Border>
+                <Polyline DockPanel.Dock="Top" Points="0,0 1,0" Stretch="Fill" StrokeThickness="6">
+                    <Polyline.Stroke>
+                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="{StaticResource BlueColor}" Offset="0"/>
+                            <GradientStop Color="#A6CAF0" Offset="0.5"/>
+                            <GradientStop Color="{StaticResource BlueColor}" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Polyline.Stroke>
+                </Polyline>
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Margin" Value="15,10,15,5"/>
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="FontFamily" Value="MS UI Gothic"/>
+                            <Setter Property="FontSize" Value="14"/>
+                        </Style>
+                    </Grid.Resources>
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="ContentControl" BasedOn="{StaticResource {x:Type ContentControl}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsErrorShown}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                        <UniformGrid Columns="1">
+                            <TextBlock Text="起動中..."/>
+                            <TextBlock Margin="14,0,0,0" Text="{Binding ProgressMessage}" TextTrimming="CharacterEllipsis"/>
+                            <ContentControl Height="20" Focusable="False" Style="{StaticResource SunkenClassicBorder}">
+                                <ProgressBar Background="Transparent" Maximum="{Binding ProgressValueMax, Mode=OneTime}" Value="{Binding ProgressValue}"/>
+                            </ContentControl>
+                            <TextBlock TextAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}      {1}">
+                                        <Binding Path="Version"/>
+                                        <Binding Path="Copyright"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </UniformGrid>
+                    </ContentControl>
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="ContentControl" BasedOn="{StaticResource {x:Type ContentControl}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsErrorShown}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Top" Text="読込が正常に完了しませんでした。"/>
+                            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="FontFamily" Value="MS UI Gothic"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Width" Value="120"/>
+                                        <Setter Property="Margin" Value="5,0"/>
+                                        <Setter Property="Padding" Value="3"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Button Content="中止" Command="{Binding Stop}"/>
+                                <Button Content="続行" IsEnabled="{Binding IsErrorIgnorable}" Command="{Binding Ignore}"/>
+                            </StackPanel>
+                            <ListBox Margin="0,10" ItemsSource="{Binding Errors}">
+                                <ListBox.Style>
+                                    <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                                        <Setter Property="FontSize" Value="14"/>
+                                    </Style>
+                                </ListBox.Style>
+                            </ListBox>
+                        </DockPanel>
+                    </ContentControl>
+                </Grid>
+            </DockPanel>
+        </DockPanel>
+    </Grid>
+</Window>

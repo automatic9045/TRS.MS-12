@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<KeyLayout Header="数字入力">
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="７" Command="ADD;7"/>
+	<Key Name="８" Command="ADD;8"/>
+	<Key Name="９" Command="ADD;9"/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="４" Command="ADD;4"/>
+	<Key Name="５" Command="ADD;5"/>
+	<Key Name="６" Command="ADD;6"/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="１" Command="ADD;1"/>
+	<Key Name="２" Command="ADD;2"/>
+	<Key Name="３" Command="ADD;3"/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="０" Command="ADD;0"/>
+	<Key Name="００" Command="ADD;00"/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+</KeyLayout>

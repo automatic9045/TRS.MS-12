@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TRS.TMS12.Resources">
+    <SolidColorBrush x:Key="BorderBrush" Color="#808080"/>
+    <SolidColorBrush x:Key="DarkBorderBrush" Color="#404040"/>
+    
+    <!--
+    <SolidColorBrush x:Key="ButtonFocuedBorder" Color="#646464"/>
+    <SolidColorBrush x:Key="ButtonShadow" Color="#7D796F"/>
+    <SolidColorBrush x:Key="ButtonBorderLight" Color="#E9E7E3"/>
+    <SolidColorBrush x:Key="ButtonBorderShadow" Color="#978E7A"/>-->
+
+    <SolidColorBrush x:Key="ButtonFocuedBorder" Color="#646464"/>
+    <SolidColorBrush x:Key="ButtonShadow" Color="#717171"/>
+    <SolidColorBrush x:Key="ButtonBorderLight" Color="#DFDFDF"/>
+    <SolidColorBrush x:Key="ButtonBorderShadow" Color="#7F7F7F"/>
+</ResourceDictionary>

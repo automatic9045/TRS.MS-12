@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="TRS.TMS12.Dialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TRS.TMS12"
+             mc:Ignorable="d" 
+             Width="800" Height="400">
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.Resources>
+            <Style TargetType="Polyline">
+                <Setter Property="Stretch" Value="Fill"/>
+                <Setter Property="StrokeStartLineCap" Value="Square"/>
+                <Setter Property="StrokeEndLineCap" Value="Square"/>
+            </Style>
+        </Grid.Resources>
+        <Polyline Margin="1" Points="1,0 0,0 0,1" Stroke="White"/>
+        <Polyline Margin="1" Points="1,0 1,1 0,1" Stroke="{StaticResource BorderBrush}"/>
+        <Polyline Margin="0" Points="1,0 1,1 0,1" Stroke="{StaticResource DarkBorderBrush}"/>
+        <Grid Margin="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="22"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <StackPanel.Background>
+                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Color="{StaticResource BlueColor}" Offset="0.0"/>
+                        <GradientStop Color="#A6CAF0" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+                <Image Grid.Column="0" Margin="3" Source="{Binding Icon, Mode=TwoWay}"/>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Caption,Mode=TwoWay}" Foreground="White" FontFamily="MS UI Gothic" FontWeight="Bold" FontSize="14"/>
+            </StackPanel>
+            <Border Grid.Row="1" Margin="30,30,30,70" BorderThickness="1" BorderBrush="Black">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="White">
+                    <TextBlock Margin="30,15" Text="{Binding Text, Mode=TwoWay}" TextWrapping="Wrap" FontSize="20" FontFamily="MS Gothic"/>
+                </ScrollViewer>
+            </Border>
+            <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="30,15" Width="160" Height="40" Content="確認" FontSize="16" FontWeight="Bold" Command="{Binding ButtonClicked}"/>
+        </Grid>
+    </Grid>
+</UserControl>

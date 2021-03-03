@@ -1,0 +1,354 @@
+﻿<UserControl x:Class="TRS.TMS12.OneTouchMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:TRS.TMS12"
+             mc:Ignorable="d" 
+             d:DesignHeight="856" d:DesignWidth="1280"
+             Visibility="{Binding Visibility, Mode=TwoWay}">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </UserControl.Resources>
+    <ContentControl Margin="10" Style="{StaticResource ClassicBorder}" Focusable="False">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <UniformGrid Grid.Row="1" Grid.Column="0" Columns="1" Margin="40,1">
+                    <UniformGrid.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource KeyButton}">
+                            <Setter Property="Margin" Value="0,-1"/>
+                            <Style.Triggers>
+                                <Trigger Property="Content" Value="">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </UniformGrid.Resources>
+                    <Button Content="{Binding ShortcutNames[0]}" Command="{Binding ShortcutCommand}" CommandParameter="0"/>
+                    <Button Content="{Binding ShortcutNames[1]}" Command="{Binding ShortcutCommand}" CommandParameter="1"/>
+                    <Button Content="{Binding ShortcutNames[2]}" Command="{Binding ShortcutCommand}" CommandParameter="2"/>
+                    <Button Content="{Binding ShortcutNames[3]}" Command="{Binding ShortcutCommand}" CommandParameter="3"/>
+                    <Button Content="{Binding ShortcutNames[4]}" Command="{Binding ShortcutCommand}" CommandParameter="4"/>
+                    <Button Content="{Binding ShortcutNames[5]}" Command="{Binding ShortcutCommand}" CommandParameter="5"/>
+                    <Button Content="{Binding ShortcutNames[6]}" Command="{Binding ShortcutCommand}" CommandParameter="6"/>
+                    <Button Content="{Binding ShortcutNames[7]}" Command="{Binding ShortcutCommand}" CommandParameter="7"/>
+                    <Button Content="{Binding ShortcutNames[8]}" Command="{Binding ShortcutCommand}" CommandParameter="8"/>
+                </UniformGrid>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,0,-1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource KeyTab}">
+                            <Setter Property="Grid.ColumnSpan" Value="3"/>
+                            <Style.Triggers>
+                                <Trigger Property="Content" Value="">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+                    <RadioButton Grid.Column="0" Content="{Binding GroupNames[0]}" IsChecked="{Binding GroupsIsChecked[0], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="0"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="2" Content="{Binding GroupNames[1]}" IsChecked="{Binding GroupsIsChecked[1], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="1"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="4" Content="{Binding GroupNames[2]}" IsChecked="{Binding GroupsIsChecked[2], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="2"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="6" Content="{Binding GroupNames[3]}" IsChecked="{Binding GroupsIsChecked[3], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="3"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="8" Content="{Binding GroupNames[4]}" IsChecked="{Binding GroupsIsChecked[4], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="4"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="10" Content="{Binding GroupNames[5]}" IsChecked="{Binding GroupsIsChecked[5], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="5"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="12" Content="{Binding GroupNames[6]}" IsChecked="{Binding GroupsIsChecked[6], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="6"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="14" Content="{Binding GroupNames[7]}" IsChecked="{Binding GroupsIsChecked[7], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="7"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Grid.Column="16" Content="{Binding GroupNames[8]}" IsChecked="{Binding GroupsIsChecked[8], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding GroupChanged}" CommandParameter="8"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                </Grid>
+                <UniformGrid Grid.Row="1" Grid.Column="1" Columns="10" Margin="1">
+                    <UniformGrid.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource KeyButton}">
+                            <Setter Property="Margin" Value="-1"/>
+                            <Setter Property="Command" Value="{Binding Command}"/>
+                            <Style.Triggers>
+                                <Trigger Property="Content" Value="">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </UniformGrid.Resources>
+                    <Button Content="{Binding Keys[0]}" CommandParameter="0"/>
+                    <Button Content="{Binding Keys[1]}" CommandParameter="1"/>
+                    <Button Content="{Binding Keys[2]}" CommandParameter="2"/>
+                    <Button Content="{Binding Keys[3]}" CommandParameter="3"/>
+                    <Button Content="{Binding Keys[4]}" CommandParameter="4"/>
+                    <Button Content="{Binding Keys[5]}" CommandParameter="5"/>
+                    <Button Content="{Binding Keys[6]}" CommandParameter="6"/>
+                    <Button Content="{Binding Keys[7]}" CommandParameter="7"/>
+                    <Button Content="{Binding Keys[8]}" CommandParameter="8"/>
+                    <Button Content="{Binding Keys[9]}" CommandParameter="9"/>
+                    <Button Content="{Binding Keys[10]}" CommandParameter="10"/>
+                    <Button Content="{Binding Keys[11]}" CommandParameter="11"/>
+                    <Button Content="{Binding Keys[12]}" CommandParameter="12"/>
+                    <Button Content="{Binding Keys[13]}" CommandParameter="13"/>
+                    <Button Content="{Binding Keys[14]}" CommandParameter="14"/>
+                    <Button Content="{Binding Keys[15]}" CommandParameter="15"/>
+                    <Button Content="{Binding Keys[16]}" CommandParameter="16"/>
+                    <Button Content="{Binding Keys[17]}" CommandParameter="17"/>
+                    <Button Content="{Binding Keys[18]}" CommandParameter="18"/>
+                    <Button Content="{Binding Keys[19]}" CommandParameter="19"/>
+                    <Button Content="{Binding Keys[20]}" CommandParameter="20"/>
+                    <Button Content="{Binding Keys[21]}" CommandParameter="21"/>
+                    <Button Content="{Binding Keys[22]}" CommandParameter="22"/>
+                    <Button Content="{Binding Keys[23]}" CommandParameter="23"/>
+                    <Button Content="{Binding Keys[24]}" CommandParameter="24"/>
+                    <Button Content="{Binding Keys[25]}" CommandParameter="25"/>
+                    <Button Content="{Binding Keys[26]}" CommandParameter="26"/>
+                    <Button Content="{Binding Keys[27]}" CommandParameter="27"/>
+                    <Button Content="{Binding Keys[28]}" CommandParameter="28"/>
+                    <Button Content="{Binding Keys[29]}" CommandParameter="29"/>
+                    <Button Content="{Binding Keys[30]}" CommandParameter="30"/>
+                    <Button Content="{Binding Keys[31]}" CommandParameter="31"/>
+                    <Button Content="{Binding Keys[32]}" CommandParameter="32"/>
+                    <Button Content="{Binding Keys[33]}" CommandParameter="33"/>
+                    <Button Content="{Binding Keys[34]}" CommandParameter="34"/>
+                    <Button Content="{Binding Keys[35]}" CommandParameter="35"/>
+                    <Button Content="{Binding Keys[36]}" CommandParameter="36"/>
+                    <Button Content="{Binding Keys[37]}" CommandParameter="37"/>
+                    <Button Content="{Binding Keys[38]}" CommandParameter="38"/>
+                    <Button Content="{Binding Keys[39]}" CommandParameter="39"/>
+                    <Button Content="{Binding Keys[40]}" CommandParameter="40"/>
+                    <Button Content="{Binding Keys[41]}" CommandParameter="41"/>
+                    <Button Content="{Binding Keys[42]}" CommandParameter="42"/>
+                    <Button Content="{Binding Keys[43]}" CommandParameter="43"/>
+                    <Button Content="{Binding Keys[44]}" CommandParameter="44"/>
+                    <Button Content="{Binding Keys[45]}" CommandParameter="45"/>
+                    <Button Content="{Binding Keys[46]}" CommandParameter="46"/>
+                    <Button Content="{Binding Keys[47]}" CommandParameter="47"/>
+                    <Button Content="{Binding Keys[48]}" CommandParameter="48"/>
+                    <Button Content="{Binding Keys[49]}" CommandParameter="49"/>
+                    <Button Content="{Binding Keys[50]}" CommandParameter="50"/>
+                    <Button Content="{Binding Keys[51]}" CommandParameter="51"/>
+                    <Button Content="{Binding Keys[52]}" CommandParameter="52"/>
+                    <Button Content="{Binding Keys[53]}" CommandParameter="53"/>
+                    <Button Content="{Binding Keys[54]}" CommandParameter="54"/>
+                    <Button Content="{Binding Keys[55]}" CommandParameter="55"/>
+                    <Button Content="{Binding Keys[56]}" CommandParameter="56"/>
+                    <Button Content="{Binding Keys[57]}" CommandParameter="57"/>
+                    <Button Content="{Binding Keys[58]}" CommandParameter="58"/>
+                    <Button Content="{Binding Keys[59]}" CommandParameter="59"/>
+                    <Button Content="{Binding Keys[60]}" CommandParameter="60"/>
+                    <Button Content="{Binding Keys[61]}" CommandParameter="61"/>
+                    <Button Content="{Binding Keys[62]}" CommandParameter="62"/>
+                    <Button Content="{Binding Keys[63]}" CommandParameter="63"/>
+                    <Button Content="{Binding Keys[64]}" CommandParameter="64"/>
+                    <Button Content="{Binding Keys[65]}" CommandParameter="65"/>
+                    <Button Content="{Binding Keys[66]}" CommandParameter="66"/>
+                    <Button Content="{Binding Keys[67]}" CommandParameter="67"/>
+                    <Button Content="{Binding Keys[68]}" CommandParameter="68"/>
+                    <Button Content="{Binding Keys[69]}" CommandParameter="69"/>
+                    <Button Content="{Binding Keys[70]}" CommandParameter="70"/>
+                    <Button Content="{Binding Keys[71]}" CommandParameter="71"/>
+                    <Button Content="{Binding Keys[72]}" CommandParameter="72"/>
+                    <Button Content="{Binding Keys[73]}" CommandParameter="73"/>
+                    <Button Content="{Binding Keys[74]}" CommandParameter="74"/>
+                    <Button Content="{Binding Keys[75]}" CommandParameter="75"/>
+                    <Button Content="{Binding Keys[76]}" CommandParameter="76"/>
+                    <Button Content="{Binding Keys[77]}" CommandParameter="77"/>
+                    <Button Content="{Binding Keys[78]}" CommandParameter="78"/>
+                    <Button Content="{Binding Keys[79]}" CommandParameter="79"/>
+                    <Button Content="{Binding Keys[80]}" CommandParameter="80"/>
+                    <Button Content="{Binding Keys[81]}" CommandParameter="81"/>
+                    <Button Content="{Binding Keys[82]}" CommandParameter="82"/>
+                    <Button Content="{Binding Keys[83]}" CommandParameter="83"/>
+                    <Button Content="{Binding Keys[84]}" CommandParameter="84"/>
+                    <Button Content="{Binding Keys[85]}" CommandParameter="85"/>
+                    <Button Content="{Binding Keys[86]}" CommandParameter="86"/>
+                    <Button Content="{Binding Keys[87]}" CommandParameter="87"/>
+                    <Button Content="{Binding Keys[88]}" CommandParameter="88"/>
+                    <Button Content="{Binding Keys[89]}" CommandParameter="89"/>
+                </UniformGrid>
+            </Grid>
+            <DockPanel Grid.Row="2">
+                <UniformGrid DockPanel.Dock="Right" Margin="10,0" Rows="1">
+                    <UniformGrid.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Template" Value="{StaticResource ThicklyBorderedDefButton}"/>
+                            <Setter Property="Width" Value="80"/>
+                            <Setter Property="FontSize" Value="20"/>
+                        </Style>
+                    </UniformGrid.Resources>
+                    <Button Content="前頁" IsEnabled="{Binding IsNotFirst}" Command="{Binding Previous}"/>
+                    <Button Content="次頁" IsEnabled="{Binding IsNotLast}" Command="{Binding Next}"/>
+                </UniformGrid>
+                <UniformGrid Rows="1" Margin="111,0,1,0">
+                    <UniformGrid.Resources>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource KeyToggleButton}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="-1,0"/>
+                            <Style.Triggers>
+                                <Trigger Property="Content" Value="">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </UniformGrid.Resources>
+                    <RadioButton Content="{Binding PageNames[0]}" IsChecked="{Binding PagesIsChecked[0], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="0"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[1]}" IsChecked="{Binding PagesIsChecked[1], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="1"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[2]}" IsChecked="{Binding PagesIsChecked[2], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="2"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[3]}" IsChecked="{Binding PagesIsChecked[3], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="3"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[4]}" IsChecked="{Binding PagesIsChecked[4], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="4"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[5]}" IsChecked="{Binding PagesIsChecked[5], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="5"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[6]}" IsChecked="{Binding PagesIsChecked[6], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="6"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[7]}" IsChecked="{Binding PagesIsChecked[7], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="7"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[8]}" IsChecked="{Binding PagesIsChecked[8], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="8"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                    <RadioButton Content="{Binding PageNames[9]}" IsChecked="{Binding PagesIsChecked[9], Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding PageChanged}" CommandParameter="9"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RadioButton>
+                </UniformGrid> 
+            </DockPanel>
+        </Grid>
+    </ContentControl>
+</UserControl>
