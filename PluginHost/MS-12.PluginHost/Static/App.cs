@@ -15,7 +15,7 @@ namespace TRS.TMS12.Static
 {
     public static class App
     {
-        private static FileVersionInfo FileVersionInfo { get; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+        private static FileVersionInfo FileVersionInfo { get; } = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location);
         public static string ProductVersion { get; } = FileVersionInfo.ProductVersion;
         public static string Copyright { get; } = FileVersionInfo.LegalCopyright;
         public static string TicketPluginsNamespace { get; } = "TRS.TMS12.TicketPlugins.";
