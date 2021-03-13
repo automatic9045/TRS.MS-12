@@ -2,10 +2,9 @@
 
 namespace TRS.TMS12
 {
-    public enum UserControls
+    public enum Screen
     {
-        PowerOff = 0,
-        MainMenu,
+        MainMenu = 0,
         OneTouchMenu,
         MaintenanceMenu,
         GroupMenu,

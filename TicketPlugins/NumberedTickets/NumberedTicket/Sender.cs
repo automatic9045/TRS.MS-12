@@ -48,7 +48,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
             this.m = m;
         }
 
-        public void ModeChanged(Mode mode, object value) => Connector.ModeChanged(mode, value);
+        public void OnChangeMode(Mode newMode, object value) => Connector.ModeChanged(newMode, value);
 
         public SendResult Send()
         {

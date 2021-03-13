@@ -154,19 +154,19 @@ namespace TRS.TMS12.Plugins.TRS
         {
             switch (mode)
             {
-                case Mode.TestMode:
+                case Mode.Test:
                     IsTestMode = (bool)value;
                     break;
 
-                case Mode.OneTimeMode:
+                case Mode.OneTime:
                     IsOneTimeMode = (bool)value;
                     break;
 
-                case Mode.SendType:
+                case Mode.Send:
                     SendType = (SendTypes?)(int?)value;
                     break;
 
-                case Mode.RelayMode:
+                case Mode.Relay:
                     IsRelayMode = (bool)value;
                     break;
             }

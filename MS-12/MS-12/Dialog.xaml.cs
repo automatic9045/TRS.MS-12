@@ -22,6 +22,7 @@ namespace TRS.TMS12
     internal class DialogInfo
     {
         public bool ButtonIsEnabled { get; set; } = true;
+        public bool CancelButtonIsVisible { get; set; } = false;
         public string Text { get; set; } = "";
         public string Caption { get; set; } = "";
         public ImageSource Icon { get; set; } = null;
@@ -35,20 +36,23 @@ namespace TRS.TMS12
             set { SetProperty(ref _DialogInfo, value); }
         }
 
-        public void ShowDialog(string text, string caption, ImageSource icon, bool buttonIsEnabled = true)
+        internal bool IsAccepted { get; set; } = true;
+
+        public void ShowDialog(string text, string caption, ImageSource icon, bool buttonIsEnabled, bool cancelButtonIsVisible = false)
         {
             DialogInfo = new DialogInfo()
             {
                 ButtonIsEnabled = buttonIsEnabled,
+                CancelButtonIsVisible = cancelButtonIsVisible,
                 Text = text,
                 Caption = caption,
                 Icon = icon,
             };
         }
 
-        public void ShowDialog(string text, string caption = "", bool buttonIsEnabled = true)
+        public void ShowDialog(string text, string caption = "", bool buttonIsEnabled = true, bool cancelButtonIsVisible = false)
         {
-            ShowDialog(text, caption, null, buttonIsEnabled);
+            ShowDialog(text, caption, null, buttonIsEnabled, cancelButtonIsVisible);
         }
 
         public void ShowErrorDialog(string text, bool buttonIsEnabled = true)
@@ -79,8 +83,16 @@ namespace TRS.TMS12
             ShowNotImplementedDialog("", isCollectingInformation);
         }
 
+        public async Task<bool> ShowConfirmDialogAsync(string text)
+        {
+            ShowDialog(text, "", true, true);
+            while (!(DialogInfo is null)) await Task.Delay(1);
+            return IsAccepted;
+        }
+
         public void HideDialog()
         {
+            IsAccepted = true;
             DialogInfo = null;
         }
     }
@@ -91,20 +103,28 @@ namespace TRS.TMS12
         {
             m = model;
 
-            ButtonClicked = new DelegateCommand(() =>
+            AcceptButtonClicked = new DelegateCommand(() =>
             {
-                IsVisible = false;
+                m.IsAccepted = true;
+                m.DialogInfo = null;
+            }, () => ButtonIsEnabled).ObservesProperty(() => ButtonIsEnabled);
+
+            CancelButtonClicked = new DelegateCommand(() =>
+            {
+                m.IsAccepted = false;
+                m.DialogInfo = null;
             });
 
             m.PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
             {
-                if (m.DialogInfo == null)
+                if (m.DialogInfo is null)
                 {
                     IsVisible = false;
                 }
                 else
                 {
                     ButtonIsEnabled = m.DialogInfo.ButtonIsEnabled;
+                    CancelButtonIsVisible = m.DialogInfo.CancelButtonIsVisible;
                     Text = m.DialogInfo.Text;
                     Caption = m.DialogInfo.Caption;
                     Icon = m.DialogInfo.Icon;
@@ -150,7 +170,15 @@ namespace TRS.TMS12
             set { SetProperty(ref _Icon, value); }
         }
 
-        public DelegateCommand ButtonClicked { get; set; }
+        private bool _CancelButtonIsVisible = false;
+        public bool CancelButtonIsVisible
+        {
+            get { return _CancelButtonIsVisible; }
+            set { SetProperty(ref _CancelButtonIsVisible, value); }
+        }
+
+        public DelegateCommand AcceptButtonClicked { get; set; }
+        public DelegateCommand CancelButtonClicked { get; set; }
     }
 
     /// <summary>

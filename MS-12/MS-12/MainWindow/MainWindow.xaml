@@ -15,31 +15,31 @@
         Background="{StaticResource BackgroundBrush}"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
     <Window.InputBindings>
-        <KeyBinding Gesture="Esc" Command="{Binding Path=FClicked[(local:FunctionKeys)Menu]}"/>
+        <KeyBinding Gesture="Esc" Command="{Binding Path=FClicked[(static:FunctionKeys)Menu]}"/>
 
-        <KeyBinding Gesture="F1" Command="{Binding Path=FClicked[(local:FunctionKeys)F1]}"/>
-        <KeyBinding Gesture="F2" Command="{Binding Path=FClicked[(local:FunctionKeys)F2]}"/>
-        <KeyBinding Gesture="F3" Command="{Binding Path=FClicked[(local:FunctionKeys)F3]}"/>
-        <KeyBinding Gesture="F4" Command="{Binding Path=FClicked[(local:FunctionKeys)F4]}"/>
-        <KeyBinding Gesture="F5" Command="{Binding Path=FClicked[(local:FunctionKeys)F5]}"/>
-        <KeyBinding Gesture="F6" Command="{Binding Path=FClicked[(local:FunctionKeys)F6]}"/>
-        <KeyBinding Gesture="F7" Command="{Binding Path=FClicked[(local:FunctionKeys)F7]}"/>
-        <KeyBinding Gesture="F8" Command="{Binding Path=FClicked[(local:FunctionKeys)F8]}"/>
-        <KeyBinding Gesture="F9" Command="{Binding Path=FClicked[(local:FunctionKeys)F9]}"/>
-        <KeyBinding Gesture="F10" Command="{Binding Path=FClicked[(local:FunctionKeys)F10]}"/>
-        <KeyBinding Gesture="F11" Command="{Binding Path=FClicked[(local:FunctionKeys)F11]}"/>
-        <KeyBinding Gesture="F12" Command="{Binding Path=FClicked[(local:FunctionKeys)F12]}"/>
-        <KeyBinding Gesture="F13" Command="{Binding Path=FClicked[(local:FunctionKeys)F13]}"/>
-        <KeyBinding Gesture="F14" Command="{Binding Path=FClicked[(local:FunctionKeys)F14]}"/>
-        <KeyBinding Gesture="F15" Command="{Binding Path=FClicked[(local:FunctionKeys)F15]}"/>
-        
-        <KeyBinding Gesture="Tab" Command="{Binding Path=FClicked[(local:FunctionKeys)Sell]}"/>
-        <KeyBinding Gesture="Divide" Command="{Binding Path=FClicked[(local:FunctionKeys)Reserve]}"/>
-        <KeyBinding Gesture="Multiply" Command="{Binding Path=FClicked[(local:FunctionKeys)Inquire]}"/>
+        <KeyBinding Gesture="F1" Command="{Binding Path=FClicked[(static:FunctionKeys)F1]}"/>
+        <KeyBinding Gesture="F2" Command="{Binding Path=FClicked[(static:FunctionKeys)F2]}"/>
+        <KeyBinding Gesture="F3" Command="{Binding Path=FClicked[(static:FunctionKeys)F3]}"/>
+        <KeyBinding Gesture="F4" Command="{Binding Path=FClicked[(static:FunctionKeys)F4]}"/>
+        <KeyBinding Gesture="F5" Command="{Binding Path=FClicked[(static:FunctionKeys)F5]}"/>
+        <KeyBinding Gesture="F6" Command="{Binding Path=FClicked[(static:FunctionKeys)F6]}"/>
+        <KeyBinding Gesture="F7" Command="{Binding Path=FClicked[(static:FunctionKeys)F7]}"/>
+        <KeyBinding Gesture="F8" Command="{Binding Path=FClicked[(static:FunctionKeys)F8]}"/>
+        <KeyBinding Gesture="F9" Command="{Binding Path=FClicked[(static:FunctionKeys)F9]}"/>
+        <KeyBinding Gesture="F10" Command="{Binding Path=FClicked[(static:FunctionKeys)F10]}"/>
+        <KeyBinding Gesture="F11" Command="{Binding Path=FClicked[(static:FunctionKeys)F11]}"/>
+        <KeyBinding Gesture="F12" Command="{Binding Path=FClicked[(static:FunctionKeys)F12]}"/>
+        <KeyBinding Gesture="F13" Command="{Binding Path=FClicked[(static:FunctionKeys)F13]}"/>
+        <KeyBinding Gesture="F14" Command="{Binding Path=FClicked[(static:FunctionKeys)F14]}"/>
+        <KeyBinding Gesture="F15" Command="{Binding Path=FClicked[(static:FunctionKeys)F15]}"/>
 
-        <KeyBinding Gesture="Delete" Command="{Binding Path=FClicked[(local:FunctionKeys)Hold]}"/>
-        <KeyBinding Gesture="Backspace" Command="{Binding Path=FClicked[(local:FunctionKeys)Release]}"/>
-        <KeyBinding Gesture="Enter" Command="{Binding Path=FClicked[(local:FunctionKeys)Send]}"/>
+        <KeyBinding Gesture="F16" Command="{Binding Path=FClicked[(static:FunctionKeys)Sell]}"/>
+        <KeyBinding Gesture="F17" Command="{Binding Path=FClicked[(static:FunctionKeys)Reserve]}"/>
+        <KeyBinding Gesture="F18" Command="{Binding Path=FClicked[(static:FunctionKeys)Inquire]}"/>
+
+        <KeyBinding Gesture="F19" Command="{Binding Path=FClicked[(static:FunctionKeys)Hold]}"/>
+        <KeyBinding Gesture="Esc" Command="{Binding Path=FClicked[(static:FunctionKeys)Release]}"/>
+        <KeyBinding Gesture="Enter" Command="{Binding Path=FClicked[(static:FunctionKeys)Send]}"/>
     </Window.InputBindings>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -148,80 +148,80 @@
                             <Setter Property="Template" Value="{StaticResource VeryThicklyBorderedDefToggleButton}"/>
                         </Style>
                     </Grid.Resources>
-                    <Button Grid.Column="0" Content="ﾒﾆｭｰ" FontSize="22" IsEnabled="{Binding Path=FIsEnabled[(local:FunctionKeys)Menu], Mode=TwoWay}" Command="{Binding Path=FClicked[(local:FunctionKeys)Menu]}" Template="{StaticResource VeryThicklyBorderedDefButton}"/>
+                    <Button Grid.Column="0" Content="ﾒﾆｭｰ" FontSize="22" IsEnabled="{Binding Path=FIsEnabled[(static:FunctionKeys)Menu], Mode=TwoWay}" Command="{Binding Path=FClicked[(static:FunctionKeys)Menu]}" Template="{StaticResource VeryThicklyBorderedDefButton}"/>
                     <UniformGrid Grid.Column="2" Rows="1">
-                        <ToggleButton Content="営試" IsChecked="{Binding Path=FIsChecked[(local:FunctionKeys)F1], Mode=TwoWay}">
+                        <ToggleButton Content="営試" IsChecked="{Binding Path=FIsChecked[(static:FunctionKeys)F1], Mode=TwoWay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
-                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)F1]}"/>
+                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)F1]}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="Unchecked">
-                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)F1]}"/>
+                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)F1]}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ToggleButton>
-                        <Button Content="回復" Command="{Binding Path=FClicked[(local:FunctionKeys)F2]}"/>
-                        <Button Content="切替" Command="{Binding Path=FClicked[(local:FunctionKeys)F3]}"/>
-                        <Button Content="保存" Command="{Binding Path=FClicked[(local:FunctionKeys)F4]}"/>
-                        <Button Content="開始" Command="{Binding Path=FClicked[(local:FunctionKeys)F5]}" Style="{StaticResource Red}"/>
-                        <Button Content="終了" Command="{Binding Path=FClicked[(local:FunctionKeys)F6]}" Style="{StaticResource Red}"/>
-                        <Button Content="中断" Command="{Binding Path=FClicked[(local:FunctionKeys)F7]}" Style="{StaticResource Red}"/>
-                        <Button Content="再開１" Command="{Binding Path=FClicked[(local:FunctionKeys)F8]}" Style="{StaticResource Red}"/>
-                        <Button Content="再開２" Command="{Binding Path=FClicked[(local:FunctionKeys)F9]}" Style="{StaticResource Red}"/>
-                        <Button Content="一括開始" FontSize="12" Command="{Binding Path=FClicked[(local:FunctionKeys)F10]}" Style="{StaticResource Red}"/>
-                        <Button Content="一括発券" FontSize="12" Command="{Binding Path=FClicked[(local:FunctionKeys)F11]}" Style="{StaticResource Red}"/>
-                        <Button Content="応答" Command="{Binding Path=FClicked[(local:FunctionKeys)F12]}"/>
-                        <Button Content="残消去" Command="{Binding Path=FClicked[(local:FunctionKeys)F13]}"/>
-                        <ToggleButton Content="ＩＣ" IsChecked="{Binding Path=FIsChecked[(local:FunctionKeys)F14], Mode=TwoWay}">
+                        <Button Content="回復" Command="{Binding Path=FClicked[(static:FunctionKeys)F2]}"/>
+                        <Button Content="切替" Command="{Binding Path=FClicked[(static:FunctionKeys)F3]}"/>
+                        <Button Content="保存" Command="{Binding Path=FClicked[(static:FunctionKeys)F4]}"/>
+                        <Button Content="開始" Command="{Binding Path=FClicked[(static:FunctionKeys)F5]}" Style="{StaticResource Red}"/>
+                        <Button Content="終了" Command="{Binding Path=FClicked[(static:FunctionKeys)F6]}" Style="{StaticResource Red}"/>
+                        <Button Content="中断" Command="{Binding Path=FClicked[(static:FunctionKeys)F7]}" Style="{StaticResource Red}"/>
+                        <Button Content="再開１" Command="{Binding Path=FClicked[(static:FunctionKeys)F8]}" Style="{StaticResource Red}"/>
+                        <Button Content="再開２" Command="{Binding Path=FClicked[(static:FunctionKeys)F9]}" Style="{StaticResource Red}"/>
+                        <Button Content="一括開始" FontSize="12" Command="{Binding Path=FClicked[(static:FunctionKeys)F10]}" Style="{StaticResource Red}"/>
+                        <Button Content="一括発券" FontSize="12" Command="{Binding Path=FClicked[(static:FunctionKeys)F11]}" Style="{StaticResource Red}"/>
+                        <Button Content="応答" Command="{Binding Path=FClicked[(static:FunctionKeys)F12]}"/>
+                        <Button Content="残消去" Command="{Binding Path=FClicked[(static:FunctionKeys)F13]}"/>
+                        <ToggleButton Content="ｸﾚｼﾞｯﾄ" IsChecked="{Binding Path=FIsChecked[(static:FunctionKeys)F14], Mode=TwoWay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
-                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)F14]}"/>
+                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)F14]}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="Unchecked">
-                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)F14]}"/>
+                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)F14]}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ToggleButton>
-                        <Button Content="連加算" Command="{Binding Path=FClicked[(local:FunctionKeys)F15]}"/>
+                        <Button Content="連加算" Command="{Binding Path=FClicked[(static:FunctionKeys)F15]}"/>
                     </UniformGrid>
-                    <RadioButton Grid.Column="4" Content="発売" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(local:SendingType)Sell], Mode=TwoWay}">
+                    <RadioButton Grid.Column="4" Content="発売" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(static:FunctionKeys)Sell], Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Checked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Sell]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Sell]}"/>
                             </i:EventTrigger>
                             <i:EventTrigger EventName="Unchecked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Sell]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Sell]}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RadioButton>
-                    <RadioButton Grid.Column="5" Content="予約" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(local:SendingType)Reserve], Mode=TwoWay}">
+                    <RadioButton Grid.Column="5" Content="予約" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(static:FunctionKeys)Reserve], Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Checked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Reserve]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Reserve]}"/>
                             </i:EventTrigger>
                             <i:EventTrigger EventName="Unchecked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Reserve]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Reserve]}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RadioButton>
-                    <RadioButton Grid.Column="6" Content="照会" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(local:SendingType)Inquire], Mode=TwoWay}">
+                    <RadioButton Grid.Column="6" Content="照会" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(static:FunctionKeys)Inquire], Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Checked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Inquire]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Inquire]}"/>
                             </i:EventTrigger>
                             <i:EventTrigger EventName="Unchecked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Inquire]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Inquire]}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RadioButton>
                     <Border Grid.Column="7">
-                        <ToggleButton Content="中継" IsChecked="{Binding Path=FIsChecked[(local:FunctionKeys)Relay], Mode=TwoWay}">
+                        <ToggleButton Content="中継" IsChecked="{Binding Path=FIsChecked[(static:FunctionKeys)Relay], Mode=TwoWay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
-                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Relay]}"/>
+                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Relay]}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="Unchecked">
-                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Relay]}"/>
+                                    <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Relay]}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ToggleButton>
@@ -250,23 +250,22 @@
                             <Setter Property="Template" Value="{StaticResource ThicklyBorderedDefToggleButton}"/>
                         </Style>
                     </StackPanel.Resources>
-                    <ToggleButton Content="保持" IsChecked="{Binding Path=FIsChecked[(local:FunctionKeys)Hold], Mode=TwoWay}">
+                    <ToggleButton Content="保持" IsChecked="{Binding Path=FIsChecked[(static:FunctionKeys)Hold], Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Checked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Hold]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Hold]}"/>
                             </i:EventTrigger>
                             <i:EventTrigger EventName="Unchecked">
-                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(local:FunctionKeys)Hold]}"/>
+                                <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Hold]}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ToggleButton>
-                    <Button Content="解放" Command="{Binding Path=FClicked[(local:FunctionKeys)Release]}"/>
-                    <Button Content="発信" Command="{Binding Path=FClicked[(local:FunctionKeys)Send]}"/>
+                    <Button Content="解放" Command="{Binding Path=FClicked[(static:FunctionKeys)Release]}"/>
+                    <Button Content="発信" Command="{Binding Path=FClicked[(static:FunctionKeys)Send]}"/>
                 </StackPanel>
             </Grid>
 
             <Grid Grid.Row="3">
-                <local:PowerOff x:Name="PowerOff"/>
                 <local:MainMenu x:Name="MainMenu"/>
                 <local:GroupMenu x:Name="GroupMenu"/>
                 <local:OneTouchMenu x:Name="OneTouchMenu"/>
@@ -276,7 +275,7 @@
                         <Style TargetType="Grid">
                             <Setter Property="Visibility" Value="Hidden"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=M.ShowingUserControl}" Value="Tickets">
+                                <DataTrigger Binding="{Binding Path=M.CurrentScreen}" Value="Tickets">
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>

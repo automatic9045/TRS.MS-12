@@ -142,7 +142,7 @@ namespace TRS.TMS12
             void Start()
             {
                 this.MainWindow = mainWindow;
-                MainWindow.Show();
+                mainWindow.Show();
                 splash.Close();
             }
         }

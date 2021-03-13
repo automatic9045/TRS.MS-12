@@ -29,7 +29,7 @@ using TRS.TMS12.Plugins.TRS;
 
 namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
 {
-    public class TimeNumberInquiringResultPresenterViewModel : BindableBase
+    public class TimeNumberInquirerResultPresenterViewModel : BindableBase
     {
         private PluginInfo m;
 
@@ -76,7 +76,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
         public DelegateCommand Cancel { get; private set; }
         public DelegateCommand Finish { get; private set; }
 
-        public TimeNumberInquiringResultPresenterViewModel(PluginInfo m)
+        public TimeNumberInquirerResultPresenterViewModel(PluginInfo m)
         {
             this.m = m;
             this.m.PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
@@ -154,17 +154,17 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
     /// <summary>
     /// InputField.xaml の相互作用ロジック
     /// </summary>
-    public partial class TimeNumberInquiringResultPresenter : UserControl
+    public partial class TimeNumberInquirerResultPresenter : UserControl
     {
-        public TimeNumberInquiringResultPresenterViewModel vm;
+        public TimeNumberInquirerResultPresenterViewModel vm;
 
-        public TimeNumberInquiringResultPresenter()
+        public TimeNumberInquirerResultPresenter()
         {
             InitializeComponent();
 
             DataContextChanged += new DependencyPropertyChangedEventHandler((csender, ce) =>
             {
-                vm = (TimeNumberInquiringResultPresenterViewModel)DataContext;
+                vm = (TimeNumberInquirerResultPresenterViewModel)DataContext;
 
                 vm.PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
                 {

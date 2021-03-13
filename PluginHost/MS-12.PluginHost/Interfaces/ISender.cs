@@ -58,14 +58,14 @@ namespace TRS.TMS12.Interfaces
     }
 
     /// <summary>
-    /// <see cref="ISender.ModeChanged(Mode, object)"/> で、変更通知元を判別するための列挙体です。
+    /// <see cref="ISender.OnChangeMode(Mode, object)"/> で、変更通知元を判別するための列挙体です。
     /// </summary>
     public enum Mode
     {
-        TestMode,
-        OneTimeMode,
-        SendType,
-        RelayMode,
+        Test,
+        OneTime,
+        Send,
+        Relay,
     }
 
     public class Ticket
@@ -83,16 +83,16 @@ namespace TRS.TMS12.Interfaces
     public class TicketInfo
     {
         public Ticket Ticket { get; }
-        public bool HasBeenPrinted { get; private set; } = false;
+        public bool HasPrinted { get; private set; } = false;
 
         public TicketInfo(Ticket ticket)
         {
             Ticket = ticket;
         }
 
-        public void Printed()
+        public void OnPrint()
         {
-            HasBeenPrinted = true;
+            HasPrinted = true;
         }
     }
 
@@ -195,9 +195,9 @@ namespace TRS.TMS12.Interfaces
         /// <summary>
         /// 端末のモードが変更された時に呼び出されるメソッドです。
         /// </summary>
-        /// <param name="changedMode">変更通知元の <see cref="Mode">。</param>
+        /// <param name="newMode">変更通知元の <see cref="Mode">。</param>
         /// <param name="value">変更後の値。</param>
-        void ModeChanged(Mode changedMode, object value);
+        void OnChangeMode(Mode newMode, object value);
 
         /// <summary>
         /// 発信時の処理を定義します。

@@ -44,7 +44,7 @@ namespace TRS.TMS12
     {
         public UserControlsConnector UserControlsConnector { get; set; }
         public List<ITicketPlugin> TicketPlugins { get; set; }
-        public Dictionary<UserControls, IModel> Models { get; set; }
+        public Dictionary<Screen, IModel> Models { get; set; }
         public DialogModel DialogModel { get; set; }
 
         public ObservableCollection<bool> FIsEnabled { get; set; } = new ObservableCollection<bool>()
@@ -75,9 +75,9 @@ namespace TRS.TMS12
         {
             Cancel = new DelegateCommand(() =>
             {
-                m.UserControlsConnector.SetShowingUserControl(UserControls.None);
+                m.UserControlsConnector.SetCurrentScreen(Screen.None);
                 DoEvents();
-                m.UserControlsConnector.SetShowingUserControl(UserControls.MainMenu);
+                m.UserControlsConnector.SetCurrentScreen(Screen.MainMenu);
             });
 
             NotImplemented = new DelegateCommand(() =>
@@ -106,17 +106,13 @@ namespace TRS.TMS12
                             }
                         }
 
-                        List<DelegateCommand> clicked = new List<DelegateCommand>();
-                        foreach (TicketButton c in m.CurrentGroup.Contents)
+                        List<DelegateCommand> clicked = m.CurrentGroup.Contents.ConvertAll(c => new DelegateCommand(() =>
                         {
-                            clicked.Add(new DelegateCommand(() =>
-                            {
-                                m.UserControlsConnector.SetShowingUserControl(UserControls.None);
-                                DoEvents();
-                                m.UserControlsConnector.SetCurrentTicket(c.TicketPlugin, UserControls.GroupMenu);
-                                m.UserControlsConnector.SetShowingUserControl(UserControls.Tickets);
-                            }));
-                        }
+                            m.UserControlsConnector.SetCurrentScreen(Screen.None);
+                            DoEvents();
+                            m.UserControlsConnector.SetCurrentTicket(c.TicketPlugin, Screen.GroupMenu);
+                            m.UserControlsConnector.SetCurrentScreen(Screen.Tickets);
+                        }));
 
                         Type = m.CurrentGroup.Name;
                         Contents = contents;

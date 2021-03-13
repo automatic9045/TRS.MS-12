@@ -87,7 +87,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PrinterEmulator.cs" />
     <Compile Include="EpsonTML90.cs" />
     <Compile Include="StarTSP100II.cs" />
     <Compile Include="StarTSP100I.cs" />

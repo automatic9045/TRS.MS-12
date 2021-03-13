@@ -34,7 +34,7 @@ namespace TRS.TMS12
     {
         public UserControlsConnector UserControlsConnector { get; set; }
         public List<ITicketPlugin> TicketPlugins { get; set; }
-        public Dictionary<UserControls, IModel> Models { get; set; }
+        public Dictionary<Screen, IModel> Models { get; set; }
         public DialogModel DialogModel { get; set; }
 
         public ObservableCollection<bool> FIsEnabled { get; set; } = new ObservableCollection<bool>()
@@ -71,33 +71,31 @@ namespace TRS.TMS12
         {
             ShortcutCommand = new DelegateCommand<string>(param =>
             {
-                m.UserControlsConnector.SetShowingUserControl(UserControls.None);
+                m.UserControlsConnector.SetCurrentScreen(Screen.None);
                 DoEvents();
 
                 TicketButton button = m.Groups[m.CurrentGroup].Shortcuts[int.Parse(param)];
-                m.UserControlsConnector.SetCurrentTicket(button.TicketPlugin, UserControls.OneTouchMenu, button.Command);
+                m.UserControlsConnector.SetCurrentTicket(button.TicketPlugin, Screen.OneTouchMenu, button.Command);
 
-                m.UserControlsConnector.SetShowingUserControl(UserControls.Tickets);
+                m.UserControlsConnector.SetCurrentScreen(Screen.Tickets);
             });
 
             Command = new DelegateCommand<string>(param =>
             {
-                m.UserControlsConnector.SetShowingUserControl(UserControls.None);
+                m.UserControlsConnector.SetCurrentScreen(Screen.None);
                 DoEvents();
 
                 TicketButton button = m.Groups[m.CurrentGroup].Pages[m.CurrentPage].Buttons[int.Parse(param)];
-                m.UserControlsConnector.SetCurrentTicket(button.TicketPlugin, UserControls.OneTouchMenu, button.Command);
+                m.UserControlsConnector.SetCurrentTicket(button.TicketPlugin, Screen.OneTouchMenu, button.Command);
 
-                m.UserControlsConnector.SetShowingUserControl(UserControls.Tickets);
+                m.UserControlsConnector.SetCurrentScreen(Screen.Tickets);
             });
 
             Previous = new DelegateCommand(() => m.CurrentPage--);
-
             Next = new DelegateCommand(() => m.CurrentPage++);
 
-            GroupChanged = new DelegateCommand<string>(param => UpdateGroup(int.Parse(param)));
-
-            PageChanged = new DelegateCommand<string>(param => UpdatePage(int.Parse(param)));
+            GroupChanged = new DelegateCommand<string>(i => UpdateGroup(int.Parse(i)));
+            PageChanged = new DelegateCommand<string>(i => UpdatePage(int.Parse(i)));
         }
 
         private void ModelSet()
@@ -151,16 +149,15 @@ namespace TRS.TMS12
         private void UpdatePage(int index)
         {
             m.CurrentPage = index;
-            List<TicketButton> keys = m.Groups[m.CurrentGroup].Pages[index].Buttons;
-            Keys = keys.ConvertAll(k => k.TypeName);
-            IsNotLast = m.CurrentPage <= m.Groups[m.CurrentGroup].Pages.FindIndex(p => p.Name == "");
+            Keys = m.Groups[m.CurrentGroup].Pages[index].Buttons.ConvertAll(k => k.TypeName);
+            IsNotLast = m.CurrentPage + 1 < PageNames.IndexOf("");
             IsNotFirst = 0 < m.CurrentPage;
         }
 
         private OneTouchMenuModel m;
         public IModel Model
         {
-            get { return m; }
+            get => m;
             set
             {
                 m = (OneTouchMenuModel)value;

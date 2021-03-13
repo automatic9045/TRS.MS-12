@@ -13,6 +13,6 @@
             <r:KeyControl x:Name="Base"/>
         </ContentControl>
         <local:TimeNumberInquirer DataContext="{Binding TimeNumberInquirerVM}"/>
-        <local:TimeNumberInquiringResultPresenter DataContext="{Binding TimeNumberInquiringResultPresenterVM}"/>
+        <local:TimeNumberInquirerResultPresenter DataContext="{Binding TimeNumberInquiringResultPresenterVM}"/>
     </Grid>
 </UserControl>

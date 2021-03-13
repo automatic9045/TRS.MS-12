@@ -20,6 +20,7 @@ using Prism.Commands;
 
 using Gayak.Collections;
 
+using TRS.TMS12.Static;
 using TRS.TMS12.Interfaces;
 
 namespace TRS.TMS12
@@ -30,7 +31,7 @@ namespace TRS.TMS12
         public ResultControlViewModel ResultControlViewModel { get; set; }
         public ResultControlViewModel FullScreenResultControlViewModel { get; set; }
 
-        public Dictionary<UserControls, IViewModel> ViewModels { get; set; }
+        public Dictionary<Screen, IViewModel> ViewModels { get; set; }
 
         private bool _MainGridIsEnabled = true;
         public bool MainGridIsEnabled
@@ -82,11 +83,11 @@ namespace TRS.TMS12
             { FunctionKeys.Hold, false },
         };
 
-        public ObservableDictionary<SendingType, bool> SendTypeButtonsIsChecked { get; private set; } = new ObservableDictionary<SendingType, bool>()
+        public ObservableDictionary<SendTypes, bool> SendTypeButtonsIsChecked { get; private set; } = new ObservableDictionary<SendTypes, bool>()
         {
-            { SendingType.Sell, false },
-            { SendingType.Reserve, false },
-            { SendingType.Inquire, false },
+            { SendTypes.Sell, false },
+            { SendTypes.Reserve, false },
+            { SendTypes.Inquire, false },
         };
 
         public ObservableCollection<SolidColorBrush> StepColors { get; private set; }
@@ -133,10 +134,7 @@ namespace TRS.TMS12
             set { SetProperty(ref _LogBox4, value); }
         }
 
-
-        public DelegateCommand Loaded { get; set; }
-
-        public DelegateCommand ShowVersionDialog { get; set; }
+        public DelegateCommand ShowVersionDialog { get; }
 
         private Dictionary<FunctionKeys, DelegateCommand> _FClicked = new Dictionary<FunctionKeys, DelegateCommand>();
         public Dictionary<FunctionKeys, DelegateCommand> FClicked

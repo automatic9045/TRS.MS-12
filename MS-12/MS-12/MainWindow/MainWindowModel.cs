@@ -22,6 +22,7 @@ using Prism.Commands;
 using Gayak.Collections;
 
 using TRS.TMS12.Interfaces;
+using TRS.TMS12.Static;
 using static TRS.TMS12.Static.App;
 
 namespace TRS.TMS12
@@ -30,12 +31,12 @@ namespace TRS.TMS12
     {
         private MainWindowModel mainWindowModel;
 
-        public void SetShowingUserControl(UserControls control)
+        public void SetCurrentScreen(Screen screen)
         {
-            mainWindowModel.ShowingUserControl = control;
+            mainWindowModel.CurrentScreen = screen;
         }
 
-        public void SetCurrentTicket(ITicketPlugin ticket, UserControls from, string option = "")
+        public void SetCurrentTicket(ITicketPlugin ticket, Screen from, string option = "")
         {
             mainWindowModel.OriginMenu = from;
             mainWindowModel.CurrentTicket = ticket;
@@ -64,7 +65,7 @@ namespace TRS.TMS12
         public DialogModel DialogModel { get; private set; } = new DialogModel();
         public ResultControlModel ResultControlModel { get; private set; } = new ResultControlModel();
         public ResultControlModel FullScreenResultControlModel { get; private set; } = new ResultControlModel();
-        public Dictionary<UserControls, IModel> Models { get; private set; }
+        public Dictionary<Screen, IModel> Models { get; private set; }
 
         public PluginsInfo Plugins { get; private set; }
 
@@ -89,28 +90,24 @@ namespace TRS.TMS12
             set
             {
                 SetProperty(ref _IsOneTimeMode, value);
-                if (IsOneTimeMode)
-                {
-                    Tickets.Add(null);
-                }
             }
         }
 
-        private SendingType? _SendType = null;
-        public SendingType? SendType
+        private SendTypes? _SendType = null;
+        public SendTypes? SendType
         {
             get => _SendType;
             set => SetProperty(ref _SendType, value);
         }
 
-        private UserControls _ShowingUserControl = UserControls.None;
-        public UserControls ShowingUserControl
+        private Screen _CurrentScreen = Screen.None;
+        public Screen CurrentScreen
         {
-            get { return _ShowingUserControl; }
+            get { return _CurrentScreen; }
             set
             {
-                if (value != UserControls.None && value != UserControls.Tickets) Models[value].BeforeShown();
-                SetProperty(ref _ShowingUserControl, value);
+                if (value != Screen.None && value != Screen.Tickets) Models[value].BeforeShown();
+                SetProperty(ref _CurrentScreen, value);
             }
         }
 
@@ -122,10 +119,10 @@ namespace TRS.TMS12
             {
                 SetProperty(ref _CurrentTicket, value);
                 
-                CurrentTicket.Sender.ModeChanged(Mode.TestMode, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
-                CurrentTicket.Sender.ModeChanged(Mode.OneTimeMode, IsOneTimeMode);
-                CurrentTicket.Sender.ModeChanged(Mode.SendType, (int?)SendType);
-                CurrentTicket.Sender.ModeChanged(Mode.RelayMode, FunctionKeyToggleButtonsIsChecked[FunctionKeys.Relay]);
+                CurrentTicket.Sender.OnChangeMode(Mode.Test, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
+                CurrentTicket.Sender.OnChangeMode(Mode.OneTime, IsOneTimeMode);
+                CurrentTicket.Sender.OnChangeMode(Mode.Send, (int?)SendType);
+                CurrentTicket.Sender.OnChangeMode(Mode.Relay, FunctionKeyToggleButtonsIsChecked[FunctionKeys.Relay]);
 
                 PluginHost.CurrentTicketChanged();
             }
@@ -142,7 +139,7 @@ namespace TRS.TMS12
             }
         }
 
-        public UserControls OriginMenu { get; set; }
+        public Screen OriginMenu { get; set; }
 
 
         public MainWindowModel(AppConnector appConnector)
@@ -194,14 +191,13 @@ namespace TRS.TMS12
 
             
             AppConnector.ChangeProgressStatus("ページを読み込んでいます", Progress.LoadingPages);
-            Models = new Dictionary<UserControls, IModel>()
+            Models = new Dictionary<Screen, IModel>()
             {
-                { UserControls.PowerOff, new PowerOffModel() },
-                { UserControls.MainMenu, new MainMenuModel() },
-                { UserControls.GroupMenu, new GroupMenuModel() },
-                { UserControls.OneTouchMenu, new OneTouchMenuModel() },
+                { Screen.MainMenu, new MainMenuModel() },
+                { Screen.GroupMenu, new GroupMenuModel() },
+                { Screen.OneTouchMenu, new OneTouchMenuModel() },
             };
-            foreach (KeyValuePair<UserControls, IModel> p in Models)
+            foreach (KeyValuePair<Screen, IModel> p in Models)
             {
                 IModel model = p.Value;
                 model.UserControlsConnector = UserControlsConnector;
@@ -219,14 +215,14 @@ namespace TRS.TMS12
         public void Loaded()
         {
             AppConnector.ChangeProgressStatus("メインメニュー・券種メニューのレイアウトを構築しています\n\n　初期化中", Progress.LoadingMainMenuAndGroupMenuLayout);
-            ((MainMenuModel)Models[UserControls.MainMenu]).LoadFromFile(AppConnector.MainMenuLayoutSourcePath,
+            ((MainMenuModel)Models[Screen.MainMenu]).LoadFromFile(AppConnector.MainMenuLayoutSourcePath,
                 message => AppConnector.ChangeProgressStatus("メインメニュー・券種メニューのレイアウトを構築しています\n\n　" + message));
 
             AppConnector.ChangeProgressStatus("ワンタッチメニューのレイアウトを構築しています", Progress.LoadingOneTouchMenuLayout);
-            ((OneTouchMenuModel)Models[UserControls.OneTouchMenu]).LoadFromFile(AppConnector.OneTouchMenuLayoutSourcePath);
+            ((OneTouchMenuModel)Models[Screen.OneTouchMenu]).LoadFromFile(AppConnector.OneTouchMenuLayoutSourcePath);
 
             AppConnector.ChangeProgressStatus("ウィンドウを表示しています", Progress.PreparingToDisplay);
-            ShowingUserControl = UserControls.PowerOff;
+            CurrentScreen = Screen.MainMenu;
         }
     }
 }

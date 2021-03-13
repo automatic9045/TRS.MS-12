@@ -144,7 +144,10 @@
     <Compile Include="Interfaces\ITicketPlugin.cs" />
     <Compile Include="Interfaces\IPrinterPlugin.cs" />
     <Compile Include="Interfaces\ITicketPluginExtension.cs" />
-    <Compile Include="Static.cs" />
+    <Compile Include="Static\EnumExtension.cs" />
+    <Compile Include="Static\LinqExtension.cs" />
+    <Compile Include="Static\App.cs" />
+    <Compile Include="Static\FunctionKeys.cs" />
     <Compile Include="Interfaces\IDialog.cs" />
     <Compile Include="Interfaces\IPluginHost.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />

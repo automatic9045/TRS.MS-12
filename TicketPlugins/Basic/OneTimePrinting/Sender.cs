@@ -32,7 +32,7 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
             this.m = m;
         }
 
-        public void ModeChanged(Mode mode, object value)
+        public void OnChangeMode(Mode newMode, object value)
         {
 
         }
