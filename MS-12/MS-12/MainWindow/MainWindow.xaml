@@ -184,7 +184,7 @@
                         </ToggleButton>
                         <Button Content="連加算" Command="{Binding Path=FClicked[(static:FunctionKeys)F15]}"/>
                     </UniformGrid>
-                    <RadioButton Grid.Column="4" Content="発売" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(static:FunctionKeys)Sell], Mode=TwoWay}">
+                    <RadioButton Grid.Column="4" Content="発売" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(interface:SendTypes)Sell], Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Checked">
                                 <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Sell]}"/>
@@ -194,7 +194,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RadioButton>
-                    <RadioButton Grid.Column="5" Content="予約" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(static:FunctionKeys)Reserve], Mode=TwoWay}">
+                    <RadioButton Grid.Column="5" Content="予約" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(interface:SendTypes)Reserve], Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Checked">
                                 <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Reserve]}"/>
@@ -204,7 +204,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RadioButton>
-                    <RadioButton Grid.Column="6" Content="照会" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(static:FunctionKeys)Inquire], Mode=TwoWay}">
+                    <RadioButton Grid.Column="6" Content="照会" GroupName="SellType" IsChecked="{Binding Path=SendTypeButtonsIsChecked[(interface:SendTypes)Inquire], Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Checked">
                                 <prism:InvokeCommandAction Command="{Binding Path=FClicked[(static:FunctionKeys)Inquire]}"/>
