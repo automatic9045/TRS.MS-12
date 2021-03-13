@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
@@ -139,11 +139,31 @@ namespace TRS.TMS12
             }
 
 
-            void Start()
+            async void Start()
             {
                 this.MainWindow = mainWindow;
                 mainWindow.Show();
                 splash.Close();
+
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        string latestVersion = await client.GetStringAsync("https://script.google.com/macros/s/AKfycbxXOLf46ZjE9WDUC4xQYn2itPOrKA5Qr3_uPWqcpWU9AFJr7QGgkF-KQQAYlu0kRvGX/exec");
+                        if (latestVersion == ProductVersion)
+                        {
+                            MainWindowVM.M.DialogModel.ShowInformationDialog($"ご利用のバージョンは最新です。\n\nご利用のバージョン：　Version {ProductVersion}\n最新のバージョン　：　Version {latestVersion}");
+                        }
+                        else
+                        {
+                            MainWindowVM.M.DialogModel.ShowInformationDialog($"新しいバージョンがリリースされています。\n\nご利用のバージョン：　Version {ProductVersion}\n最新のバージョン　：　Version {latestVersion}");
+                        }
+                    }
+                }
+                catch
+                {
+                    MainWindowVM.M.DialogModel.ShowInformationDialog($"ご利用のバージョンが最新であるか確認出来ませんでした。\n\nご利用のバージョン：　Version {ProductVersion}\n最新のバージョン　：　不明");
+                }
             }
         }
 
