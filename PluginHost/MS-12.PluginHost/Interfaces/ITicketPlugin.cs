@@ -56,6 +56,6 @@ namespace TRS.TMS12.Interfaces
         /// <summary>
         /// 残消去ボタンを押したときに呼び出されるメソッドです。要求画面の、現在のフォーカス位置を含む以降の入力内容を消去します。
         /// </summary>
-        void ClearFocusedAndLater();
+        void ClearFocusedAndAfter();
     }
 }

@@ -73,7 +73,7 @@ namespace TRS.TMS12.Static
         /// </summary>
         F13,
         /// <summary>
-        /// ＩＣ
+        /// ｸﾚｼﾞｯﾄ
         /// </summary>
         F14,
         /// <summary>
@@ -110,56 +110,5 @@ namespace TRS.TMS12.Static
         /// 発信
         /// </summary>
         Send,
-    }
-
-    public class EnumDisplayNameAttribute : Attribute
-    {
-        public string Name { get; set; }
-        public EnumDisplayNameAttribute(string name)
-        {
-            Name = name;
-        }
-    }
-
-    public static class EnumExtension
-    {
-        public static string GetEnumDisplayName<T>(this T enumValue)
-        {
-            var field = typeof(T).GetField(enumValue.ToString());
-            return ((EnumDisplayNameAttribute)Attribute.GetCustomAttribute(field, typeof(EnumDisplayNameAttribute))).Name;
-        }
-    }
-
-    public static class App
-    {
-        private static FileVersionInfo FileVersionInfo { get; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
-        public static string ProductVersion { get; } = FileVersionInfo.ProductVersion;
-        public static string Copyright { get; } = FileVersionInfo.LegalCopyright;
-        public static string TicketPluginsNamespace { get; } = "TRS.TMS12.TicketPlugins.";
-        public static string PrinterPluginsNamespace { get; } = "TRS.TMS12.PrinterPlugins.";
-        public static string AppDirectory { get; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-        public static void DoEvents()
-        {
-            DispatcherFrame frame = new DispatcherFrame();
-            var callback = new DispatcherOperationCallback(obj =>
-            {
-                ((DispatcherFrame)obj).Continue = false;
-                return null;
-            });
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, callback, frame);
-            Dispatcher.PushFrame(frame);
-        }
-
-        public static int WideStringToInt(string wideString)
-        {
-            int number = 0;
-            try
-            {
-                number = int.Parse("0" + Strings.StrConv(wideString, VbStrConv.Narrow));
-            }
-            catch { }
-            return number;
-        }
     }
 }

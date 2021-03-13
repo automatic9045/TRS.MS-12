@@ -28,7 +28,7 @@ namespace TRS.TMS12
     {
         UserControlsConnector UserControlsConnector { get; set; }
         List<ITicketPlugin> TicketPlugins { get; set; }
-        Dictionary<UserControls, IModel> Models { get; set; }
+        Dictionary<Screen, IModel> Models { get; set; }
         DialogModel DialogModel { get; set; }
 
         ObservableCollection<bool> FIsEnabled { get; set; }

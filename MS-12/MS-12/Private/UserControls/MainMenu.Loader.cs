@@ -224,17 +224,17 @@ namespace TRS.TMS12
                             TypicalTicket = typicalTicketPlugin,
                             Command = new DelegateCommand(() =>
                             {
-                                UserControlsConnector.SetShowingUserControl(UserControls.None);
+                                UserControlsConnector.SetCurrentScreen(Screen.None);
                                 DoEvents();
-                                UserControlsConnector.SetCurrentTicket(typicalTicketPlugin, UserControls.MainMenu);
-                                UserControlsConnector.SetShowingUserControl(UserControls.Tickets);
+                                UserControlsConnector.SetCurrentTicket(typicalTicketPlugin, Screen.MainMenu);
+                                UserControlsConnector.SetCurrentScreen(Screen.Tickets);
                             }),
                             OpenTabCommand = new DelegateCommand(() =>
                             {
-                                UserControlsConnector.SetShowingUserControl(UserControls.None);
+                                UserControlsConnector.SetCurrentScreen(Screen.None);
                                 DoEvents();
-                                ((GroupMenuModel)Models[UserControls.GroupMenu]).CurrentGroup = new TicketGroup(ticketGroupName, tickets);
-                                UserControlsConnector.SetShowingUserControl(UserControls.GroupMenu);
+                                ((GroupMenuModel)Models[Screen.GroupMenu]).CurrentGroup = new TicketGroup(ticketGroupName, tickets);
+                                UserControlsConnector.SetCurrentScreen(Screen.GroupMenu);
                             }),
                         });
 

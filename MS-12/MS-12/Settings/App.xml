@@ -2,6 +2,6 @@
 <ApplicationSettings>
 	<CatchUnobservedExceptions Enabled="true"/>
 	<ShowNotImplementedDialog Enabled="true"/>
-	<Printer Class="TRS.PrinterEmulator" Name="PrinterEmulator"/>
+	<Printer Class="Basic.PrinterEmulator" Name="PrinterEmulator"/>
 	<Printer Class="TRS.StarTSP100I" Name="Star TSP143GT Cutter"/>
 </ApplicationSettings>

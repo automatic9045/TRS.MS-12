@@ -147,13 +147,14 @@ namespace TRS.TMS12
 
         public void ChangeSendType(SendTypes? sendType)
         {
-            mainWindowModel.SendType = (SendingType?)sendType;
+            mainWindowModel.SendType = sendType;
         }
 
         public void GoToSideMenu()
         {
-            mainWindowModel.ShowingUserControl = UserControls.None;
+            mainWindowModel.CurrentScreen = Screen.None;
             DoEvents();
+            mainWindowModel.CurrentScreen = Screen.GroupMenu;
         }
     }
 }

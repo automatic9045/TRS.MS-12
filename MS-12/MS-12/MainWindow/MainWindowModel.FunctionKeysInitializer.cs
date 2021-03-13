@@ -23,6 +23,7 @@ using Prism.Commands;
 using Gayak.Collections;
 
 using TRS.TMS12.Interfaces;
+using TRS.TMS12.Static;
 using static TRS.TMS12.Static.App;
 
 namespace TRS.TMS12
@@ -41,13 +42,12 @@ namespace TRS.TMS12
 
                 { FunctionKeys.F1, CreateObserveDelegateCommand(() =>
                 {
-                    if (FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]) DialogModel.ShowErrorDialog("テスト");
+
                 }, () => CanExecute(FunctionKeys.F1)) },
 
                 { FunctionKeys.F2, CreateObserveDelegateCommand(() =>
                 {
-                    List<TicketInfo> notPrintedTickets = new List<TicketInfo>();
-                    PluginHost.Tickets.ConvertAll(t => t.FindAll(t => !t.HasBeenPrinted)).ForEach(t => notPrintedTickets.AddRange(t));
+                    List<TicketInfo> notPrintedTickets = PluginHost.Tickets.SelectMany(t => t).Where(t => !t.HasPrinted).ToList();
 
                     if (notPrintedTickets.Count == 0)
                     {
@@ -62,14 +62,14 @@ namespace TRS.TMS12
                         {
                             CurrentPrinter.Print(notPrintedTickets.ConvertAll(t => t.Ticket), i =>
                             {
-                                notPrintedTickets[i].Printed();
-                                DialogModel.ShowInformationDialog("再製中\n\n（" + i.ToString() + "／" + notPrintedTickets.Count + "）", false);
+                                notPrintedTickets[i].OnPrint();
+                                DialogModel.ShowInformationDialog($"再製中\n\n（{i}／{notPrintedTickets.Count}）", false);
                                 DoEvents();
-                            }, (ex, i) => DialogModel.ShowErrorDialog("印刷時にエラーが発生しました。\n\n\n詳細：\n\n" + ex.ToString()));
+                            }, (ex, i) => DialogModel.ShowErrorDialog($"印刷時にエラーが発生しました。\n\n\n詳細：\n\n{ex}"));
                         }
                         catch (Exception ex)
                         {
-                            DialogModel.ShowErrorDialog("プリンターの呼び出しに失敗しました。\n\n\n詳細：\n\n" + ex.ToString());
+                            DialogModel.ShowErrorDialog($"プリンターの呼び出しに失敗しました。\n\n\n詳細：\n\n{ex}");
                         }
 
                         DialogModel.HideDialog();
@@ -78,7 +78,7 @@ namespace TRS.TMS12
 
                 { FunctionKeys.F3, CreateObserveDelegateCommand(() =>
                 {
-                    DialogModel.ShowErrorDialog("テスト");
+
                 }, () => CanExecute(FunctionKeys.F3)) },
 
                 { FunctionKeys.F4, CreateObserveDelegateCommand(() =>
@@ -114,55 +114,55 @@ namespace TRS.TMS12
                 { FunctionKeys.F10, CreateObserveDelegateCommand(() =>
                 {
                     IsOneTimeMode = true;
-                }, () => CanExecute(FunctionKeys.F10)) },
+                }, () => (CanExecute(FunctionKeys.F10)) && !IsOneTimeMode).ObservesProperty(() => IsOneTimeMode) },
 
                 { FunctionKeys.F11, CreateObserveDelegateCommand(() =>
                 {
-                    ShowingUserControl = UserControls.None;
+                    CurrentScreen = Screen.None;
                     ResultControlModel.Hide();
                     FullScreenResultControlModel.Hide();
                     DoEvents();
 
-                    UserControls menuOrigin;
+                    Screen originMenu;
                     switch (OriginMenu)
                     {
-                        case UserControls.MainMenu:
-                        case UserControls.GroupMenu:
-                            menuOrigin = UserControls.MainMenu;
+                        case Screen.MainMenu:
+                        case Screen.GroupMenu:
+                            originMenu = Screen.MainMenu;
                             break;
 
-                        case UserControls.OneTouchMenu:
-                            menuOrigin = UserControls.OneTouchMenu;
+                        case Screen.OneTouchMenu:
+                            originMenu = Screen.OneTouchMenu;
                             break;
 
                         default:
-                            menuOrigin = UserControls.MainMenu;
+                            originMenu = Screen.MainMenu;
                             break;
                     }
 
-                    UserControlsConnector.SetCurrentTicket(Plugins.TicketPlugins.Find(t => t.Plugin.TicketName == "一括発券").Plugin, menuOrigin);
+                    UserControlsConnector.SetCurrentTicket(Plugins.TicketPlugins.Find(t => t.Plugin.TicketName == "一括発券").Plugin, originMenu);
 
-                    ShowingUserControl = UserControls.Tickets;
+                    CurrentScreen = Screen.Tickets;
                 }, () => CanExecute(FunctionKeys.F11)) },
 
                 { FunctionKeys.F12, CreateObserveDelegateCommand(() =>
                 {
-
+                    DialogModel.ShowNotImplementedDialog("応答", true);
                 }, () => CanExecute(FunctionKeys.F12)) },
 
                 { FunctionKeys.F13, CreateObserveDelegateCommand(() =>
                 {
-                    CurrentTicket.ClearFocusedAndLater();
+                    CurrentTicket.ClearFocusedAndAfter();
                 }, () => CanExecute(FunctionKeys.F13)) },
 
                 { FunctionKeys.F14, CreateObserveDelegateCommand(() =>
                 {
-                    if (FunctionKeyToggleButtonsIsChecked[FunctionKeys.F14]) DialogModel.ShowErrorDialog("テスト");
+                    DialogModel.ShowNotImplementedDialog("クレジット", false);
                 }, () => CanExecute(FunctionKeys.F14)) },
 
                 { FunctionKeys.F15, CreateObserveDelegateCommand(() =>
                 {
-                    DialogModel.ShowNotImplementedDialog("連続加算");
+                    DialogModel.ShowNotImplementedDialog("連続加算", false);
                 }, () => CanExecute(FunctionKeys.F15)) },
 
 
@@ -194,15 +194,15 @@ namespace TRS.TMS12
 
                 { FunctionKeys.Release, CreateObserveDelegateCommand(() =>
                 {
-                    switch (ShowingUserControl)
+                    switch (CurrentScreen)
                     {
-                        case UserControls.GroupMenu:
-                        case UserControls.OneTouchMenu:
-                            ShowingUserControl = UserControls.None;
+                        case Screen.GroupMenu:
+                        case Screen.OneTouchMenu:
+                            CurrentScreen = Screen.None;
                             DoEvents();
-                            ShowingUserControl = UserControls.MainMenu;
+                            CurrentScreen = Screen.MainMenu;
                             break;
-                        case UserControls.Tickets:
+                        case Screen.Tickets:
                             if ((ResultControlModel.IsVisible || FullScreenResultControlModel.IsVisible) && FunctionKeyToggleButtonsIsChecked[FunctionKeys.Hold])
                             {
                                 ResultControlModel.Hide();
@@ -210,11 +210,11 @@ namespace TRS.TMS12
                             }
                             else
                             {
-                                ShowingUserControl = UserControls.None;
+                                CurrentScreen = Screen.None;
                                 DoEvents();
                                 ResultControlModel.Hide();
                                 FullScreenResultControlModel.Hide();
-                                ShowingUserControl = OriginMenu;
+                                CurrentScreen = OriginMenu;
                             }
                             break;
                         default:
@@ -225,11 +225,11 @@ namespace TRS.TMS12
 
                 { FunctionKeys.Send, CreateObserveDelegateCommand(async () =>
                 {
-                    if (ShowingUserControl == UserControls.Tickets && CurrentTicket != null)
+                    if (CurrentScreen == Screen.Tickets && !(CurrentTicket is null))
                     {
                         IsTicketSending = true;
 
-                        if (SendType == SendingType.Reserve && !IsOneTimeMode) IsOneTimeMode = true;
+                        if (SendType == SendTypes.Reserve && !IsOneTimeMode) IsOneTimeMode = true;
 
                         SendResult result = await Task.Run(() => CurrentTicket.Sender.Send());
                         if (result.IsFullScreen)
@@ -243,28 +243,28 @@ namespace TRS.TMS12
                         DoEvents();
 
                         IssuableSendResult issuableResult = result as IssuableSendResult;
-                        if (issuableResult != null)
+                        if (!(issuableResult is null))
                         {
                             List<Ticket> tickets = await Task.Run(issuableResult.CreateTicketsMethod);
                             switch (SendType)
                             {
-                                case SendingType.Reserve:
+                                case SendTypes.Reserve:
                                     PluginHost.ReservedTickets.AddRange(tickets);
                                     break;
 
-                                case SendingType.Sell:
+                                case SendTypes.Sell:
                                     List<TicketInfo> ticketInfos = tickets.ConvertAll(t => new TicketInfo(t));
                                     PluginHost.Tickets.Add(ticketInfos);   
                                     try
                                     {
                                         CurrentPrinter.Print(tickets, i =>
                                         {
-                                            ticketInfos[i].Printed();
-                                        }, (ex, i) => DialogModel.ShowErrorDialog("印刷時にエラーが発生しました。\n\n\n詳細：\n\n" + ex.ToString()));
+                                            ticketInfos[i].OnPrint();
+                                        }, (ex, i) => DialogModel.ShowErrorDialog($"印刷時にエラーが発生しました。\n\n\n詳細：{ex}"));
                                     }
                                     catch (Exception ex)
                                     {
-                                        DialogModel.ShowErrorDialog("プリンターの呼び出しに失敗しました。\n\n\n詳細：\n\n" + ex.ToString());
+                                        DialogModel.ShowErrorDialog($"プリンターの呼び出しに失敗しました。\n\n\n詳細：\n\n{ex}");
                                     }
                                     break;
                             }
@@ -276,12 +276,12 @@ namespace TRS.TMS12
 
             FunctionKeyToggleButtonsIsChecked.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
             {
-                if (ShowingUserControl == UserControls.Tickets && CurrentTicket != null)
+                if (CurrentScreen == Screen.Tickets && CurrentTicket != null)
                 {
                     switch ((FunctionKeys)e.NewStartingIndex)
                     {
                         case FunctionKeys.F1:
-                            CurrentTicket.Sender.ModeChanged(Mode.TestMode, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
+                            CurrentTicket.Sender.OnChangeMode(Mode.Test, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
                             break;
 
                         case FunctionKeys.F14:
@@ -289,7 +289,7 @@ namespace TRS.TMS12
                             break;
 
                         case FunctionKeys.Relay:
-                            CurrentTicket.Sender.ModeChanged(Mode.RelayMode, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F14]);
+                            CurrentTicket.Sender.OnChangeMode(Mode.Relay, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F14]);
                             break;
                     }
                 }
@@ -297,9 +297,9 @@ namespace TRS.TMS12
 
             PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
             {
-                if (ShowingUserControl == UserControls.Tickets && CurrentTicket != null && e.PropertyName == nameof(SendType))
+                if (CurrentScreen == Screen.Tickets && CurrentTicket != null && e.PropertyName == nameof(SendType))
                 {
-                    CurrentTicket.Sender.ModeChanged(Mode.SendType, (int?)SendType);
+                    CurrentTicket.Sender.OnChangeMode(Mode.Send, (int?)SendType);
                 }
             });
 
@@ -311,27 +311,27 @@ namespace TRS.TMS12
                 });
             }
 
-            foreach (KeyValuePair<UserControls, IModel> model in Models)
+            Models.Values.ForEach(m =>
             {
-                model.Value.FIsEnabled.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
+                m.FIsEnabled.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
                 {
                     FunctionKeyCommands[FunctionKeys.Send].RaiseCanExecuteChanged();
                 });
-            }
+            });
         }
 
         private bool CanExecute(FunctionKeys key)
         {
-            switch (ShowingUserControl)
+            switch (CurrentScreen)
             {
-                case UserControls.None:
+                case Screen.None:
                     return false;
 
-                case UserControls.Tickets:
+                case Screen.Tickets:
                     return CurrentTicket.FunctionKeysIsEnabled[(int)key];
 
                 default:
-                    return Models[ShowingUserControl].FIsEnabled[(int)key];
+                    return Models[CurrentScreen].FIsEnabled[(int)key];
             }
         }
 
@@ -339,7 +339,7 @@ namespace TRS.TMS12
         {
             return new DelegateCommand(executeMethod, canExecuteMethod)
                 .ObservesProperty(() => CurrentTicket)
-                .ObservesProperty(() => ShowingUserControl);
+                .ObservesProperty(() => CurrentScreen);
         }
     }
 }

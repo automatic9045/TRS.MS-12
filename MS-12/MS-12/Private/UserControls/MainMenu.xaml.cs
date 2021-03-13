@@ -36,7 +36,7 @@ namespace TRS.TMS12
     {
         public UserControlsConnector UserControlsConnector { get; set; }
         public List<ITicketPlugin> TicketPlugins { get; set; }
-        public Dictionary<UserControls, IModel> Models { get; set; }
+        public Dictionary<Screen, IModel> Models { get; set; }
         public DialogModel DialogModel { get; set; }
 
         public ObservableCollection<bool> FIsEnabled { get; set; } = new ObservableCollection<bool>()
@@ -58,9 +58,9 @@ namespace TRS.TMS12
         {
             OneTouchClicked = new DelegateCommand(() =>
             {
-                m.UserControlsConnector.SetShowingUserControl(UserControls.None);
+                m.UserControlsConnector.SetCurrentScreen(Screen.None);
                 DoEvents();
-                m.UserControlsConnector.SetShowingUserControl(UserControls.OneTouchMenu);
+                m.UserControlsConnector.SetCurrentScreen(Screen.OneTouchMenu);
             });
 
             MaintenanceClicked = new DelegateCommand(() =>
@@ -68,11 +68,12 @@ namespace TRS.TMS12
 
             });
 
-            PowerOffClicked = new DelegateCommand(() =>
+            PowerOffClicked = new DelegateCommand(async () =>
             {
-                m.UserControlsConnector.SetShowingUserControl(UserControls.None);
-                DoEvents();
-                m.UserControlsConnector.SetShowingUserControl(UserControls.PowerOff);
+                if (await m.DialogModel.ShowConfirmDialogAsync("ソフトウェアを終了します。\nよろしいですか？"))
+                {
+                    Application.Current.Shutdown();
+                }
             });
         }
 

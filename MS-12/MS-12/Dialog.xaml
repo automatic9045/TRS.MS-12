@@ -8,10 +8,9 @@
              Width="800" Height="400">
     <UserControl.Style>
         <Style TargetType="UserControl">
-            <Setter Property="Visibility" Value="Hidden"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                    <Setter Property="Visibility" Value="Visible"/>
+                <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                    <Setter Property="Visibility" Value="Hidden"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -47,7 +46,20 @@
                     <TextBlock Margin="30,15" Text="{Binding Text, Mode=TwoWay}" TextWrapping="Wrap" FontSize="20" FontFamily="MS Gothic"/>
                 </ScrollViewer>
             </Border>
-            <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="30,15" Width="160" Height="40" Content="確認" FontSize="16" FontWeight="Bold" Command="{Binding ButtonClicked}"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="30,15">
+                <Button Margin="0,0,10,0" Width="160" Height="40" Content="中止" FontSize="16" FontWeight="Bold" Command="{Binding CancelButtonClicked}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CancelButtonIsVisible}" Value="False">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Width="160" Height="40" Content="確認" FontSize="16" FontWeight="Bold" Command="{Binding AcceptButtonClicked}"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

@@ -44,14 +44,13 @@ namespace TRS.TMS12
             ResultControlViewModel = new ResultControlViewModel(M.ResultControlModel);
             FullScreenResultControlViewModel = new ResultControlViewModel(M.FullScreenResultControlModel);
 
-            ViewModels = new Dictionary<UserControls, IViewModel>()
+            ViewModels = new Dictionary<Screen, IViewModel>()
             {
-                { UserControls.PowerOff, new PowerOffViewModel() },
-                { UserControls.MainMenu, new MainMenuViewModel() },
-                { UserControls.GroupMenu, new GroupMenuViewModel() },
-                { UserControls.OneTouchMenu, new OneTouchMenuViewModel() },
+                { Screen.MainMenu, new MainMenuViewModel() },
+                { Screen.GroupMenu, new GroupMenuViewModel() },
+                { Screen.OneTouchMenu, new OneTouchMenuViewModel() },
             };
-            foreach (KeyValuePair<UserControls, IViewModel> p in ViewModels)
+            foreach (KeyValuePair<Screen, IViewModel> p in ViewModels)
             {
                 IViewModel vm = p.Value;
                 vm.Model = M.Models[p.Key];
@@ -67,7 +66,7 @@ namespace TRS.TMS12
 
             ShowVersionDialog = new DelegateCommand(() =>
             {
-                M.DialogModel.ShowDialog("ＴＲＳ係員操作端末　ＭＳ－１２\n\n\nVersion " + ProductVersion + "\n\n" + Copyright + "\n\n\n\n" + "バージョン及び著作権の詳細は、取扱説明書をご覧下さい。", "バージョン情報");
+                M.DialogModel.ShowDialog($"ＴＲＳ係員操作端末　ＭＳ－１２\n\n\nVersion {ProductVersion}\n\n{Copyright}\n\n\n\nバージョン及び著作権の詳細は、取扱説明書をご覧下さい。", "バージョン情報");
             });
 
             List<ITicketPlugin> ticketPlugins = M.Plugins.TicketPlugins.ConvertAll(p => p.Plugin);
@@ -83,30 +82,30 @@ namespace TRS.TMS12
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(M.ShowingUserControl):
-                        UserControls showedControl = UserControls.None;
+                    case nameof(M.CurrentScreen):
+                        Screen showedControl = Screen.None;
                         try
                         {
                             showedControl = ViewModels.First(p => p.Value.Visibility == Visibility.Visible).Key;
-                            ViewModels[(UserControls)showedControl].Visibility = Visibility.Hidden;
+                            ViewModels[(Screen)showedControl].Visibility = Visibility.Hidden;
                         }
                         catch { }
 
-                        if (M.ShowingUserControl == UserControls.Tickets)
+                        if (M.CurrentScreen == Screen.Tickets)
                         {
                         }
-                        else if (M.ShowingUserControl != UserControls.None)
+                        else if (M.CurrentScreen != Screen.None)
                         {
-                            IModel model = ViewModels[M.ShowingUserControl].Model;
-                            ViewModels[M.ShowingUserControl].Visibility = Visibility.Visible;
+                            IModel model = ViewModels[M.CurrentScreen].Model;
+                            ViewModels[M.CurrentScreen].Visibility = Visibility.Visible;
                         }
 
-                        if (M.ShowingUserControl == UserControls.None)
+                        if (M.CurrentScreen == Screen.None)
                         {
                             MainGridIsEnabled = false;
                             DoEvents();
                         }
-                        else if (showedControl == UserControls.None)
+                        else if (showedControl == Screen.None)
                         {
                             MainGridIsEnabled = true;
                         }
@@ -118,7 +117,7 @@ namespace TRS.TMS12
                         break;
 
                     case nameof(M.SendType):
-                        foreach (SendingType type in Enum.GetValues(typeof(SendingType)))
+                        foreach (SendTypes type in Enum.GetValues(typeof(SendTypes)))
                         {
                             SendTypeButtonsIsChecked[type] = M.SendType == type;
                         }
@@ -193,7 +192,7 @@ namespace TRS.TMS12
 
             SendTypeButtonsIsChecked.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
             {
-                SendingType? currentType = null;
+                SendTypes? currentType = null;
                 try
                 {
                     currentType = SendTypeButtonsIsChecked.First(b => b.Value).Key;

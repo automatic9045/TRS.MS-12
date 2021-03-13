@@ -200,7 +200,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
             }
         }
 
-        public void ClearFocusedAndLater()
+        public void ClearFocusedAndAfter()
         {
             InputControlTextBox[] textBoxes = (InputControlTextBox[])Enum.GetValues(typeof(InputControlTextBox));
             foreach (InputControlTextBox textBox in textBoxes)

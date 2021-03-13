@@ -37,7 +37,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
         }
 
         public TimeNumberInquirerViewModel TimeNumberInquirerVM { get; private set; }
-        public TimeNumberInquiringResultPresenterViewModel TimeNumberInquiringResultPresenterVM { get; private set; }
+        public TimeNumberInquirerResultPresenterViewModel TimeNumberInquiringResultPresenterVM { get; private set; }
 
         public KeyControlViewModel(PluginInfo m)
         {
@@ -69,7 +69,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
             });
 
             TimeNumberInquirerVM = new TimeNumberInquirerViewModel(m);
-            TimeNumberInquiringResultPresenterVM = new TimeNumberInquiringResultPresenterViewModel(m);
+            TimeNumberInquiringResultPresenterVM = new TimeNumberInquirerResultPresenterViewModel(m);
         }
     }
 

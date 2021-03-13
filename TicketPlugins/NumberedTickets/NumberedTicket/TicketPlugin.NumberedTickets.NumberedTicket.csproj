@@ -143,8 +143,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TimeNumberInquiringResultPresenter.xaml.cs">
-      <DependentUpon>TimeNumberInquiringResultPresenter.xaml</DependentUpon>
+    <Compile Include="TimeNumberInquirer.ResultPresenter.xaml.cs">
+      <DependentUpon>TimeNumberInquirer.ResultPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="TimeNumberInquirer.xaml.cs">
       <DependentUpon>TimeNumberInquirer.xaml</DependentUpon>
@@ -184,7 +184,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="TimeNumberInquiringResultPresenter.xaml">
+    <Page Include="TimeNumberInquirer.ResultPresenter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

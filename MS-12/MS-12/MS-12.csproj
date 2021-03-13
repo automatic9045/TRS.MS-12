@@ -193,10 +193,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Private\UserControls\PowerOff.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="SplashScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -216,9 +212,6 @@
     <Compile Include="Private\UserControls\MainMenu.Loader.cs" />
     <Compile Include="Private\UserControls\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Private\UserControls\PowerOff.xaml.cs">
-      <DependentUpon>PowerOff.xaml</DependentUpon>
     </Compile>
     <Compile Include="Private\Interfaces\IViewModel.cs" />
     <Compile Include="Private\Interfaces\IModel.cs" />
