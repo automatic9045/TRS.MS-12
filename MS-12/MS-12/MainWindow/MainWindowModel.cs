@@ -150,7 +150,7 @@ namespace TRS.TMS12
             PluginHost = new PluginHost(this);
 
             AppConnector.ChangeProgressStatus("プラグインを検索しています", Progress.LoadingPlugins);
-            Plugins = PluginsLoader.Load();
+            Plugins = PluginsLoader.Load(AppConnector);
 
             LoadedPlugin<IPrinterPlugin> plugin = Plugins.PrinterPlugins.Find(p => p.Plugin.GetType().FullName == PrinterPluginsNamespace + AppConnector.PrinterClass);
             if (!(plugin is null))
@@ -163,12 +163,12 @@ namespace TRS.TMS12
                 }
                 catch (Exception ex)
                 {
-                    AppConnector.OnError("プリンター (プリンタークラス： \"" + AppConnector.PrinterClass + "\"　プリンター名： \"" + AppConnector.PrinterName + "\" ) が見つかりませんでした。", "プリンターエラー", ErrorType.Warning);
+                    AppConnector.OnError($"プリンター (プリンタークラス： \"{AppConnector.PrinterClass}\"　プリンター名： \"{AppConnector.PrinterName}\" ) の初期化に失敗しました（{ex.GetType().FullName}）。", "プリンターエラー", ErrorType.Warning);
                 }
             }
             else
             {
-                AppConnector.OnError("プリンター \"" + AppConnector.PrinterClass + "\"が見つかりませんでした。", "プリンターエラー", ErrorType.Error);
+                AppConnector.OnError($"プリンター \"{AppConnector.PrinterClass}\" が見つかりませんでした。", "プリンターエラー", ErrorType.Error);
             }
 
             foreach (LoadedPlugin<IPlugin> p in Plugins.Plugins)

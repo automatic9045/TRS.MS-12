@@ -41,7 +41,7 @@ namespace TRS.TMS12
 
     public static class PluginsLoader
     {
-        public static PluginsInfo Load()
+        public static PluginsInfo Load(AppConnector appConnector)
         {
             List<LoadedPlugin<IPlugin>> plugins = new List<LoadedPlugin<IPlugin>>();
             List<LoadedPlugin<ITicketPlugin>> ticketPlugins = new List<LoadedPlugin<ITicketPlugin>>();
@@ -51,14 +51,16 @@ namespace TRS.TMS12
             string iTicketPluginName = typeof(ITicketPlugin).FullName;
             string iPluginName = typeof(IPlugin).FullName;
 
-            string pluginFolder = Path.Combine(AppDirectory, "Plugins");
-            if (!Directory.Exists(pluginFolder))
+            string pluginDirectory = Path.Combine(AppDirectory, "Plugins");
+            if (!Directory.Exists(pluginDirectory))
             {
-                throw new ApplicationException("フォルダ \"" + pluginFolder + "\" が見つかりませんでした。");
+                appConnector.OnError($"フォルダ \"{pluginDirectory}\" が見つかりませんでした。", "プラグイン読込エラー", ErrorType.Error);
+                return new PluginsInfo(plugins, ticketPlugins, printerPlugins);
             }
 
-            string[] pluginDlls = Directory.GetFiles(pluginFolder, "*.dll", SearchOption.AllDirectories);
+            List<string> pluginPaths = LoadPluginLists(pluginDirectory);
 
+            string[] pluginDlls = Directory.GetFiles(pluginDirectory, "*.dll", SearchOption.AllDirectories);
             foreach (string dll in pluginDlls)
             {
                 try
@@ -82,20 +84,30 @@ namespace TRS.TMS12
                         return new LoadedPlugin<IPlugin>((IPlugin)assembly.CreateInstance(t.FullName), dll.Replace(AppDirectory + @"\", ""));
                     }));
                 }
-                catch (Exception ex)
+                catch (ReflectionTypeLoadException ex)
                 {
-                    Exception[] loaderExceptions = (ex as ReflectionTypeLoadException != null) ? ((ReflectionTypeLoadException)ex).LoaderExceptions : null;
+                    Exception[] loaderExceptions = ex.LoaderExceptions;
                 }
+                catch (FileLoadException ex)
+                {
+                    if (ex.InnerException is NotSupportedException && pluginPaths.Contains(dll))
+                    {
+                        appConnector.OnError($"プラグインDLL \"{dll}\" はブロックされているため、読み込めませんでした。ファイルのプロパティからブロックを解除して下さい。", "プラグイン読込エラー", ErrorType.Warning);
+                    }
+                }
+                catch { }
             }
 
-            string printerFolder = Path.Combine(AppDirectory, "Printers");
-            if (!Directory.Exists(printerFolder))
+            string printerDirectory = Path.Combine(AppDirectory, "Printers");
+            if (!Directory.Exists(printerDirectory))
             {
-                throw new ApplicationException("フォルダ \"" + printerFolder + "\" が見つかりませんでした。");
+                appConnector.OnError($"フォルダ \"{printerDirectory}\" が見つかりませんでした。", "プラグイン読込エラー", ErrorType.Error);
+                return new PluginsInfo(plugins, ticketPlugins, printerPlugins);
             }
 
-            string[] printerDlls = Directory.GetFiles(printerFolder, "*.dll", SearchOption.AllDirectories);
+            List<string> printerPaths = LoadPluginLists(printerDirectory);
 
+            string[] printerDlls = Directory.GetFiles(printerDirectory, "*.dll", SearchOption.AllDirectories);
             foreach (string dll in printerDlls)
             {
                 try
@@ -112,11 +124,39 @@ namespace TRS.TMS12
                         return new LoadedPlugin<IPrinterPlugin>((IPrinterPlugin)assembly.CreateInstance(t.FullName), dll.Replace(AppDirectory + @"\", ""));
                     }));
                 }
+                catch (FileLoadException ex)
+                {
+                    if (ex.InnerException is NotSupportedException && printerPaths.Contains(dll))
+                    {
+                        appConnector.OnError($"プリンタープラグインDLL {dll} はブロックされているため、読み込めませんでした。ファイルのプロパティからブロックを解除して下さい。", "プラグイン読込エラー", ErrorType.Warning);
+                    }
+                }
                 catch
                 { }
             }
 
             return new PluginsInfo(plugins, ticketPlugins, printerPlugins);
+        }
+
+        private static List<string> LoadPluginLists(string baseDirectory)
+        {
+            string[] pluginLists = Directory.GetFiles(baseDirectory, "*.pluginlist", SearchOption.AllDirectories);
+            List<string> pluginPaths = new List<string>();
+            foreach (string list in pluginLists)
+            {
+                string currentDirectory = Path.GetDirectoryName(list);
+
+                using (StreamReader sr = new StreamReader(list))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string path = Path.Combine(currentDirectory, sr.ReadLine());
+                        if (File.Exists(path)) pluginPaths.Add(path);
+                    }
+                }
+            }
+
+            return pluginPaths;
         }
     }
 }
