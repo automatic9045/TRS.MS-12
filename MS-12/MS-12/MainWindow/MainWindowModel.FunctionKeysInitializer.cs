@@ -271,12 +271,12 @@ namespace TRS.TMS12
                         }
                         IsTicketSending = false;
                     }
-                }, () => CanExecute(FunctionKeys.Send) && SendType != null).ObservesProperty(() => SendType) },
+                }, () => CanExecute(FunctionKeys.Send) && !(SendType is null)).ObservesProperty(() => SendType) },
             };
 
             FunctionKeyToggleButtonsIsChecked.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
             {
-                if (CurrentScreen == Screen.Tickets && CurrentTicket != null)
+                if (CurrentScreen == Screen.Tickets && !(CurrentTicket is null))
                 {
                     switch ((FunctionKeys)e.NewStartingIndex)
                     {
