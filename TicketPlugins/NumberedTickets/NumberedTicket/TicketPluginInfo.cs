@@ -141,7 +141,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
 
             Sender = new Sender(this);
 
-            TextBoxes.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
+            TextBoxes.CollectionChanged += (sender, e) =>
             {
                 bool canSend =
                     TextBoxes[(int)InputControlTextBox.Service] != "" &&
@@ -155,7 +155,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
                     TextBoxes[(int)InputControlTextBox.Preschooler] != "");
 
                 FunctionKeysIsEnabled[(int)FunctionKeys.Send] = canSend;
-            });
+            };
         }
 
         public void AddOption(string value)
