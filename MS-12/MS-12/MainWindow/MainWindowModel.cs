@@ -153,7 +153,7 @@ namespace TRS.TMS12
             Plugins = PluginsLoader.Load();
 
             LoadedPlugin<IPrinterPlugin> plugin = Plugins.PrinterPlugins.Find(p => p.Plugin.GetType().FullName == PrinterPluginsNamespace + AppConnector.PrinterClass);
-            if (plugin != null)
+            if (!(plugin is null))
             {
                 CurrentPrinter = plugin.Plugin;
 
