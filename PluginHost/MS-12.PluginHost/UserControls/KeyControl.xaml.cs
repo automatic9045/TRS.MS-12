@@ -94,20 +94,20 @@ namespace TRS.TMS12.Resources
             set
             {
                 m = value;
-                m.PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
+                m.PropertyChanged += (sender, e) =>
                 {
                     if (e.PropertyName == nameof(m.CurrentTab))
                     {
                         TabsIsChecked[m.CurrentTab] = true;
                     }
-                });
+                };
 
-                TabsIsChecked.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
+                TabsIsChecked.CollectionChanged += (sender, e) =>
                 {
                     m.CurrentTab = TabsIsChecked.IndexOf(true);
-                });
+                };
 
-                TabsHeader = new List<string>(m.Tabs.Select(t => t.Header));
+                TabsHeader = new List<string>(m.Tabs.ConvertAll(t => t.Header));
                 Command = m.ButtonClickedCommand;
                 CommandParameters = m.Tabs[0].KeyList.ConvertAll(k => "");
                 UpdateTab(0);
