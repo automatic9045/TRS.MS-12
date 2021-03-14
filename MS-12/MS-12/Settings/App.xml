@@ -2,5 +2,5 @@
 <ApplicationSettings>
 	<CatchUnobservedExceptions Enabled="true"/>
 	<ShowNotImplementedDialog Enabled="true"/>
-	<Printer Class="Basic.PrinterEmulator" Name="PrinterEmulator"/>
+	<Printer Class="Basic.PrinterEmulator" Name=""/>
 </ApplicationSettings>
