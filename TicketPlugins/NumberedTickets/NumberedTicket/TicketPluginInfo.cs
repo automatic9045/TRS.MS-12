@@ -133,11 +133,9 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
 
             InputControlViewModel inputControlViewModel = new InputControlViewModel(this);
             KeyControlViewModel keyControlViewModel = new KeyControlViewModel(this);
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                InputControl = new InputControl(inputControlViewModel);
-                KeyControl = new KeyControl(keyControlViewModel);
-            });
+
+            InputControl = new InputControl(inputControlViewModel);
+            KeyControl = new KeyControl(keyControlViewModel);
 
             Sender = new Sender(this);
 
@@ -217,7 +215,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
             }
             catch (Exception ex)
             {
-                PluginHost.Dialog.ShowError("コマンドの実行に失敗しました。\n\n\n要求コマンド：\n\n" + param + "\n\n\n詳細：\n\n" + ex.ToString());
+                PluginHost.Dialog.ShowError($"コマンドの実行に失敗しました。\n\n\n要求コマンド：\n\n{param}\n\n\n詳細：\n\n{ex}");
             }
         }
     }
