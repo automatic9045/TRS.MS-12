@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using TRS.TMS12.Interfaces;
 using TRS.TMS12.Static;
 
-namespace TRS.TMS12.PrinterPlugins.Basic
+namespace TRS.TMS12.PrinterPlugins.Emulators.ImageSaving
 {
-    public class PrinterEmulator : IPrinterPlugin
+    public class ImageSaving : IPrinterPlugin
     {
-        public string PrinterName { get; } = "Printer Emulator";
+        public string PrinterName { get; } = "Image-Saving Printer Emulator";
 
         public IPluginHost PluginHost { get; set; }
 
