@@ -95,11 +95,9 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
 
             InputControlViewModel inputControlViewModel = new InputControlViewModel(this);
             KeyControlViewModel keyControlViewModel = new KeyControlViewModel(this);
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                InputControl = new InputControl(inputControlViewModel);
-                KeyControl = new KeyControl(keyControlViewModel);
-            });
+
+            InputControl = new InputControl(inputControlViewModel);
+            KeyControl = new KeyControl(keyControlViewModel);
 
             Sender = new Sender(this);
 

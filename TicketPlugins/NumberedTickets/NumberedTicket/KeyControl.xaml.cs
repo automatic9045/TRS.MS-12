@@ -27,7 +27,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
     {
         private PluginInfo m;
 
-        public Resources.KeyControlViewModel KeyBaseViewModel { get; private set; } = new Resources.KeyControlViewModel();
+        public Resources.KeyControlViewModel KeyBaseViewModel { get; } = new Resources.KeyControlViewModel();
 
         private Visibility _Visibility;
         public Visibility Visibility
@@ -42,12 +42,12 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
         public KeyControlViewModel(PluginInfo m)
         {
             this.m = m;
-            this.m.PropertyChanged += new PropertyChangedEventHandler((sender2, e2) =>
+            this.m.PropertyChanged += (sender2, e2) =>
             {
                 switch (e2.PropertyName)
                 {
                     case nameof(m.PluginHost):
-                        ((BindableBase)this.m.PluginHost).PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
+                        ((BindableBase)this.m.PluginHost).PropertyChanged += (sender, e) =>
                         {
                             switch (e.PropertyName)
                             {
@@ -55,7 +55,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
                                     Visibility = m.PluginHost.CurrentTicket == this.m && m.TimeNumberInquirerStatus == TimeNumberInquirerStatus.Hidden ? Visibility.Visible : Visibility.Hidden;
                                     break;
                             }
-                        });
+                        };
                         break;
 
                     case nameof(m.KeyBaseModel):
@@ -66,7 +66,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
                         Visibility = m.PluginHost.CurrentTicket == this.m && m.TimeNumberInquirerStatus == TimeNumberInquirerStatus.Hidden ? Visibility.Visible : Visibility.Hidden;
                         break;
                 }
-            });
+            };
 
             TimeNumberInquirerVM = new TimeNumberInquirerViewModel(m);
             TimeNumberInquiringResultPresenterVM = new TimeNumberInquirerResultPresenterViewModel(m);
