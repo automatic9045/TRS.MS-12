@@ -27,7 +27,7 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
     {
         private PluginInfo m;
 
-        public Resources.KeyControlViewModel KeyBaseViewModel { get; private set; } = new Resources.KeyControlViewModel();
+        public Resources.KeyControlViewModel KeyBaseViewModel { get; } = new Resources.KeyControlViewModel();
 
         private Visibility _Visibility;
         public Visibility Visibility
@@ -39,12 +39,12 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
         public KeyControlViewModel(PluginInfo m)
         {
             this.m = m;
-            this.m.PropertyChanged += new PropertyChangedEventHandler((sender2, e2) =>
+            this.m.PropertyChanged += (sender2, e2) =>
             {
                 switch (e2.PropertyName)
                 {
                     case nameof(m.PluginHost):
-                        ((BindableBase)this.m.PluginHost).PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
+                        ((BindableBase)this.m.PluginHost).PropertyChanged += (sender, e) =>
                         {
                             switch (e.PropertyName)
                             {
@@ -52,14 +52,14 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
                                     Visibility = m.PluginHost.CurrentTicket == this.m ? Visibility.Visible : Visibility.Hidden;
                                     break;
                             }
-                        });
+                        };
                         break;
 
                     case nameof(m.KeyBaseModel):
                         KeyBaseViewModel.M = m.KeyBaseModel;
                         break;
                 }
-            });
+            };
         }
     }
 
