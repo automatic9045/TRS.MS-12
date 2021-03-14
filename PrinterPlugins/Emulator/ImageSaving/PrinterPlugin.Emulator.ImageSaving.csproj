@@ -7,8 +7,8 @@
     <ProjectGuid>{17ADF6B0-75D4-4767-9879-134492C00B3E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PrinterPlugin.PrinterEmulator</RootNamespace>
-    <AssemblyName>PrinterPlugin.PrinterEmulator</AssemblyName>
+    <RootNamespace>TRS.TMS12.PrinterPlugins.Emulators.ImageSaving</RootNamespace>
+    <AssemblyName>ImageSaving</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\MS-12\MS-12\bin\Debug\Any CPU\Printers\</OutputPath>
+    <OutputPath>..\..\..\MS-12\MS-12\bin\Debug\Any CPU\Printers\Emulators\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,11 +46,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PluginHost\MS-12.PluginHost\MS-12.PluginHost.csproj">
+    <ProjectReference Include="..\..\..\PluginHost\MS-12.PluginHost\MS-12.PluginHost.csproj">
       <Project>{31ff6588-aa25-4100-aafc-6d4c733a6eb8}</Project>
       <Name>MS-12.PluginHost</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImageSaving.pluginlist">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
