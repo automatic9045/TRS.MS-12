@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.VisualBasic;
@@ -60,7 +61,7 @@ namespace TRS.TMS12.Resources
 
                     case "SET":
                         key = GetTargetKey(args[0]);
-                        if (key != null)
+                        if (!(key is null))
                         {
                             m.TextBoxes[(int)key] = args[1];
 
@@ -74,7 +75,7 @@ namespace TRS.TMS12.Resources
 
                     case "CLEAR":
                         key = GetTargetKey(args[0]);
-                        if (key != null)
+                        if (!(key is null))
                         {
                             m.TextBoxes[(int)key] = "";
 
@@ -86,21 +87,38 @@ namespace TRS.TMS12.Resources
                         break;
 
                     case "ADD":
-                        for (int n = 0; n < args[0].Length; n++) Keyboard.FocusedElement.RaiseEvent(
-                            new KeyEventArgs(
-                                Keyboard.PrimaryDevice,
-                                PresentationSource.FromVisual((Visual)Keyboard.FocusedElement),
-                                0,
-                                Key.Delete)
-                            { RoutedEvent = Keyboard.KeyDownEvent }
-                        );
+                        if (Keyboard.FocusedElement is TextBox)
+                        {
+                            TextBox textBox = (TextBox)Keyboard.FocusedElement;
 
-                        Keyboard.FocusedElement.RaiseEvent(
-                            new TextCompositionEventArgs(
-                                InputManager.Current.PrimaryKeyboardDevice,
-                                new TextComposition(InputManager.Current, Keyboard.FocusedElement, args[0]))
-                            { RoutedEvent = TextCompositionManager.TextInputEvent }
-                        );
+                            int selectionStart = textBox.SelectionStart;
+
+                            int selectionLength = 1;
+                            if (textBox.SelectionLength != 0) selectionLength = textBox.SelectionLength;
+                            else if (selectionStart == textBox.Text.Length) selectionLength = 0;
+
+                            textBox.Text.Remove(selectionStart, selectionLength);
+                            textBox.Text = textBox.Text.Insert(selectionStart, args[0]);
+                            textBox.CaretIndex = selectionStart + args[0].Length;
+                        }
+                        else
+                        {
+                            for (int n = 0; n < args[0].Length; n++) Keyboard.FocusedElement.RaiseEvent(
+                                new KeyEventArgs(
+                                    Keyboard.PrimaryDevice,
+                                    PresentationSource.FromVisual((Visual)Keyboard.FocusedElement),
+                                    0,
+                                    Key.Delete)
+                                { RoutedEvent = Keyboard.KeyDownEvent }
+                            );
+
+                            Keyboard.FocusedElement.RaiseEvent(
+                                new TextCompositionEventArgs(
+                                    InputManager.Current.PrimaryKeyboardDevice,
+                                    new TextComposition(InputManager.Current, Keyboard.FocusedElement, args[0]))
+                                { RoutedEvent = TextCompositionManager.TextInputEvent }
+                            );
+                        }
                         break;
 
                     case "SET_DATE":
