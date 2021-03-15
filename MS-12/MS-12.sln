@@ -15,7 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPlugin.OneTimePrintin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPlugin.NumberedTickets.NumberedTicket", "..\TicketPlugins\NumberedTickets\NumberedTicket\TicketPlugin.NumberedTickets.NumberedTicket.csproj", "{915BC400-F839-4A89-93C0-AF13256A33D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrinterPlugin.PrinterEmulator", "..\PrinterPlugins\PrinterEmulator\PrinterPlugin.PrinterEmulator.csproj", "{17ADF6B0-75D4-4767-9879-134492C00B3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrinterPlugin.Emulator.ImageSaving", "..\PrinterPlugins\Emulator\ImageSaving\PrinterPlugin.Emulator.ImageSaving.csproj", "{17ADF6B0-75D4-4767-9879-134492C00B3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrinterPlugin.Epson.TML90", "..\PrinterPlugins\Epson\TML90\PrinterPlugin.Epson.TML90.csproj", "{B61B2AF0-5705-4AA0-93D0-790686ADD747}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,18 @@ Global
 		{17ADF6B0-75D4-4767-9879-134492C00B3E}.Release|x64.Build.0 = Release|Any CPU
 		{17ADF6B0-75D4-4767-9879-134492C00B3E}.Release|x86.ActiveCfg = Release|Any CPU
 		{17ADF6B0-75D4-4767-9879-134492C00B3E}.Release|x86.Build.0 = Release|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Debug|x64.Build.0 = Debug|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Debug|x86.Build.0 = Debug|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Release|x64.ActiveCfg = Release|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Release|x64.Build.0 = Release|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Release|x86.ActiveCfg = Release|Any CPU
+		{B61B2AF0-5705-4AA0-93D0-790686ADD747}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
