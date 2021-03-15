@@ -145,8 +145,7 @@ namespace TRS.TMS12.Plugins.TRS
                 "StarTSP100I" => PrintSetting.PrintByStarTSP100,
                 "StarTSP100II" => PrintSetting.PrintByStarTSP100II,
                 "EpsonTML90" => PrintSetting.PrintByEpsonTML90,
-                "PrinterEmulator" => PrintSetting.SaveTicketAsPicture,
-                _ => throw new ArgumentOutOfRangeException(),
+                _ => PrintSetting.SaveTicketAsPicture,
             };
         }
 
