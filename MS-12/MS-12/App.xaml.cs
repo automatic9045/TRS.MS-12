@@ -43,15 +43,21 @@ namespace TRS.TMS12
 
         public bool ShowNotImplementedDialog { get; set; }
 
-        public string PrinterClass { get; set; }
-        public string PrinterName { get; set; }
+        public string PrinterClass { get; }
+        public string PrinterArg { get; }
 
-        public string MainMenuLayoutSourcePath { get; set; }
-        public string OneTouchMenuLayoutSourcePath { get; set; }
+        public string MainMenuLayoutSourcePath { get; }
+        public string OneTouchMenuLayoutSourcePath { get; }
 
-        public AppConnector(SplashScreenViewModel splashScreenVM)
+        public AppConnector(SplashScreenViewModel splashScreenVM, string printerClass, string printerArg, string mainMenuLayoutSourcePath, string oneTouchMenuLayoutSourcePath)
         {
             splashVM = splashScreenVM;
+
+            PrinterClass = printerClass;
+            PrinterArg = printerArg;
+
+            MainMenuLayoutSourcePath = mainMenuLayoutSourcePath;
+            OneTouchMenuLayoutSourcePath = oneTouchMenuLayoutSourcePath;
         }
 
         public void OnError(string text, string caption, ErrorType type)
@@ -103,17 +109,13 @@ namespace TRS.TMS12
 
                 XElement menuLayoutSources = XDocument.Load(@"Settings\MenuLayoutSources.xml").Element("MenuLayoutSources");
 
-                appConnector = new AppConnector(splashVM)
-                {
-                    ShowNotImplementedDialog = (bool)appSettings.Element("ShowNotImplementedDialog").Attribute("Enabled"),
-                    PrinterClass = (string)appSettings.Element("Printer").Attribute("Class"),
-                    PrinterName = (string)appSettings.Element("Printer").Attribute("Name"),
-
-                    MainMenuLayoutSourcePath = Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("MainMenu").Attribute("Source") ?? "")),
-                    OneTouchMenuLayoutSourcePath = Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("OneTouchMenu").Attribute("Source") ?? "")),
-                };
+                appConnector = new AppConnector(
+                    splashVM,
+                    (string)appSettings.Element("Printer").Attribute("Class"), (string)appSettings.Element("Printer").Attribute("Name"),
+                    Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("MainMenu").Attribute("Source") ?? "")),
+                    Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("OneTouchMenu").Attribute("Source") ?? "")));
             }
-            catch (Exception ex)
+            catch
             {
                 splashVM.Errors.Add("基本設定を正常に読み込めませんでした。設定内容に誤りが無いか確認し、解消されない場合は再インストールを検討して下さい。");
                 splashVM.IsErrorIgnorable = false;
@@ -172,7 +174,7 @@ namespace TRS.TMS12
             string exceptionString = e.Exception.ToString();
             string text = "アプリケーションでハンドルされていない例外が発生しました。\n\n例外のログが Log フォルダ内に保存されます。\n\n\n詳細：\n\n" + exceptionString;
 
-            if (MainWindowVM == null)
+            if (MainWindowVM is null)
                 MessageBox.Show(text);
             else
                 MainWindowVM.M.DialogModel.ShowErrorDialog(text);
