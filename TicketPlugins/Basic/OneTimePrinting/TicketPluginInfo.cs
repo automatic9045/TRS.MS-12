@@ -143,7 +143,7 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
             }
             catch (Exception ex)
             {
-                PluginHost.Dialog.ShowError("コマンドの実行に失敗しました。\n\n\n要求コマンド：\n\n" + param + "\n\n\n詳細：\n\n" + ex.ToString());
+                PluginHost.Dialog.ShowErrorDialog("コマンドの実行に失敗しました。\n\n\n要求コマンド：\n\n" + param + "\n\n\n詳細：\n\n" + ex.ToString());
             }
         }
     }

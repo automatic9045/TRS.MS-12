@@ -21,8 +21,8 @@ namespace TRS.TMS12
 {
     internal class DialogInfo
     {
-        public bool ButtonIsEnabled { get; set; } = true;
-        public bool CancelButtonIsVisible { get; set; } = false;
+        public bool IsButtonEnabled { get; set; } = true;
+        public bool UseCancelButton { get; set; } = false;
         public string Text { get; set; } = "";
         public string Caption { get; set; } = "";
         public ImageSource Icon { get; set; } = null;
@@ -38,50 +38,78 @@ namespace TRS.TMS12
 
         internal bool IsAccepted { get; set; } = true;
 
-        public void ShowDialog(string text, string caption, ImageSource icon, bool buttonIsEnabled, bool cancelButtonIsVisible = false)
+
+        public void ShowDialog(string text, string caption, ImageSource icon, bool isButtonEnabled, bool useCancelButton = false)
         {
             DialogInfo = new DialogInfo()
             {
-                ButtonIsEnabled = buttonIsEnabled,
-                CancelButtonIsVisible = cancelButtonIsVisible,
+                IsButtonEnabled = isButtonEnabled,
+                UseCancelButton = useCancelButton,
                 Text = text,
                 Caption = caption,
                 Icon = icon,
             };
         }
 
-        public void ShowDialog(string text, string caption = "", bool buttonIsEnabled = true, bool cancelButtonIsVisible = false)
+        public void ShowDialog(string text, string caption = "", bool isButtonEnabled = true, bool useCancelButton = false)
         {
-            ShowDialog(text, caption, null, buttonIsEnabled, cancelButtonIsVisible);
+            ShowDialog(text, caption, null, isButtonEnabled, useCancelButton);
         }
 
-        public void ShowErrorDialog(string text, bool buttonIsEnabled = true)
+
+        public void ShowErrorDialog(string text, bool isButtonEnabled = true)
         {
-            ShowDialog(text, "障害メッセージ", buttonIsEnabled);
+            ShowDialog(text, "障害メッセージ", isButtonEnabled);
 
             Task.Run(() => File.WriteAllText(@"Logs\" + DateTime.Now.ToString("yyyyMMdd-HHmmss-fff") + ".txt", text));
         }
 
-        public void ShowWarningDialog(string text, bool buttonIsEnabled = true)
+        public void ShowWarningDialog(string text, bool isButtonEnabled = true)
         {
-            ShowDialog(text, "警告", buttonIsEnabled);
+            ShowDialog(text, "警告", isButtonEnabled);
         }
 
-        public void ShowInformationDialog(string text, bool buttonIsEnabled = true)
+        public void ShowInformationDialog(string text, bool isButtonEnabled = true)
         {
-            ShowDialog(text, "情報", buttonIsEnabled);
+            ShowDialog(text, "情報", isButtonEnabled);
         }
 
-        public void ShowNotImplementedDialog(string text = "", bool isCollectingInformation = true)
+        public void ShowNotImplementedDialog(string text = "", bool isHelpWanted = true)
         {
-            string message = isCollectingInformation ? "\n情報提供のご協力お待ちしています。" : "";
+            string message = isHelpWanted ? "\n情報提供のご協力お待ちしています。" : "";
             ShowDialog("この機能は未実装です。" + message + "\n\n\n" + text, "情報");
         }
 
-        public void ShowNotImplementedDialog(bool isCollectingInformation)
+        public void ShowNotImplementedDialog(bool isHelpWanted)
         {
-            ShowNotImplementedDialog("", isCollectingInformation);
+            ShowNotImplementedDialog("", isHelpWanted);
         }
+
+
+        public async Task ShowErrorDialogAsync(string text)
+        {
+            ShowErrorDialog(text);
+            while (!(DialogInfo is null)) await Task.Delay(1);
+        }
+
+        public async Task ShowWarningDialogAsync(string text)
+        {
+            ShowWarningDialog(text);
+            while (!(DialogInfo is null)) await Task.Delay(1);
+        }
+
+        public async Task ShowInformationDialogAsync(string text)
+        {
+            ShowInformationDialog(text);
+            while (!(DialogInfo is null)) await Task.Delay(1);
+        }
+
+        public async Task ShowNotImplementedDialogAsync(string text, bool isHelpWanted = true)
+        {
+            ShowNotImplementedDialog(text, isHelpWanted);
+            while (!(DialogInfo is null)) await Task.Delay(1);
+        }
+
 
         public async Task<bool> ShowConfirmDialogAsync(string text)
         {
@@ -123,8 +151,8 @@ namespace TRS.TMS12
                 }
                 else
                 {
-                    ButtonIsEnabled = m.DialogInfo.ButtonIsEnabled;
-                    CancelButtonIsVisible = m.DialogInfo.CancelButtonIsVisible;
+                    ButtonIsEnabled = m.DialogInfo.IsButtonEnabled;
+                    CancelButtonIsVisible = m.DialogInfo.UseCancelButton;
                     Text = m.DialogInfo.Text;
                     Caption = m.DialogInfo.Caption;
                     Icon = m.DialogInfo.Icon;
