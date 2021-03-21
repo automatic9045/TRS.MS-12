@@ -296,7 +296,7 @@ namespace TRS.TMS12
             {
                 if (CurrentScreen == Screen.Tickets && !(CurrentTicket is null))
                 {
-                    switch ((FunctionKeys)e.NewStartingIndex)
+                    switch (((KeyValuePair<FunctionKeys, bool>)e.NewItems[e.NewStartingIndex]).Key)
                     {
                         case FunctionKeys.F1:
                             PluginHost.RaiseModeEnabledChanged(Mode.Test, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
