@@ -23,7 +23,7 @@ namespace TRS.TMS12.Interfaces
     public interface IPlugin
     {
         /// <summary>
-        /// アプリケーションとプラグインの間でやりとりするためのメソッド、プロパティを提供します。
+        /// アプリケーションとプラグインの間でやりとりするためのメソッド、プロパティを提供する <see cref="IPluginHost"/> を取得します。
         /// </summary>
         IPluginHost PluginHost { get; set; }
     }
