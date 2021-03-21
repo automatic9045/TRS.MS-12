@@ -59,6 +59,16 @@ namespace TRS.TMS12.Interfaces
         List<TicketBase> ReservedTickets { get; }
 
         /// <summary>
+        /// 各モードの有効・無効が変更されたときに発生します。
+        /// </summary>
+        event ModeEnabledChangedEventHandler ModeEnabledChanged;
+
+        /// <summary>
+        /// 操作種別が変更されたときに発生します。
+        /// </summary>
+        event SendTypeChangedEventHandler SendTypeChanged;
+
+        /// <summary>
         /// データ読込時にエラーを表示します。<br />
         /// エラーが一つでも発生した場合、パラメーターで設定したメッセージが表示され、ユーザーが実行しているデータの読込は強制的に中止されます。<br />
         /// 実行中にエラーを表示させるには <see cref="IDialog.ShowErrorDialog(string, bool)"/> メソッドを使用して下さい。

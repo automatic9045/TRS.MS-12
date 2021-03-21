@@ -113,6 +113,10 @@ namespace TRS.TMS12
             Dialog = new DialogService(mainWindowModel);
         }
 
+        public event ModeEnabledChangedEventHandler ModeEnabledChanged;
+
+        public event SendTypeChangedEventHandler SendTypeChanged;
+
         public List<IPlugin> Plugins
         {
             get => mainWindowModel.Plugins.Plugins.ConvertAll(p => p.Plugin);
@@ -187,6 +191,16 @@ namespace TRS.TMS12
             mainWindowModel.CurrentScreen = Screen.None;
             DoEvents();
             mainWindowModel.CurrentScreen = Screen.GroupMenu;
+        }
+
+        public void RaiseModeEnabledChanged(Mode targetMode, bool isModeEnabled)
+        {
+            ModeEnabledChanged(new ModeEnabledChangedEventArgs(targetMode, isModeEnabled));
+        }
+
+        public void RaiseSendTypeChanged(SendTypes? newSendType)
+        {
+            SendTypeChanged(new SendTypeChangedEventArgs(newSendType));
         }
     }
 }

@@ -119,10 +119,11 @@ namespace TRS.TMS12
             {
                 SetProperty(ref _CurrentTicket, value);
                 
-                CurrentTicket.Sender.OnChangeMode(Mode.Test, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
-                CurrentTicket.Sender.OnChangeMode(Mode.OneTime, IsOneTimeMode);
-                CurrentTicket.Sender.OnChangeMode(Mode.Send, (int?)SendType);
-                CurrentTicket.Sender.OnChangeMode(Mode.Relay, FunctionKeyToggleButtonsIsChecked[FunctionKeys.Relay]);
+                PluginHost.RaiseModeEnabledChanged(Mode.Test, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
+                PluginHost.RaiseModeEnabledChanged(Mode.OneTime, IsOneTimeMode);
+                PluginHost.RaiseModeEnabledChanged(Mode.Relay, FunctionKeyToggleButtonsIsChecked[FunctionKeys.Relay]);
+
+                PluginHost.RaiseSendTypeChanged(SendType);
 
                 PluginHost.CurrentTicketChanged();
             }

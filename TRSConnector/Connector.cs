@@ -149,7 +149,7 @@ namespace TRS.TMS12.Plugins.TRS
             };
         }
 
-        public void OnChangeMode(Mode mode, object value)
+        public void ModeChanged(Mode mode, object value)
         {
             switch (mode)
             {
@@ -161,14 +161,15 @@ namespace TRS.TMS12.Plugins.TRS
                     IsOneTimeMode = (bool)value;
                     break;
 
-                case Mode.Send:
-                    SendType = (SendTypes?)(int?)value;
-                    break;
-
                 case Mode.Relay:
                     IsRelayMode = (bool)value;
                     break;
             }
+        }
+
+        public void SendTypeChanged(SendTypes? sendType)
+        {
+            SendType = sendType;
         }
 
         private static SendResult ParseResult(dynamic json, bool isFullScreen = false)
