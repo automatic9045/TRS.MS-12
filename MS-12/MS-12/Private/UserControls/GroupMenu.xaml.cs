@@ -43,9 +43,6 @@ namespace TRS.TMS12
     public  partial class GroupMenuModel : BindableBase, IModel
     {
         public UserControlHost UserControlHost { get; set; }
-        public List<ITicketPlugin> TicketPlugins { get; set; }
-        public Dictionary<Screen, IModel> Models { get; set; }
-        public DialogModel DialogModel { get; set; }
 
         public ObservableCollection<bool> FIsEnabled { get; set; } = new ObservableCollection<bool>()
         {
@@ -82,7 +79,7 @@ namespace TRS.TMS12
 
             NotImplemented = new DelegateCommand(() =>
             {
-                m.DialogModel.ShowNotImplementedDialog();
+                m.UserControlHost.DialogModel.ShowNotImplementedDialog();
             });
         }
 

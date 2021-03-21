@@ -123,7 +123,7 @@ namespace TRS.TMS12
                     foreach (XElement shortcutElement in shortcutsElement.Elements("Shortcut"))
                     {
                         string ticketPluginClassName = (string)shortcutElement.Attribute("Type") ?? "";
-                        ITicketPlugin ticketPlugin = TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + ticketPluginClassName);
+                        ITicketPlugin ticketPlugin = UserControlHost.TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + ticketPluginClassName);
                         if (ticketPluginClassName == "")
                         {
 
@@ -165,7 +165,7 @@ namespace TRS.TMS12
                         foreach (XElement buttonElement in pageElement.Elements("Content"))
                         {
                             string ticketPluginClassName = (string)buttonElement.Attribute("Type") ?? "";
-                            ITicketPlugin ticketPlugin = TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + ticketPluginClassName);
+                            ITicketPlugin ticketPlugin = UserControlHost.TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + ticketPluginClassName);
                             if (ticketPluginClassName == "")
                             {
 
