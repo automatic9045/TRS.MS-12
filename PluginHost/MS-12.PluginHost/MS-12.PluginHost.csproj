@@ -140,7 +140,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\SendTypeChangedEvent.cs" />
     <Compile Include="CommandParser.cs" />
+    <Compile Include="Classes\ModeEnabledChangedEvent.cs" />
     <Compile Include="Interfaces\ITicketPlugin.cs" />
     <Compile Include="Interfaces\IPrinterPlugin.cs" />
     <Compile Include="Interfaces\ITicketPluginExtension.cs" />
