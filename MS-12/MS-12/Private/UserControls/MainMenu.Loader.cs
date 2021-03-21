@@ -64,19 +64,19 @@ namespace TRS.TMS12
             void ThrowError(string text, bool isInGroupMenu = false)
             {
                 string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlsConnector.Throw(text, menuName + "設定に関するエラー", ErrorType.Error);
+                UserControlHost.Throw(text, menuName + "設定に関するエラー", ErrorType.Error);
             }
 
             void ThrowWarning(string text, bool isInGroupMenu = false)
             {
                 string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlsConnector.Throw(text, menuName + "設定に関する警告", ErrorType.Warning);
+                UserControlHost.Throw(text, menuName + "設定に関する警告", ErrorType.Warning);
             }
 
             void ThrowInformation(string text, bool isInGroupMenu = false)
             {
                 string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlsConnector.Throw(text, menuName + "設定に関する情報", ErrorType.Warning);
+                UserControlHost.Throw(text, menuName + "設定に関する情報", ErrorType.Warning);
             }
 
 
@@ -224,17 +224,17 @@ namespace TRS.TMS12
                             TypicalTicket = typicalTicketPlugin,
                             Command = new DelegateCommand(() =>
                             {
-                                UserControlsConnector.SetCurrentScreen(Screen.None);
+                                UserControlHost.SetCurrentScreen(Screen.None);
                                 DoEvents();
-                                UserControlsConnector.SetCurrentTicket(typicalTicketPlugin, Screen.MainMenu);
-                                UserControlsConnector.SetCurrentScreen(Screen.Tickets);
+                                UserControlHost.SetCurrentTicket(typicalTicketPlugin, Screen.MainMenu);
+                                UserControlHost.SetCurrentScreen(Screen.Tickets);
                             }),
                             OpenTabCommand = new DelegateCommand(() =>
                             {
-                                UserControlsConnector.SetCurrentScreen(Screen.None);
+                                UserControlHost.SetCurrentScreen(Screen.None);
                                 DoEvents();
                                 ((GroupMenuModel)Models[Screen.GroupMenu]).CurrentGroup = new TicketGroup(ticketGroupName, tickets);
-                                UserControlsConnector.SetCurrentScreen(Screen.GroupMenu);
+                                UserControlHost.SetCurrentScreen(Screen.GroupMenu);
                             }),
                         });
 

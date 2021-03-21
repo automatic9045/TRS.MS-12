@@ -53,19 +53,19 @@ namespace TRS.TMS12
             void ThrowError(string text, bool isInGroupMenu = false)
             {
                 string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlsConnector.Throw(text, menuName + "設定に関するエラー", ErrorType.Error);
+                UserControlHost.Throw(text, menuName + "設定に関するエラー", ErrorType.Error);
             }
 
             void ThrowWarning(string text, bool isInGroupMenu = false)
             {
                 string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlsConnector.Throw(text, menuName + "設定に関する警告", ErrorType.Warning);
+                UserControlHost.Throw(text, menuName + "設定に関する警告", ErrorType.Warning);
             }
 
             void ThrowInformation(string text, bool isInGroupMenu = false)
             {
                 string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlsConnector.Throw(text, menuName + "設定に関する情報", ErrorType.Warning);
+                UserControlHost.Throw(text, menuName + "設定に関する情報", ErrorType.Warning);
             }
 
 

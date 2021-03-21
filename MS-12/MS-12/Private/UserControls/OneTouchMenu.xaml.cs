@@ -32,7 +32,7 @@ namespace TRS.TMS12
 {
     public partial class OneTouchMenuModel : BindableBase, IModel
     {
-        public UserControlsConnector UserControlsConnector { get; set; }
+        public UserControlHost UserControlHost { get; set; }
         public List<ITicketPlugin> TicketPlugins { get; set; }
         public Dictionary<Screen, IModel> Models { get; set; }
         public DialogModel DialogModel { get; set; }
@@ -71,24 +71,24 @@ namespace TRS.TMS12
         {
             ShortcutCommand = new DelegateCommand<string>(param =>
             {
-                m.UserControlsConnector.SetCurrentScreen(Screen.None);
+                m.UserControlHost.SetCurrentScreen(Screen.None);
                 DoEvents();
 
                 TicketButton button = m.Groups[m.CurrentGroup].Shortcuts[int.Parse(param)];
-                m.UserControlsConnector.SetCurrentTicket(button.TicketPlugin, Screen.OneTouchMenu, button.Command);
+                m.UserControlHost.SetCurrentTicket(button.TicketPlugin, Screen.OneTouchMenu, button.Command);
 
-                m.UserControlsConnector.SetCurrentScreen(Screen.Tickets);
+                m.UserControlHost.SetCurrentScreen(Screen.Tickets);
             });
 
             Command = new DelegateCommand<string>(param =>
             {
-                m.UserControlsConnector.SetCurrentScreen(Screen.None);
+                m.UserControlHost.SetCurrentScreen(Screen.None);
                 DoEvents();
 
                 TicketButton button = m.Groups[m.CurrentGroup].Pages[m.CurrentPage].Buttons[int.Parse(param)];
-                m.UserControlsConnector.SetCurrentTicket(button.TicketPlugin, Screen.OneTouchMenu, button.Command);
+                m.UserControlHost.SetCurrentTicket(button.TicketPlugin, Screen.OneTouchMenu, button.Command);
 
-                m.UserControlsConnector.SetCurrentScreen(Screen.Tickets);
+                m.UserControlHost.SetCurrentScreen(Screen.Tickets);
             });
 
             Previous = new DelegateCommand(() => m.CurrentPage--);

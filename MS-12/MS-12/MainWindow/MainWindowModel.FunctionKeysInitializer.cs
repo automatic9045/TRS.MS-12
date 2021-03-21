@@ -159,7 +159,7 @@ namespace TRS.TMS12
                             break;
                     }
 
-                    UserControlsConnector.SetCurrentTicket(Plugins.TicketPlugins.Find(t => t.Plugin.TicketName == "一括発券").Plugin, originMenu);
+                    UserControlHost.SetCurrentTicket(Plugins.TicketPlugins.Find(t => t.Plugin.TicketName == "一括発券").Plugin, originMenu);
 
                     CurrentScreen = Screen.Tickets;
                 }, () => CanExecute(FunctionKeys.F11)) },
