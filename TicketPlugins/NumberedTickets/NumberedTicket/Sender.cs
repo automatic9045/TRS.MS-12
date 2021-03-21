@@ -20,7 +20,6 @@ using TRS.TMS12.Static;
 using TRS.TMS12.Interfaces;
 using TRS.TMS12.Resources;
 using TRS.TMS12.Plugins.TRS;
-using RethinkCodes = TRS.TMS12.Plugins.TRS.RethinkCodes;
 using static TRS.TMS12.Static.App;
 
 namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
@@ -48,7 +47,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
             this.m = m;
         }
 
-        public void OnChangeMode(Mode newMode, object value) => Connector.ModeChanged(newMode, value);
+        public void OnChangeMode(Mode newMode, object value) => Connector.OnChangeMode(newMode, value);
 
         public SendResult Send()
         {
@@ -69,7 +68,7 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
                 WideStringToInt(m.TextBoxes[(int)InputControlTextBox.Preschooler]));
 
             Discount discount = m.Options.Any(p => p is Discount) ? (Discount)m.Options.First(p => p is Discount) : Discount.None;
-
+            
             SendResult result = Connector.Reserve(game, timeCode, customer, Pay.Cash(), discount, m.Options.Where(p => p is Option).Select(p => (Option)p));
             return result;
         }

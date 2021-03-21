@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-
-using Codeplex.Data;
 
 using TRS.TMS12.Interfaces;
 using TRS.Tickets;
+using NativeNumberedTicket = TRS.Tickets.NumberedTicket;
 
 namespace TRS.TMS12.Plugins.TRS
 {
@@ -49,7 +47,7 @@ namespace TRS.TMS12.Plugins.TRS
                         {
                             return SendResult.Error(ex, json, ResultTypeStringToEnum(json));
                         }
-                        catch (Exception ex2)
+                        catch
                         {
                             return SendResult.Error(ex);
                         }
@@ -71,9 +69,9 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
-                        result = ParseResult(json, new Func<List<Ticket>>(() =>
+                        result = ParseResult(json, new Func<List<TicketBase>>(() =>
                         {
-                            NumberedTicket ticket = new NumberedTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new NumberedTicketInformation()
+                            NativeNumberedTicket ticket = new NativeNumberedTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new NumberedTicketInformation()
                             {
                                 StartDate = DateTime.Parse(json.date + " " + json.time1),
                                 EndDate = DateTime.Parse(json.date + " " + json.time2),
@@ -84,7 +82,7 @@ namespace TRS.TMS12.Plugins.TRS
                                 CNumber = ((string[])json.cNumber).Select(n => int.Parse(n)).ToArray(),
                                 Forced = seatCode != -1,
                                 IssuedDate = DateTime.Parse(json.now),
-                                IssueNumber = PluginHost.IsOneTimeMode ? PluginHost.Tickets.IndexOf(null) + 1 : PluginHost.Tickets.Count + 1,
+                                IssueNumber = PluginHost.IsOneTimeMode ? PluginHost.AllSentTickets.IndexOf(null) + 1 : PluginHost.AllSentTickets.Count + 1,
                                 CountBeginNumber = PluginHost.IsOneTimeMode ? PluginHost.ReservedTickets.Count + 1 : 1,
                                 IsWorkingOnInternet = true,
                                 WriteNumberOfPerson = IsOneTimeMode,
@@ -107,13 +105,7 @@ namespace TRS.TMS12.Plugins.TRS
                                 },
                             }, PrintSetting);
 
-                            List<Ticket> tickets = new List<Ticket>();
-                            for (int i = 0; i < ticket.ticketImages.Length; i++)
-                            {
-                                tickets.Add(new Ticket(ticket.ticketImages[i], ticket.ticketPrintStartPosition[i]));
-                            }
-
-                            return tickets;
+                            return ticket.ticketImages.Select((t, i) => (TicketBase)new NumberedTicket(ticket, i)).ToList();
                         }));
                     }
                     catch (Exception ex)
@@ -122,7 +114,7 @@ namespace TRS.TMS12.Plugins.TRS
                         {
                             return SendResult.Error(ex, ResultTypeStringToEnum(json));
                         }
-                        catch (Exception ex2)
+                        catch
                         {
                             return SendResult.Error(ex);
                         }
@@ -135,5 +127,19 @@ namespace TRS.TMS12.Plugins.TRS
 
         public SendResult Reserve(Game game, int timeCode, CustomersInfo customer, Pay pay, Discount discount, IEnumerable<Option> options) =>
             Reserve(game, timeCode, -1, -1, customer, pay, discount, options);
+    }
+
+    public class NumberedTicket : TicketBase
+    {
+        private NativeNumberedTicket nativeTicket;
+        private int index;
+
+        public NumberedTicket(NativeNumberedTicket nativeTicket, int index) : base(nativeTicket.ticketImages[index])
+        {
+            this.nativeTicket = nativeTicket;
+            this.index = index;
+        }
+
+        public override TicketBase Resend() => this; // 本来はカク再付の再製券を作らないといけない
     }
 }

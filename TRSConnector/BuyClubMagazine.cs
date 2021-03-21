@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using Microsoft.VisualBasic;
 
 using Codeplex.Data;
 
 using TRS.TMS12.Interfaces;
 using TRS.Tickets;
+using NativeEventTicket = TRS.Tickets.EventTicket;
 
 namespace TRS.TMS12.Plugins.TRS
 {
@@ -40,7 +40,7 @@ namespace TRS.TMS12.Plugins.TRS
                         {
                             return SendResult.Error(ex, json, ResultTypeStringToEnum(json));
                         }
-                        catch (Exception ex2)
+                        catch
                         {
                             return SendResult.Error(ex);
                         }
@@ -60,9 +60,9 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
-                        result = ParseResult(json, new Func<List<Ticket>>(() =>
+                        result = ParseResult(json, new Func<List<TicketBase>>(() =>
                         {
-                            EventTicket ticket = new EventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
+                            NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
                             {
                                 Title = "部誌購入証",
                                 Product = "部誌" + Strings.StrConv(year.ToString(), VbStrConv.Wide) + "号",
@@ -78,13 +78,7 @@ namespace TRS.TMS12.Plugins.TRS
                                 CountBeginNumber = 1,
                             }, PrintSetting);
 
-                            List<Ticket> tickets = new List<Ticket>();
-                            for (int i = 0; i < ticket.ticketImages.Length; i++)
-                            {
-                                tickets.Add(new Ticket(ticket.ticketImages[i], ticket.ticketPrintStartPosition[i]));
-                            }
-
-                            return tickets;
+                            return ticket.ticketImages.Select((t, i) => (TicketBase)new EventTicket(ticket, i)).ToList();
                         }));
                     }
                     catch (Exception ex)
@@ -93,7 +87,7 @@ namespace TRS.TMS12.Plugins.TRS
                         {
                             return SendResult.Error(ex, ResultTypeStringToEnum(json));
                         }
-                        catch (Exception ex2)
+                        catch
                         {
                             return SendResult.Error(ex);
                         }
@@ -103,5 +97,19 @@ namespace TRS.TMS12.Plugins.TRS
 
             return result;
         }
+    }
+
+    public class EventTicket : TicketBase
+    {
+        private NativeEventTicket nativeTicket;
+        private int index;
+
+        public EventTicket(NativeEventTicket nativeTicket, int index) : base(nativeTicket.ticketImages[index])
+        {
+            this.nativeTicket = nativeTicket;
+            this.index = index;
+        }
+
+        public override TicketBase Resend() => this; // 本来はカク再付の再製券を作らないといけない
     }
 }

@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace TRS.TMS12.Interfaces
 {
     /// <summary>
-    /// 券を印刷するためのインターフェイスです。<see cref="IPlugin"/> を継承しています。
+    /// 券を印刷するプリンターのインターフェイスです。<see cref="IPlugin"/> を継承しています。
     /// </summary>
     public interface IPrinterPlugin : IPlugin
     {
@@ -35,7 +35,7 @@ namespace TRS.TMS12.Interfaces
         /// <summary>
         /// プリンターを初期化します。
         /// </summary>
-        /// <param name="printerName"></param>
+        /// <param name="printerName">App.xml で設定されたプリンター名。</param>
         void Initialize(string printerName);
 
         /// <summary>
@@ -46,12 +46,11 @@ namespace TRS.TMS12.Interfaces
         /// <summary>
         /// 券を印刷します。
         /// </summary>
-        /// <param name="tickets">印刷する <see cref="Ticket"/> のリスト。</param>
-        /// <param name="onPrint"><see cref="Ticket"/> の印刷が完了する毎に呼び出すアクション。引数には、印刷が完了した <see cref="Ticket"/> の <paramref name="tickets"/> におけるインデックスをとります。</param>
-        /// <param name="onError">引数には、発生した例外、例外発生時に印刷していた <see cref="Ticket"/> の <paramref name="tickets"/> におけるインデックスをとります。</param>
-        /// <param name="isStart">このメソッドを連続して呼び出すとき、この呼び出しが最初であるか。連続して呼び出さない場合は <see cref="true"/>。</param>
-        /// <param name="isEnd">このメソッドを連続して呼び出すとき、この呼び出しが最後であるか。連続して呼び出さない場合は <see cref="true"/>。</param>
-        void Print(List<Ticket> tickets, Action<int> onPrint, Action<Exception, int> onError, bool isStart = true, bool isEnd = true);
+        /// <param name="tickets">印刷対象の <see cref="TicketBase"/> のリスト。</param>
+        /// <param name="issueingNumber">各発行毎に附番されるユニークな番号。</param>
+        /// <param name="onPrint"><see cref="TicketBase"/> の印刷が完了する毎に呼び出すアクション。引数には、印刷が完了した <see cref="TicketBase"/> の <paramref name="tickets"/> におけるインデックスをとります。</param>
+        /// <param name="onError">引数には、発生した例外、例外発生時に印刷していた <see cref="TicketBase"/> の <paramref name="tickets"/> におけるインデックスをとります。</param>
+        void Print(List<TicketBase> tickets, int issueingNumber, Action<int> onPrint, Action<Exception, int> onError);
     }
 
     public static class PrintWidthes

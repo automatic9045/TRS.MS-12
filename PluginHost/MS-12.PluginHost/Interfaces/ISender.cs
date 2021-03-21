@@ -68,24 +68,24 @@ namespace TRS.TMS12.Interfaces
         Relay,
     }
 
-    public class Ticket
+    public abstract class TicketBase
     {
-        public Bitmap Bitmap { get; private set; }
-        public int PrintStartPosition { get; private set; }
+        public Bitmap Bitmap { get; }
 
-        public Ticket(Bitmap bitmap, int printStartPosition)
+        public abstract TicketBase Resend();
+
+        public TicketBase(Bitmap bitmap)
         {
             Bitmap = bitmap;
-            PrintStartPosition = printStartPosition;
         }
     }
 
     public class TicketInfo
     {
-        public Ticket Ticket { get; }
+        public TicketBase Ticket { get; }
         public bool HasPrinted { get; private set; } = false;
 
-        public TicketInfo(Ticket ticket)
+        public TicketInfo(TicketBase ticket)
         {
             Ticket = ticket;
         }
@@ -159,15 +159,15 @@ namespace TRS.TMS12.Interfaces
     public class IssuableSendResult : SendResult
     {
         private bool isTicketCreated = false;
-        public Func<List<Ticket>> _CreateTicketsMethod;
-        public Func<List<Ticket>> CreateTicketsMethod
+        public Func<List<TicketBase>> _CreateTicketsMethod;
+        public Func<List<TicketBase>> CreateTicketsFunc
         {
             get
             {
                 if (!isTicketCreated)
                 {
-                    List<Ticket> tickets = _CreateTicketsMethod.Invoke();
-                    CreateTicketsMethod = () => tickets;
+                    List<TicketBase> tickets = _CreateTicketsMethod.Invoke();
+                    CreateTicketsFunc = () => tickets;
                     isTicketCreated = true;
                 }
 
@@ -176,7 +176,7 @@ namespace TRS.TMS12.Interfaces
             protected set => _CreateTicketsMethod = value;
         }
 
-        public static IssuableSendResult Yes(Func<List<Ticket>> createTicketsMethod, string text, string message, bool isFullScreen)
+        public static IssuableSendResult Yes(Func<List<TicketBase>> createTicketsFunc, string text, string message, bool isFullScreen)
         {
             IssuableSendResult result = new IssuableSendResult()
             {
@@ -184,7 +184,7 @@ namespace TRS.TMS12.Interfaces
                 Result = SendResultType.Yes,
                 Text = text,
                 Message = message,
-                CreateTicketsMethod = createTicketsMethod,
+                CreateTicketsFunc = createTicketsFunc,
             };
             return result;
         }

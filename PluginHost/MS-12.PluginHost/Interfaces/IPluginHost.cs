@@ -18,10 +18,13 @@ using TRS.TMS12.Resources;
 
 namespace TRS.TMS12.Interfaces
 {
+    /// <summary>
+    /// アプリケーションとプラグインの間でやりとりするためのメソッド、プロパティを提供します。
+    /// </summary>
     public interface IPluginHost
     {
         /// <summary>
-        /// アプリケーション独自のダイアログを表示するメソッドを提供します。
+        /// アプリケーション独自のダイアログを表示する為のメソッドを提供する <see cref="IDialog"/> を取得します。
         /// </summary>
         IDialog Dialog { get; }
 
@@ -33,32 +36,46 @@ namespace TRS.TMS12.Interfaces
         /// <summary>
         /// 現在表示している券種を取得・設定します。
         /// </summary>
-        ITicketPlugin CurrentTicket { get; }
+        ITicketPlugin CurrentTicket { get; set; }
 
         /// <summary>
         /// 現在使用しているプリンターを取得・設定します。
         /// </summary>
         IPrinterPlugin CurrentPrinter { get; set; }
 
+        /// <summary>
+        /// 現在一件操作中であるかを取得・設定します。
+        /// </summary>
         bool IsOneTimeMode { get; set; }
 
-        List<List<TicketInfo>> Tickets { get; }
-        List<Ticket> ReservedTickets { get; }
+        /// <summary>
+        /// アプリケーションを起動してからこれまでに発信された全ての <see cref="TicketBase"/> の <see cref="TicketInfo"/> のリストを取得します。
+        /// </summary>
+        List<List<TicketInfo>> AllSentTickets { get; }
 
         /// <summary>
-        /// データ読込時にエラーを表示します。実行中にエラーを表示させるには <see cref="IDialog.ShowError(string, bool)"/> メソッドを使用して下さい。
+        /// 一括一件操作において予約され、まだ発券されていない <see cref="TicketBase"/> のリストを取得します。
+        /// </summary>
+        List<TicketBase> ReservedTickets { get; }
+
+        /// <summary>
+        /// データ読込時にエラーを表示します。<br />
+        /// エラーが一つでも発生した場合、パラメーターで設定したメッセージが表示され、ユーザーが実行しているデータの読込は強制的に中止されます。<br />
+        /// 実行中にエラーを表示させるには <see cref="IDialog.ShowErrorDialog(string, bool)"/> メソッドを使用して下さい。
         /// </summary>
         /// <param name="text">表示するテキスト。</param>
         /// <param name="caption">エラーの概要を表すキャプション。</param>
         void ThrowError(string text, string caption);
         /// <summary>
-        /// データ読込時に警告を表示します。実行中に警告を表示させるには <see cref="IDialog.ShowWarning(string, bool)"/> メソッドを使用して下さい。
+        /// データ読込時に警告を表示します。<br />
+        /// 実行中に警告を表示させるには <see cref="IDialog.ShowWarningDialog(string, bool)"/> メソッドを使用して下さい。
         /// </summary>
         /// <param name="text">表示するテキスト。</param>
         /// <param name="caption">警告の概要を表すキャプション。</param>
         void ThrowWarning(string text, string caption);
         /// <summary>
-        /// データ読込時に情報を表示します。実行中に情報を表示させるには <see cref="IDialog.ShowInformation(string, bool)"/> メソッドを使用して下さい。
+        /// データ読込時に情報を表示します。<br />
+        /// 実行中に情報を表示させるには <see cref="IDialog.ShowInformationDialog(string, bool)"/> メソッドを使用して下さい。
         /// </summary>
         /// <param name="text">表示するテキスト。</param>
         /// <param name="caption">情報の概要を表すキャプション。</param>
@@ -72,8 +89,15 @@ namespace TRS.TMS12.Interfaces
         /// <returns>キーレイアウトを表現する <see cref="List<KeyInfo>"/>。</returns>
         KeyTab GetKeyLayoutFromFile(string path, int keyCount = 60);
 
+        /// <summary>
+        /// 操作種別（発売・予約・照会）を切り替えます。
+        /// </summary>
+        /// <param name="sendType">新しい <see cref="SendTypes">。</param>
         void ChangeSendType(SendTypes? sendType);
 
+        /// <summary>
+        /// サイドメニューに画面を遷移します。
+        /// </summary>
         void GoToSideMenu();
     }
 }
