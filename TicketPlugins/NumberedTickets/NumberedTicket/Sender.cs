@@ -45,8 +45,14 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
         public Sender(PluginInfo m)
         {
             this.m = m;
-            m.PluginHost.ModeEnabledChanged += e => Connector.ModeChanged(e.TargetMode, e.IsModeEnabled);
-            m.PluginHost.SendTypeChanged += e => Connector.SendTypeChanged(e.SendType);
+            m.PropertyChanged += (sender, pe) =>
+            {
+                if (pe.PropertyName == nameof(m.PluginHost))
+                {
+                    m.PluginHost.ModeEnabledChanged += e => Connector.ModeChanged(e.TargetMode, e.IsModeEnabled);
+                    m.PluginHost.SendTypeChanged += e => Connector.SendTypeChanged(e.SendType);
+                }
+            };
         }
 
         public SendResult Send()
