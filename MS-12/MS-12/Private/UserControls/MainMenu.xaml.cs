@@ -35,9 +35,6 @@ namespace TRS.TMS12
     public partial class MainMenuModel : BindableBase, IModel
     {
         public UserControlHost UserControlHost { get; set; }
-        public List<ITicketPlugin> TicketPlugins { get; set; }
-        public Dictionary<Screen, IModel> Models { get; set; }
-        public DialogModel DialogModel { get; set; }
 
         public ObservableCollection<bool> FIsEnabled { get; set; } = new ObservableCollection<bool>()
         {
@@ -70,8 +67,12 @@ namespace TRS.TMS12
 
             PowerOffClicked = new DelegateCommand(async () =>
             {
-                if (await m.DialogModel.ShowConfirmDialogAsync("ソフトウェアを終了します。\nよろしいですか？"))
+                if (await m.UserControlHost.DialogModel.ShowConfirmDialogAsync("ソフトウェアを終了します。\nよろしいですか？"))
                 {
+                    m.UserControlHost.DialogModel.ShowInformationDialog("プリンターの解放中");
+                    m.UserControlHost.CurrentPrinter.Dispose();
+                    m.UserControlHost.DialogModel.ShowInformationDialog("シャットダウン中");
+
                     Application.Current.Shutdown();
                 }
             });

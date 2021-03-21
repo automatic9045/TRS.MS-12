@@ -33,9 +33,6 @@ namespace TRS.TMS12
     public partial class OneTouchMenuModel : BindableBase, IModel
     {
         public UserControlHost UserControlHost { get; set; }
-        public List<ITicketPlugin> TicketPlugins { get; set; }
-        public Dictionary<Screen, IModel> Models { get; set; }
-        public DialogModel DialogModel { get; set; }
 
         public ObservableCollection<bool> FIsEnabled { get; set; } = new ObservableCollection<bool>()
         {

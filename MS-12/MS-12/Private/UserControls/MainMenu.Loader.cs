@@ -174,7 +174,7 @@ namespace TRS.TMS12
                                 foreach (XElement groupMenuContent in groupMenuContents)
                                 {
                                     string ticketPluginClassName = (string)groupMenuContent.Attribute("Type") ?? "";
-                                    ITicketPlugin ticketPlugin = TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + ticketPluginClassName);
+                                    ITicketPlugin ticketPlugin = UserControlHost.TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + ticketPluginClassName);
                                     if (ticketPluginClassName == "")
                                     {
 
@@ -205,7 +205,7 @@ namespace TRS.TMS12
                         }
 
                         string typicalTicketPluginClassName = (string)content.Attribute("TypicalTicketType") ?? "";
-                        ITicketPlugin typicalTicketPlugin = TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + typicalTicketPluginClassName);
+                        ITicketPlugin typicalTicketPlugin = UserControlHost.TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + typicalTicketPluginClassName);
                         if (typicalTicketPluginClassName == "")
                         {
 
@@ -233,7 +233,7 @@ namespace TRS.TMS12
                             {
                                 UserControlHost.SetCurrentScreen(Screen.None);
                                 DoEvents();
-                                ((GroupMenuModel)Models[Screen.GroupMenu]).CurrentGroup = new TicketGroup(ticketGroupName, tickets);
+                                ((GroupMenuModel)UserControlHost.Models[Screen.GroupMenu]).CurrentGroup = new TicketGroup(ticketGroupName, tickets);
                                 UserControlHost.SetCurrentScreen(Screen.GroupMenu);
                             }),
                         });

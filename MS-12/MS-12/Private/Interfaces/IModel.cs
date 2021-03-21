@@ -27,9 +27,6 @@ namespace TRS.TMS12
     public interface IModel
     {
         UserControlHost UserControlHost { get; set; }
-        List<ITicketPlugin> TicketPlugins { get; set; }
-        Dictionary<Screen, IModel> Models { get; set; }
-        DialogModel DialogModel { get; set; }
 
         ObservableCollection<bool> FIsEnabled { get; set; }
 

@@ -31,6 +31,14 @@ namespace TRS.TMS12
     {
         private MainWindowModel mainWindowModel;
 
+        public List<ITicketPlugin> TicketPlugins { get; }
+        public IPrinterPlugin CurrentPrinter
+        {
+            get => mainWindowModel.CurrentPrinter;
+        }
+        public Dictionary<Screen, IModel> Models { get; }
+        public DialogModel DialogModel { get; }
+
         public void SetCurrentScreen(Screen screen)
         {
             mainWindowModel.CurrentScreen = screen;
@@ -48,6 +56,9 @@ namespace TRS.TMS12
         public UserControlHost(MainWindowModel mainWindowModel)
         {
             this.mainWindowModel = mainWindowModel;
+            Models = mainWindowModel.Models;
+            DialogModel = mainWindowModel.DialogModel;
+            TicketPlugins = mainWindowModel.Plugins.TicketPlugins.Select(p => p.Plugin).ToList();
         }
     }
 
@@ -147,7 +158,6 @@ namespace TRS.TMS12
         {
             AppConnector = appConnector;
 
-            UserControlHost = new UserControlHost(this);
             PluginHost = new PluginHost(this);
 
             AppConnector.ChangeProgressStatus("プラグインを検索しています", Progress.LoadingPlugins);
@@ -187,8 +197,6 @@ namespace TRS.TMS12
                 AppConnector.ChangeProgressStatus("プラグインを読み込んでいます\n\n　" + p.Path, Progress.LoadingPlugins);
                 p.Plugin.PluginHost = PluginHost;
             }
-            AppConnector.ChangeProgressStatus("プラグインを読み込んでいます", Progress.LoadingPlugins);
-            List<ITicketPlugin> ticketPlugins = Plugins.TicketPlugins.Select(p => p.Plugin).ToList();
 
             
             AppConnector.ChangeProgressStatus("ページを読み込んでいます", Progress.LoadingPages);
@@ -198,13 +206,11 @@ namespace TRS.TMS12
                 { Screen.GroupMenu, new GroupMenuModel() },
                 { Screen.OneTouchMenu, new OneTouchMenuModel() },
             };
+            UserControlHost = new UserControlHost(this);
             foreach (KeyValuePair<Screen, IModel> p in Models)
             {
                 IModel model = p.Value;
                 model.UserControlHost = UserControlHost;
-                model.Models = Models;
-                model.DialogModel = DialogModel;
-                model.TicketPlugins = ticketPlugins;
             }
 
             ResultControlModel.DialogModel = DialogModel;
