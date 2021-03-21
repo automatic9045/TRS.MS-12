@@ -30,11 +30,10 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
         public Sender(PluginInfo m)
         {
             this.m = m;
-        }
-
-        public void OnChangeMode(Mode newMode, object value)
-        {
-            if (newMode == Mode.OneTime) m.FunctionKeysIsEnabled[(int)FunctionKeys.Send] = true;
+            m.PluginHost.ModeEnabledChanged += e =>
+            {
+                if (e.TargetMode == Mode.OneTime) m.FunctionKeysIsEnabled[(int)FunctionKeys.Send] = e.IsModeEnabled;
+            };
         }
 
         public SendResult Send()

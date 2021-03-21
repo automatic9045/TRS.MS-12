@@ -20,7 +20,7 @@ using System.Windows.Shapes;
 namespace TRS.TMS12.Interfaces
 {
     /// <summary>
-    /// 発信のタイプです。発売／予約／照会。
+    /// 操作種別を指定します。発売／予約／照会。
     /// </summary>
     public enum SendTypes
     {
@@ -39,7 +39,7 @@ namespace TRS.TMS12.Interfaces
     }
 
     /// <summary>
-    /// 発信時の結果の種別です。
+    /// 発信結果の種別を指定します。
     /// </summary>
     public enum SendResultType
     {
@@ -55,17 +55,6 @@ namespace TRS.TMS12.Interfaces
         /// 再考
         /// </summary>
         Rethink,
-    }
-
-    /// <summary>
-    /// <see cref="ISender.OnChangeMode(Mode, object)"/> で、変更通知元を判別するための列挙体です。
-    /// </summary>
-    public enum Mode
-    {
-        Test,
-        OneTime,
-        Send,
-        Relay,
     }
 
     public abstract class TicketBase
@@ -94,6 +83,32 @@ namespace TRS.TMS12.Interfaces
         {
             HasPrinted = true;
         }
+    }
+
+    /// <summary>
+    /// <see cref="IPluginHost.ModeEnabledChanged"/> で、有効・無効が変更されたモードを指定します。
+    /// </summary>
+    public enum Mode
+    {
+        /// <summary>
+        /// 営業試験
+        /// </summary>
+        Test,
+
+        /// <summary>
+        /// 一件
+        /// </summary>
+        OneTime,
+
+        /// <summary>
+        /// クレジット
+        /// </summary>
+        Credit,
+
+        /// <summary>
+        /// 中継発売
+        /// </summary>
+        Relay,
     }
 
     /// <summary>
@@ -192,13 +207,6 @@ namespace TRS.TMS12.Interfaces
 
     public interface ISender
     {
-        /// <summary>
-        /// 端末のモードが変更された時に呼び出されるメソッドです。
-        /// </summary>
-        /// <param name="newMode">変更通知元の <see cref="Mode">。</param>
-        /// <param name="value">変更後の値。</param>
-        void OnChangeMode(Mode newMode, object value);
-
         /// <summary>
         /// 発信時の処理を定義します。
         /// </summary>

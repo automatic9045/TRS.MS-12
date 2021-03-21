@@ -299,27 +299,27 @@ namespace TRS.TMS12
                     switch ((FunctionKeys)e.NewStartingIndex)
                     {
                         case FunctionKeys.F1:
-                            CurrentTicket.Sender.OnChangeMode(Mode.Test, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
+                            PluginHost.RaiseModeEnabledChanged(Mode.Test, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
                             break;
 
                         case FunctionKeys.F14:
-                            //CurrentTicket.Sender.ModeChanged(Mode., FunctionKeyToggleButtonsIsChecked[FunctionKeys.F14]);
+                            PluginHost.RaiseModeEnabledChanged(Mode.Credit, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F14]);
                             break;
 
                         case FunctionKeys.Relay:
-                            CurrentTicket.Sender.OnChangeMode(Mode.Relay, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F14]);
+                            PluginHost.RaiseModeEnabledChanged(Mode.Relay, FunctionKeyToggleButtonsIsChecked[FunctionKeys.F14]);
                             break;
                     }
                 }
             });
 
-            PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
+            PropertyChanged += (sender, e) =>
             {
-                if (CurrentScreen == Screen.Tickets && CurrentTicket != null && e.PropertyName == nameof(SendType))
+                if (CurrentScreen == Screen.Tickets && !(CurrentTicket is null) && e.PropertyName == nameof(SendType))
                 {
-                    CurrentTicket.Sender.OnChangeMode(Mode.Send, (int?)SendType);
+                    PluginHost.RaiseSendTypeChanged(SendType);
                 }
-            });
+            };
 
             foreach (ITicketPlugin ticketPlugin in Plugins.TicketPlugins.Select(p =>p.Plugin))
             {
