@@ -2,5 +2,5 @@
 <ApplicationSettings>
 	<CatchUnobservedExceptions Enabled="true"/>
 	<ShowNotImplementedDialog Enabled="true"/>
-	<Printer Class="Emulators.ImageSaving.ImageSaving" Name=""/>
+	<Printer Class="Emulators.ImageSaving.Printer58" Name=""/>
 </ApplicationSettings>
