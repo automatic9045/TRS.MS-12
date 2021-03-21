@@ -153,17 +153,17 @@ namespace TRS.TMS12
 
         public void ThrowError(string text, string caption)
         {
-            mainWindowModel.UserControlsConnector.Throw(text, caption, ErrorType.Error);
+            mainWindowModel.UserControlHost.Throw(text, caption, ErrorType.Error);
         }
 
         public void ThrowWarning(string text, string caption)
         {
-            mainWindowModel.UserControlsConnector.Throw(text, caption, ErrorType.Warning);
+            mainWindowModel.UserControlHost.Throw(text, caption, ErrorType.Warning);
         }
 
         public void ThrowInformation(string text, string caption)
         {
-            mainWindowModel.UserControlsConnector.Throw(text, caption, ErrorType.Information);
+            mainWindowModel.UserControlHost.Throw(text, caption, ErrorType.Information);
         }
 
         public KeyTab GetKeyLayoutFromFile(string path, int keyCount = 60)

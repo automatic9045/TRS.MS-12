@@ -27,7 +27,7 @@ using static TRS.TMS12.Static.App;
 
 namespace TRS.TMS12
 {
-    public class UserControlsConnector
+    public class UserControlHost
     {
         private MainWindowModel mainWindowModel;
 
@@ -45,7 +45,7 @@ namespace TRS.TMS12
 
         public void Throw(string text, string caption, ErrorType errorType) => mainWindowModel.AppConnector.OnError(text, caption, errorType);
 
-        public UserControlsConnector(MainWindowModel mainWindowModel)
+        public UserControlHost(MainWindowModel mainWindowModel)
         {
             this.mainWindowModel = mainWindowModel;
         }
@@ -59,7 +59,7 @@ namespace TRS.TMS12
 
         public AppConnector AppConnector { get; private set; }
 
-        public UserControlsConnector UserControlsConnector { get; private set; }
+        public UserControlHost UserControlHost { get; private set; }
         public PluginHost PluginHost { get; private set; }
 
         public DialogModel DialogModel { get; private set; } = new DialogModel();
@@ -147,7 +147,7 @@ namespace TRS.TMS12
         {
             AppConnector = appConnector;
 
-            UserControlsConnector = new UserControlsConnector(this);
+            UserControlHost = new UserControlHost(this);
             PluginHost = new PluginHost(this);
 
             AppConnector.ChangeProgressStatus("プラグインを検索しています", Progress.LoadingPlugins);
@@ -201,7 +201,7 @@ namespace TRS.TMS12
             foreach (KeyValuePair<Screen, IModel> p in Models)
             {
                 IModel model = p.Value;
-                model.UserControlsConnector = UserControlsConnector;
+                model.UserControlHost = UserControlHost;
                 model.Models = Models;
                 model.DialogModel = DialogModel;
                 model.TicketPlugins = ticketPlugins;

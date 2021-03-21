@@ -34,7 +34,7 @@ namespace TRS.TMS12
 {
     public partial class MainMenuModel : BindableBase, IModel
     {
-        public UserControlsConnector UserControlsConnector { get; set; }
+        public UserControlHost UserControlHost { get; set; }
         public List<ITicketPlugin> TicketPlugins { get; set; }
         public Dictionary<Screen, IModel> Models { get; set; }
         public DialogModel DialogModel { get; set; }
@@ -58,9 +58,9 @@ namespace TRS.TMS12
         {
             OneTouchClicked = new DelegateCommand(() =>
             {
-                m.UserControlsConnector.SetCurrentScreen(Screen.None);
+                m.UserControlHost.SetCurrentScreen(Screen.None);
                 DoEvents();
-                m.UserControlsConnector.SetCurrentScreen(Screen.OneTouchMenu);
+                m.UserControlHost.SetCurrentScreen(Screen.OneTouchMenu);
             });
 
             MaintenanceClicked = new DelegateCommand(() =>

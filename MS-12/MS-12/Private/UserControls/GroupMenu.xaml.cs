@@ -42,7 +42,7 @@ namespace TRS.TMS12
 
     public  partial class GroupMenuModel : BindableBase, IModel
     {
-        public UserControlsConnector UserControlsConnector { get; set; }
+        public UserControlHost UserControlHost { get; set; }
         public List<ITicketPlugin> TicketPlugins { get; set; }
         public Dictionary<Screen, IModel> Models { get; set; }
         public DialogModel DialogModel { get; set; }
@@ -75,9 +75,9 @@ namespace TRS.TMS12
         {
             Cancel = new DelegateCommand(() =>
             {
-                m.UserControlsConnector.SetCurrentScreen(Screen.None);
+                m.UserControlHost.SetCurrentScreen(Screen.None);
                 DoEvents();
-                m.UserControlsConnector.SetCurrentScreen(Screen.MainMenu);
+                m.UserControlHost.SetCurrentScreen(Screen.MainMenu);
             });
 
             NotImplemented = new DelegateCommand(() =>
@@ -108,10 +108,10 @@ namespace TRS.TMS12
 
                         List<DelegateCommand> clicked = m.CurrentGroup.Contents.ConvertAll(c => new DelegateCommand(() =>
                         {
-                            m.UserControlsConnector.SetCurrentScreen(Screen.None);
+                            m.UserControlHost.SetCurrentScreen(Screen.None);
                             DoEvents();
-                            m.UserControlsConnector.SetCurrentTicket(c.TicketPlugin, Screen.GroupMenu);
-                            m.UserControlsConnector.SetCurrentScreen(Screen.Tickets);
+                            m.UserControlHost.SetCurrentTicket(c.TicketPlugin, Screen.GroupMenu);
+                            m.UserControlHost.SetCurrentScreen(Screen.Tickets);
                         }));
 
                         Type = m.CurrentGroup.Name;
