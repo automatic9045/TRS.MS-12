@@ -39,9 +39,9 @@ namespace TRS.TMS12.Plugins.TRS
             {
                 json = Communicator.Check();
             }
-            catch (Exception ex)
+            catch
             {
-                return null;
+                return new List<TimeInquiringInfo>();
             }
 
             try
@@ -65,9 +65,9 @@ namespace TRS.TMS12.Plugins.TRS
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                return null;
+                return new List<TimeInquiringInfo>();
             }
 
             return result;
