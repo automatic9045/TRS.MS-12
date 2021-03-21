@@ -47,9 +47,9 @@ namespace TRS.TMS12
 
                 { FunctionKeys.F2, CreateObserveDelegateCommand(() =>
                 {
-                    List<TicketInfo> notPrintedTickets = PluginHost.Tickets.SelectMany(t => t).Where(t => !t.HasPrinted).ToList();
+                    List<TicketInfo> resentRequiringTickets = PluginHost.AllSentTickets.SelectMany(t => t).Where(t => !t.HasPrinted).ToList();
 
-                    if (notPrintedTickets.Count == 0)
+                    if (resentRequiringTickets.Count == 0)
                     {
                         DialogModel.ShowInformationDialog("回復の必要はありません。");
                     }
@@ -58,21 +58,40 @@ namespace TRS.TMS12
                         DialogModel.ShowInformationDialog("再製中", false);
                         DoEvents();
 
+                        List<TicketInfo> resentTickets = new List<TicketInfo>();
+                        resentRequiringTickets.ForEach(t =>
+                        {
+                            TicketBase resentTicket;
+                            
+                            try
+                            {
+                                resentTicket = Task.Run(t.Ticket.Resend).Result;
+                            }
+                            catch (Exception ex)
+                            {
+                                DialogModel.ShowErrorDialog($"再製要求の送信中にエラーが発生しました。\n\n\n詳細：\n\n{ex}");
+                                return;
+                            }
+                            
+                            t.OnPrint();
+                            resentTickets.Add(new TicketInfo(resentTicket));
+                        });
+
                         try
                         {
-                            CurrentPrinter.Print(notPrintedTickets.ConvertAll(t => t.Ticket), i =>
+                            CurrentPrinter.Print(resentTickets.ConvertAll(t => t.Ticket), PluginHost.AllSentTickets.Count + PluginHost.AllSentTickets.Count % 7 * 10000, i =>
                             {
-                                notPrintedTickets[i].OnPrint();
-                                DialogModel.ShowInformationDialog($"再製中\n\n（{i}／{notPrintedTickets.Count}）", false);
+                                resentTickets[i].OnPrint();
+                                DialogModel.ShowInformationDialog($"再製中\n\n発券中（{i}／{resentTickets.Count}）", false);
                                 DoEvents();
                             }, (ex, i) => DialogModel.ShowErrorDialog($"印刷時にエラーが発生しました。\n\n\n詳細：\n\n{ex}"));
+
+                            DialogModel.HideDialog();
                         }
                         catch (Exception ex)
                         {
                             DialogModel.ShowErrorDialog($"プリンターの呼び出しに失敗しました。\n\n\n詳細：\n\n{ex}");
                         }
-
-                        DialogModel.HideDialog();
                     }
                 }, () => CanExecute(FunctionKeys.F2)) },
 
@@ -242,10 +261,9 @@ namespace TRS.TMS12
                         }
                         DoEvents();
 
-                        IssuableSendResult issuableResult = result as IssuableSendResult;
-                        if (!(issuableResult is null))
+                        if (result is IssuableSendResult)
                         {
-                            List<Ticket> tickets = await Task.Run(issuableResult.CreateTicketsMethod);
+                            List<TicketBase> tickets = await Task.Run(((IssuableSendResult)result).CreateTicketsFunc);
                             switch (SendType)
                             {
                                 case SendTypes.Reserve:
@@ -254,10 +272,10 @@ namespace TRS.TMS12
 
                                 case SendTypes.Sell:
                                     List<TicketInfo> ticketInfos = tickets.ConvertAll(t => new TicketInfo(t));
-                                    PluginHost.Tickets.Add(ticketInfos);   
+                                    PluginHost.AllSentTickets.Add(ticketInfos);   
                                     try
                                     {
-                                        CurrentPrinter.Print(tickets, i =>
+                                        CurrentPrinter.Print(tickets, PluginHost.AllSentTickets.Count + PluginHost.AllSentTickets.Count % 7 * 10000, i =>
                                         {
                                             ticketInfos[i].OnPrint();
                                         }, (ex, i) => DialogModel.ShowErrorDialog($"印刷時にエラーが発生しました。\n\n\n詳細：{ex}"));

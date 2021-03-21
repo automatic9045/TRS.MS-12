@@ -149,7 +149,7 @@ namespace TRS.TMS12.Plugins.TRS
             };
         }
 
-        public void ModeChanged(Mode mode, object value)
+        public void OnChangeMode(Mode mode, object value)
         {
             switch (mode)
             {
@@ -183,7 +183,7 @@ namespace TRS.TMS12.Plugins.TRS
             };
         }
 
-        private static SendResult ParseResult(dynamic json, Func<List<Ticket>> createTicketsMethod, bool isFullScreen = false)
+        private static SendResult ParseResult(dynamic json, Func<List<TicketBase>> createTicketsMethod, bool isFullScreen = false)
         {
             SendResultType resultType = ResultTypeStringToEnum(json);
             return resultType switch

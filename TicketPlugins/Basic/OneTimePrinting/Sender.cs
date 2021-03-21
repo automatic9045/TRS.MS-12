@@ -34,14 +34,14 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
 
         public void OnChangeMode(Mode newMode, object value)
         {
-
+            if (newMode == Mode.OneTime) m.FunctionKeysIsEnabled[(int)FunctionKeys.Send] = true;
         }
 
         public SendResult Send()
         {
             SendResult result = IssuableSendResult.Yes(() =>
             {
-                List<Ticket> tickets = new List<Ticket>(m.PluginHost.ReservedTickets);
+                List<TicketBase> tickets = new List<TicketBase>(m.PluginHost.ReservedTickets);
                 
                 m.PluginHost.ReservedTickets.Clear();
                 m.PluginHost.IsOneTimeMode = false;
