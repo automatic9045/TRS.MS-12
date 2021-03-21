@@ -18,10 +18,10 @@
 - Plugins\TRS\NumberedTickets.NumberedTicket\NumberedTicket.dll
 - Plugins\TRS\TRSConnector.dll
 - Plugins\TRS\TRSTicket.dll
-- Printers\Printer.dll
-- Printers\PrinterPlugin.PrinterEmulator.dll
-- Printers\TRSConnector.dll
-- Printers\TRSTicket.dll
+- Printers\Emulators\PrinterEmulator.dll
+- Printers\Epson\TML90.dll
+- Printers\Star\TSP100I.dll
+- Printers\Star\TSP100II.dll
 
 解除されていないDLLはソフトウェアから動的に読み込めません。
 
