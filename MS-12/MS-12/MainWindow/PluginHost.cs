@@ -48,24 +48,56 @@ namespace TRS.TMS12
         }
 
 
-        public void ShowError(string text, bool buttonIsEnabled = true)
+        public void ShowErrorDialog(string text, bool buttonIsEnabled = true)
         {
             mainWindowModel.DialogModel.ShowErrorDialog(text, buttonIsEnabled);
         }
 
-        public void ShowWarning(string text, bool buttonIsEnabled = true)
+        public void ShowWarningDialog(string text, bool buttonIsEnabled = true)
         {
             mainWindowModel.DialogModel.ShowWarningDialog(text, buttonIsEnabled);
         }
 
-        public void ShowInformation(string text, bool buttonIsEnabled = true)
+        public void ShowInformationDialog(string text, bool buttonIsEnabled = true)
         {
             mainWindowModel.DialogModel.ShowInformationDialog(text, buttonIsEnabled);
         }
 
-        public void ShowNotImplementedDialog(string text, bool isCollectingInformation = false)
+        public void ShowNotImplementedDialog(string text, bool isHelpWanted = false)
         {
-            mainWindowModel.DialogModel.ShowNotImplementedDialog(text, isCollectingInformation);
+            mainWindowModel.DialogModel.ShowNotImplementedDialog(text, isHelpWanted);
+        }
+
+
+        public async Task ShowErrorDialogAsync(string text)
+        {
+            await mainWindowModel.DialogModel.ShowErrorDialogAsync(text);
+        }
+
+        public async Task ShowWarningDialogAsync(string text)
+        {
+            await mainWindowModel.DialogModel.ShowWarningDialogAsync(text);
+        }
+
+        public async Task ShowInformationDialogAsync(string text)
+        {
+            await mainWindowModel.DialogModel.ShowInformationDialogAsync(text);
+        }
+
+        public async Task ShowNotImplementedDialogAsync(string text, bool isHelpWanted = false)
+        {
+            await mainWindowModel.DialogModel.ShowNotImplementedDialogAsync(text, isHelpWanted);
+        }
+
+
+        public async Task<bool> ShowConfirmDialogAsync(string text)
+        {
+            return await mainWindowModel.DialogModel.ShowConfirmDialogAsync(text);
+        }
+
+        public void Hide()
+        {
+            mainWindowModel.DialogModel.HideDialog();
         }
     }
 
@@ -98,12 +130,12 @@ namespace TRS.TMS12
             set => mainWindowModel.CurrentPrinter = value;
         }
 
-        public List<List<TicketInfo>> Tickets
+        public List<List<TicketInfo>> AllSentTickets
         {
             get => mainWindowModel.Tickets;
         }
 
-        public List<Ticket> ReservedTickets
+        public List<TicketBase> ReservedTickets
         {
             get => mainWindowModel.ReservedTickets;
         }

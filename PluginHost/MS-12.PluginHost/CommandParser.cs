@@ -101,8 +101,8 @@ namespace TRS.TMS12.Resources
                             textBox.Text = textBox.Text.Insert(selectionStart, args[0]);
                             textBox.CaretIndex = selectionStart + args[0].Length;
                         }
-                        else
-                        {
+
+                        /*
                             for (int n = 0; n < args[0].Length; n++) Keyboard.FocusedElement.RaiseEvent(
                                 new KeyEventArgs(
                                     Keyboard.PrimaryDevice,
@@ -118,7 +118,7 @@ namespace TRS.TMS12.Resources
                                     new TextComposition(InputManager.Current, Keyboard.FocusedElement, args[0]))
                                 { RoutedEvent = TextCompositionManager.TextInputEvent }
                             );
-                        }
+                        */
                         break;
 
                     case "SET_DATE":
@@ -148,7 +148,7 @@ namespace TRS.TMS12.Resources
                         break;
 
                     default:
-                        m.PluginHost.Dialog.ShowWarning("指定されたコマンドが見つかりませんでした：\n\n" + param);
+                        m.PluginHost.Dialog.ShowWarningDialog("指定されたコマンドが見つかりませんでした：\n\n" + param);
                         break;
                 }
             }
