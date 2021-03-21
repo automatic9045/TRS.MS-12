@@ -44,17 +44,17 @@ namespace TRS.TMS12
         public bool ShowNotImplementedDialog { get; set; }
 
         public string PrinterClass { get; }
-        public string PrinterArg { get; }
+        public string PrinterName { get; }
 
         public string MainMenuLayoutSourcePath { get; }
         public string OneTouchMenuLayoutSourcePath { get; }
 
-        public AppConnector(SplashScreenViewModel splashScreenVM, string printerClass, string printerArg, string mainMenuLayoutSourcePath, string oneTouchMenuLayoutSourcePath)
+        public AppConnector(SplashScreenViewModel splashScreenVM, string printerClass, string printerName, string mainMenuLayoutSourcePath, string oneTouchMenuLayoutSourcePath)
         {
             splashVM = splashScreenVM;
 
             PrinterClass = printerClass;
-            PrinterArg = printerArg;
+            PrinterName = printerName;
 
             MainMenuLayoutSourcePath = mainMenuLayoutSourcePath;
             OneTouchMenuLayoutSourcePath = oneTouchMenuLayoutSourcePath;
@@ -143,6 +143,8 @@ namespace TRS.TMS12
 
             async void Start()
             {
+                MainWindowVM.M.DialogModel.ShowInformationDialog("ソフトウェアのバージョンを確認しています...", false);
+
                 this.MainWindow = mainWindow;
                 mainWindow.Show();
                 splash.Close();
