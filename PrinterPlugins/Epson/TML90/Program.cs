@@ -57,7 +57,7 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
                 return;
             }
 
-            List<(Bitmap, Bitmap)> bmps = tickets.ConvertAll(t =>
+            List<(string, string)> bmpPaths = tickets.ConvertAll(t =>
             {
                 Bitmap sourceBmp = (Bitmap)t.Bitmap.Clone();
                 sourceBmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
@@ -65,17 +65,23 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
                 Bitmap bmp1 = sourceBmp.Clone(new Rectangle((sourceBmp.Width - 364) / 2, 0, 364, 90), PixelFormat.Format1bppIndexed);
                 Bitmap bmp2 = sourceBmp.Clone(new Rectangle((sourceBmp.Width - 364) / 2, 90, 364, sourceBmp.Height - 90), PixelFormat.Format1bppIndexed);
 
-                return (bmp1, bmp2);
+                string bmp1Path = Path.GetTempFileName();
+                string bmp2Path = Path.GetTempFileName();
+
+                bmp1.Save(bmp1Path, ImageFormat.Bmp);
+                bmp2.Save(bmp2Path, ImageFormat.Bmp);
+
+                return (bmp1Path, bmp2Path);
             });
 
-            bmps.ForEach((b, i) =>
+            bmpPaths.ForEach((b, i) =>
             {
                 try
                 {
                     posPrinter.PrintNormal(PrinterStation.Receipt, "\u001b|45uF");
-                    posPrinter.PrintMemoryBitmap(PrinterStation.Receipt, b.Item1, PosPrinter.PrinterBitmapAsIs, (420 - 364) / 2);
+                    posPrinter.PrintBitmap(PrinterStation.Receipt, b.Item1, PosPrinter.PrinterBitmapAsIs, (420 - 364) / 2);
                     posPrinter.PrintNormal(PrinterStation.Receipt, "\u001b|P");
-                    posPrinter.PrintMemoryBitmap(PrinterStation.Receipt, b.Item2, PosPrinter.PrinterBitmapAsIs, (420 - 364) / 2);
+                    posPrinter.PrintBitmap(PrinterStation.Receipt, b.Item2, PosPrinter.PrinterBitmapAsIs, (420 - 364) / 2);
                 }
                 catch (Exception ex)
                 {
