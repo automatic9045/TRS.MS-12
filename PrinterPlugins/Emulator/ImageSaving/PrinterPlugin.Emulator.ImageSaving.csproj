@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\MS-12\MS-12\bin\Release\Any CPU\Printers\</OutputPath>
+    <OutputPath>..\..\..\MS-12\MS-12\bin\Release\Any CPU\Printers\Emulators\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
