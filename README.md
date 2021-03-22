@@ -3,7 +3,7 @@
 
 【開発中】駅の窓口で見かける座席予約端末をモチーフにした、POS向け汎用端末です。
 
-ダウンロード：https://github.com/Automatic9045/TRS.MS-12/releases
+ダウンロード：https://github.com/Automatic9045/TRS.MS-12/releases  
 サイト内の紹介ページ：https://Automatic9045.github.io/contents/software/software.html
 
 ## 実行に必要なもの
