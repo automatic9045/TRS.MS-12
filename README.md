@@ -3,8 +3,8 @@
 
 【開発中】駅の窓口で見かける座席予約端末をモチーフにした、POS向け汎用端末です。
 
-ダウンロード：https://github.com/Automatic9045/TRS.MS-12/releases
-サイト内の紹介ページ：https://Automatic9045.github.io/contents/software/software.html
+ダウンロード：https://github.com/Automatic9045/TRS.MS-12/releases/  
+サイト内の紹介ページ：https://Automatic9045.github.io/contents/software/TRS.MS-12/
 
 ## 実行に必要なもの
 - .NET Framework 4.8
@@ -18,10 +18,10 @@
 - Plugins\TRS\NumberedTickets.NumberedTicket\NumberedTicket.dll
 - Plugins\TRS\TRSConnector.dll
 - Plugins\TRS\TRSTicket.dll
-- Printers\Printer.dll
-- Printers\PrinterPlugin.PrinterEmulator.dll
-- Printers\TRSConnector.dll
-- Printers\TRSTicket.dll
+- Printers\Emulators\PrinterEmulator.dll
+- Printers\Epson\TML90.dll
+- Printers\Star\TSP100I.dll
+- Printers\Star\TSP100II.dll
 
 解除されていないDLLはソフトウェアから動的に読み込めません。
 
