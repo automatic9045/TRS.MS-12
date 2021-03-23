@@ -30,5 +30,16 @@ namespace TRS.TMS12.Static
                 selector(source[i], i);
             }
         }
+
+        public static List<TOutput> ConvertAll<T, TOutput>(this List<T> source, Func<T, int, TOutput> selector)
+        {
+            int i = 0;
+            return source.ConvertAll(e =>
+            {
+                TOutput result = selector(e, i);
+                i++;
+                return result;
+            });
+        }
     }
 }
