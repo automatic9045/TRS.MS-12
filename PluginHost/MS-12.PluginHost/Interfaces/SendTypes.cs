@@ -19,12 +19,22 @@ using System.Windows.Shapes;
 
 namespace TRS.TMS12.Interfaces
 {
-    public interface ISender
+    /// <summary>
+    /// 操作種別を指定します。発売／予約／照会。
+    /// </summary>
+    public enum SendTypes
     {
         /// <summary>
-        /// 発信時の処理を定義します。
+        /// 発売
         /// </summary>
-        /// <returns>発信結果を表す <see cref="SendResult"/>。</returns>
-        SendResult Send();
+        Sell,
+        /// <summary>
+        /// 予約
+        /// </summary>
+        Reserve,
+        /// <summary>
+        /// 照会
+        /// </summary>
+        Inquire,
     }
 }
