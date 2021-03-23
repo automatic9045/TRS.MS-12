@@ -2,5 +2,5 @@
 <ApplicationSettings>
 	<CatchUnobservedExceptions Enabled="true"/>
 	<ShowNotImplementedDialog Enabled="true"/>
-	<Printer Class="Epson.TML90.Printer58" Name="PosPrinter"/>
+	<Printer Class="Emulators.ImageSaving.Printer58" Name=""/>
 </ApplicationSettings>
