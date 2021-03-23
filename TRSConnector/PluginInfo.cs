@@ -23,6 +23,9 @@ namespace TRS.TMS12.Plugins.TRS
             {
                 _PluginHost = value;
 
+                PluginHost.ModeEnabledChanged += e => ModeChanged(e.TargetMode, e.IsModeEnabled);
+                PluginHost.SendTypeChanged += e => SendTypeChanged(e.SendType);
+
                 int companyNumber = 0;
                 string stationName = "名無駅";
                 string terminalName = "";
