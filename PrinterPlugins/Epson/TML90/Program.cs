@@ -117,7 +117,7 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
             }
             catch (Exception ex)
             {
-                PluginHost.ThrowWarning($"不明なエラーが発生しました： {ex.Message}", "プリンターセットアップエラー");
+                PluginHost.ThrowWarning($"不明なエラーが発生しました：【{ex.GetType().Name}】 {ex.Message}", "プリンターセットアップエラー");
             }
         }
 
@@ -130,6 +130,9 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
 
         public void Print(List<TicketBase> tickets, int issuingNumber, Action<int> onPrint, Action<Exception, int> onError)
         {
+            string tempDirectoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(tempDirectoryPath);
+
             try
             {
                 posPrinter.PrintNormal(PrinterStation.Receipt, $"{issuingNumber} {tickets.Count}枚");
@@ -137,10 +140,11 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
             catch (Exception ex)
             {
                 onError(ex, 0);
+                DeleteTempFiles();
                 return;
             }
 
-            List<(string, string)> bmpPaths = tickets.ConvertAll(t =>
+            List<(string, string)> bmpPaths = tickets.ConvertAll((t, i) =>
             {
                 Bitmap sourceBmp = (Bitmap)t.Bitmap.Clone();
                 sourceBmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
@@ -148,8 +152,8 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
                 Bitmap bmp1 = sourceBmp.Clone(new Rectangle((sourceBmp.Width - 364) / 2, 0, 364, 90), PixelFormat.Format1bppIndexed);
                 Bitmap bmp2 = sourceBmp.Clone(new Rectangle((sourceBmp.Width - 364) / 2, 90, 364, sourceBmp.Height - 90), PixelFormat.Format1bppIndexed);
 
-                string bmp1Path = Path.GetTempFileName();
-                string bmp2Path = Path.GetTempFileName();
+                string bmp1Path = Path.Combine(tempDirectoryPath, $"{i}-1.bmp");
+                string bmp2Path = Path.Combine(tempDirectoryPath, $"{i}-2.bmp");
 
                 bmp1.Save(bmp1Path, ImageFormat.Bmp);
                 bmp2.Save(bmp2Path, ImageFormat.Bmp);
@@ -169,6 +173,7 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
                 catch (Exception ex)
                 {
                     onError(ex, i);
+                    DeleteTempFiles();
                     return;
                 }
 
@@ -183,7 +188,16 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
             catch (Exception ex)
             {
                 onError(ex, tickets.Count - 1);
+                DeleteTempFiles();
                 return;
+            }
+
+            DeleteTempFiles();
+
+
+            void DeleteTempFiles()
+            {
+                Task.Run(() => Directory.Delete(tempDirectoryPath, true));
             }
         }
     }
