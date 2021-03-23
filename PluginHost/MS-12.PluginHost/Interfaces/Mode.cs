@@ -19,12 +19,29 @@ using System.Windows.Shapes;
 
 namespace TRS.TMS12.Interfaces
 {
-    public interface ISender
+    /// <summary>
+    /// <see cref="IPluginHost.ModeEnabledChanged"/> で、有効・無効が変更されたモードを指定します。
+    /// </summary>
+    public enum Mode
     {
         /// <summary>
-        /// 発信時の処理を定義します。
+        /// 営業試験
         /// </summary>
-        /// <returns>発信結果を表す <see cref="SendResult"/>。</returns>
-        SendResult Send();
+        Test,
+
+        /// <summary>
+        /// 一件
+        /// </summary>
+        OneTime,
+
+        /// <summary>
+        /// クレジット
+        /// </summary>
+        Credit,
+
+        /// <summary>
+        /// 中継発売
+        /// </summary>
+        Relay,
     }
 }

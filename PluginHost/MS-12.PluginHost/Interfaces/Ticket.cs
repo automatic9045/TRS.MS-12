@@ -19,12 +19,31 @@ using System.Windows.Shapes;
 
 namespace TRS.TMS12.Interfaces
 {
-    public interface ISender
+    public abstract class TicketBase
     {
-        /// <summary>
-        /// 発信時の処理を定義します。
-        /// </summary>
-        /// <returns>発信結果を表す <see cref="SendResult"/>。</returns>
-        SendResult Send();
+        public Bitmap Bitmap { get; }
+
+        public abstract TicketBase Resend();
+
+        public TicketBase(Bitmap bitmap)
+        {
+            Bitmap = bitmap;
+        }
+    }
+
+    public class TicketInfo
+    {
+        public TicketBase Ticket { get; }
+        public bool HasPrinted { get; private set; } = false;
+
+        public TicketInfo(TicketBase ticket)
+        {
+            Ticket = ticket;
+        }
+
+        public void OnPrint()
+        {
+            HasPrinted = true;
+        }
     }
 }
