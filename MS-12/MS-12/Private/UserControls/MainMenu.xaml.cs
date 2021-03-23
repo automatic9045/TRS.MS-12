@@ -69,9 +69,11 @@ namespace TRS.TMS12
             {
                 if (await m.UserControlHost.DialogModel.ShowConfirmDialogAsync("ソフトウェアを終了します。\nよろしいですか？"))
                 {
-                    m.UserControlHost.DialogModel.ShowInformationDialog("プリンターの解放中");
+                    m.UserControlHost.DialogModel.ShowInformationDialog("プリンターの解放中", false);
+                    DoEvents();
                     m.UserControlHost.CurrentPrinter.Dispose();
-                    m.UserControlHost.DialogModel.ShowInformationDialog("シャットダウン中");
+                    m.UserControlHost.DialogModel.ShowInformationDialog("シャットダウン中", false);
+                    DoEvents();
 
                     Application.Current.Shutdown();
                 }
