@@ -97,8 +97,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Magazine.cs" />
+    <Compile Include="PlatformTicket.cs" />
     <Compile Include="InquireTimeNumbers.cs" />
-    <Compile Include="BuyClubMagazine.cs" />
     <Compile Include="Reserve.cs" />
     <Compile Include="PluginInfo.cs" />
     <Compile Include="RethinkCodes.cs" />
