@@ -128,11 +128,11 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
             posPrinter.Close();
         }
 
-        public void Print(List<TicketBase> tickets, int issueingNumber, Action<int> onPrint, Action<Exception, int> onError)
+        public void Print(List<TicketBase> tickets, int issuingNumber, Action<int> onPrint, Action<Exception, int> onError)
         {
             try
             {
-                posPrinter.PrintNormal(PrinterStation.Receipt, $"{issueingNumber} {tickets.Count}枚");
+                posPrinter.PrintNormal(PrinterStation.Receipt, $"{issuingNumber} {tickets.Count}枚");
             }
             catch (Exception ex)
             {
