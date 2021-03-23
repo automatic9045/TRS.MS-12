@@ -1,24 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <OneTouchMenuGroup>
 	<Shortcuts>
-		<Shortcut Name="いひひひひひ" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-		<Shortcut Name="うふふふふふ" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+		<Shortcut Name="入場券" Type="PlatformTickets.PlatformTicket.PluginInfo"/>
 	</Shortcuts>
 	<Pages>
 		<Page Name="入場券">
-			<Content Name="あはははははは" Type="NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Adult,５０"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="aaaa" Type="NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Child,１"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content Name="" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content Name="大人１" Type="PlatformTickets.PlatformTicket.PluginInfo" Command="SET_DATE;0,0/SET;Adult,１"/>
+			<Content Name="小児１" Type="PlatformTickets.PlatformTicket.PluginInfo" Command="SET_DATE;0,0/SET;Child,１"/>
 		</Page>
 	</Pages>
 </OneTouchMenuGroup>

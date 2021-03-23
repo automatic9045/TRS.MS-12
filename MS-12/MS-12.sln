@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRSConnector", "..\TRSConne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPlugin.OneTimePrinting", "..\TicketPlugins\Basic\OneTimePrinting\TicketPlugin.OneTimePrinting.csproj", "{C8072704-1D0F-4C59-8354-933CFD324E33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPlugin.NumberedTickets.NumberedTicket", "..\TicketPlugins\NumberedTickets\NumberedTicket\TicketPlugin.NumberedTickets.NumberedTicket.csproj", "{915BC400-F839-4A89-93C0-AF13256A33D3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrinterPlugin.Emulator.ImageSaving", "..\PrinterPlugins\Emulator\ImageSaving\PrinterPlugin.Emulator.ImageSaving.csproj", "{17ADF6B0-75D4-4767-9879-134492C00B3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrinterPlugin.Epson.TML90", "..\PrinterPlugins\Epson\TML90\PrinterPlugin.Epson.TML90.csproj", "{B61B2AF0-5705-4AA0-93D0-790686ADD747}"
@@ -20,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrinterPlugin.Star.TSP100II", "..\PrinterPlugins\Star\TSP100II\PrinterPlugin.Star.TSP100II.csproj", "{BDECE316-A319-4B27-8E4F-C4AB6B0D4427}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrinterPlugin.Star.TSP100I", "..\PrinterPlugins\Star\TSP100I\PrinterPlugin.Star.TSP100I.csproj", "{83A99EE7-963A-4AA2-8931-6476D858F6D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPlugin.NumberedTickets.NumberedTicket", "..\TicketPlugins\TRS\NumberedTickets\NumberedTicket\TicketPlugin.NumberedTickets.NumberedTicket.csproj", "{915BC400-F839-4A89-93C0-AF13256A33D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPlugin.PlatformTickets.PlatformTicket", "..\TicketPlugins\TRS\PlatformTickets\PlatformTicket\TicketPlugin.PlatformTickets.PlatformTicket.csproj", "{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,18 +81,6 @@ Global
 		{C8072704-1D0F-4C59-8354-933CFD324E33}.Release|x64.Build.0 = Release|x64
 		{C8072704-1D0F-4C59-8354-933CFD324E33}.Release|x86.ActiveCfg = Release|x86
 		{C8072704-1D0F-4C59-8354-933CFD324E33}.Release|x86.Build.0 = Release|x86
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x64.ActiveCfg = Debug|x64
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x64.Build.0 = Debug|x64
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x86.ActiveCfg = Debug|x86
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x86.Build.0 = Debug|x86
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x64.ActiveCfg = Release|x64
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x64.Build.0 = Release|x64
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x86.ActiveCfg = Release|x86
-		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x86.Build.0 = Release|x86
 		{17ADF6B0-75D4-4767-9879-134492C00B3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17ADF6B0-75D4-4767-9879-134492C00B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17ADF6B0-75D4-4767-9879-134492C00B3E}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -139,6 +129,30 @@ Global
 		{83A99EE7-963A-4AA2-8931-6476D858F6D9}.Release|x64.Build.0 = Release|Any CPU
 		{83A99EE7-963A-4AA2-8931-6476D858F6D9}.Release|x86.ActiveCfg = Release|Any CPU
 		{83A99EE7-963A-4AA2-8931-6476D858F6D9}.Release|x86.Build.0 = Release|Any CPU
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x64.ActiveCfg = Debug|x64
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x64.Build.0 = Debug|x64
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x86.ActiveCfg = Debug|x86
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Debug|x86.Build.0 = Debug|x86
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x64.ActiveCfg = Release|x64
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x64.Build.0 = Release|x64
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x86.ActiveCfg = Release|x86
+		{915BC400-F839-4A89-93C0-AF13256A33D3}.Release|x86.Build.0 = Release|x86
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Debug|x64.ActiveCfg = Debug|x64
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Debug|x64.Build.0 = Debug|x64
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Debug|x86.ActiveCfg = Debug|x86
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Debug|x86.Build.0 = Debug|x86
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Release|x64.ActiveCfg = Release|x64
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Release|x64.Build.0 = Release|x64
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Release|x86.ActiveCfg = Release|x86
+		{EFEEDA6A-1349-42E1-A57B-CD4C5ABA04D8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
