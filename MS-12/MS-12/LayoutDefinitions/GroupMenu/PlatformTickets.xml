@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GroupMenuLayout>
-	<Content Name="整理券" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="入場券" Type="PlatformTickets.PlatformTicket.PluginInfo"/>
 </GroupMenuLayout>

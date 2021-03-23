@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<KeyLayout Header="フルキー">
+	<Key Name="本日" Command="SET_DATE;0,0"/>
+	<Key Name="明日" Command="SET_DATE;0,1"/>
+	<Key Name="明後日" Command="SET_DATE;0,2"/>
+	<Key Name="１ヶ月前" Command="SET_DATE;1,0"/>
+	<Key Name="" Command=""/>
+	<Key Name="カレンダ&#10;日付入力" Command="OPEN;Calender"/>
+	
+	<Key Name="大人１" Command="SET;Adult,１"/>
+	<Key Name="大人２" Command="SET;Adult,２"/>
+	<Key Name="大人３" Command="SET;Adult,３"/>
+	<Key Name="大人４" Command="SET;Adult,４"/>
+	<Key Name="" Command=""/>
+	<Key Name="大人&#10;人数入力" Command="FOCUS;Adult"/>
+	
+	<Key Name="小児１" Command="SET;Child,１"/>
+	<Key Name="小児２" Command="SET;Child,２"/>
+	<Key Name="小児３" Command="SET;Child,３"/>
+	<Key Name="小児４" Command="SET;Child,４"/>
+	<Key Name="" Command=""/>
+	<Key Name="小児&#10;人数入力" Command="FOCUS;Child"/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+</KeyLayout>
