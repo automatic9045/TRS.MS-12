@@ -28,14 +28,97 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
             posExplorer = new PosExplorer();
 
             DeviceInfo deviceInfo = posExplorer.GetDevice(DeviceType.PosPrinter, printerName);
-            posPrinter = (PosPrinter)posExplorer.CreateInstance(deviceInfo);
+            if (deviceInfo is null)
+            {
+                PluginHost.ThrowWarning($"指定された論理デバイス名 \"{printerName}\" は不正です。OPOS ADK でこの名前のプリンターが登録されているか確認して下さい。", "プリンター GetDevice エラー");
+                return;
+            }
 
-            posPrinter.Open();
-            posPrinter.Claim(1000);
-            posPrinter.DeviceEnabled = true;
+            try
+            {
+                posPrinter = (PosPrinter)posExplorer.CreateInstance(deviceInfo);
+            }
+            catch (Exception ex)
+            {
+                PluginHost.ThrowWarning($"不明なエラーが発生しました： {ex.Message}", "プリンター CreateInstance エラー");
+            }
 
-            posPrinter.MapMode = MapMode.Dots;
-            posPrinter.RecLetterQuality = true;
+            try
+            {
+                posPrinter.Open();
+            }
+            catch (PosControlException ex)
+            {
+                switch (ex.ErrorCode)
+                {
+                    case ErrorCode.Illegal:
+                        if (ex.Message.Contains("invalid parameter value"))
+                        {
+                            PluginHost.ThrowWarning($"指定された論理デバイス名 \"{printerName}\" は不正です。OPOS ADK でこの名前のプリンターが登録されているか確認して下さい。", "プリンター Open エラー");
+                        }
+                        else if (ex.Message.Contains("already open"))
+                        {
+                            PluginHost.ThrowWarning($"接続処理に失敗しました。プリンターが他のアプリケーションで使用されている可能性があります。", "プリンター Open エラー");
+                        }
+                        else
+                        {
+                            PluginHost.ThrowWarning($"不明なエラーが発生しました：【ErrorCode: Illegal】 {ex.Message}", "プリンター Open エラー");
+                        }
+                        break;
+
+                    case ErrorCode.NoService:
+                        PluginHost.ThrowWarning($"接続処理に失敗しました。お使いのプリンターの不具合の可能性があります。", "プリンター Open エラー");
+                        break;
+
+                    default:
+                        PluginHost.ThrowWarning($"不明なエラーが発生しました：【ErrorCode: {ex.ErrorCode}】 {ex.Message}", "プリンター Open エラー");
+                        break;
+                }
+                return;
+            }
+
+            try
+            {
+                posPrinter.Claim(5000);
+            }
+            catch (PosControlException ex)
+            {
+                switch (ex.ErrorCode)
+                {
+                    case ErrorCode.Closed:
+                        PluginHost.ThrowWarning($"ソフトウェアの不具合です。お手数ですが開発者へご連絡下さい。ご連絡の際にはこちらのエラーコードをお伝え下さい：【CA-CO】", "プリンター Claim エラー");
+                        break;
+
+                    case ErrorCode.Illegal:
+                        PluginHost.ThrowWarning($"ソフトウェアの不具合です。お手数ですが開発者へご連絡下さい。ご連絡の際にはこちらのエラーコードをお伝え下さい：【CA-IL】", "プリンター Claim エラー");
+                        break;
+
+                    case ErrorCode.Timeout:
+                        PluginHost.ThrowWarning($"時間内に接続出来ませんでした。プリンターが他のアプリケーションで使用されている可能性があります。", "プリンター Claim エラー");
+                        break;
+
+                    case ErrorCode.Failure:
+                        PluginHost.ThrowWarning($"不明なエラーが発生しました：【ErrorCode: Failure】 {ex.Message}", "プリンター Claim エラー");
+                        break;
+
+                    default:
+                        PluginHost.ThrowWarning($"不明なエラーが発生しました：【ErrorCode: {ex.ErrorCode}】 {ex.Message}", "プリンター Claim エラー");
+                        break;
+                }
+                return;
+            }
+
+            try
+            {
+                posPrinter.DeviceEnabled = true;
+
+                posPrinter.MapMode = MapMode.Dots;
+                posPrinter.RecLetterQuality = true;
+            }
+            catch (Exception ex)
+            {
+                PluginHost.ThrowWarning($"不明なエラーが発生しました： {ex.Message}", "プリンターセットアップエラー");
+            }
         }
 
         public void Dispose()
