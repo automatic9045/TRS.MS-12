@@ -33,9 +33,9 @@ namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
         {
             get
             {
-                if (_Connector == null)
+                if (_Connector is null)
                 {
-                    _Connector = (Connector)m.PluginHost.Plugins.Find(p => p as Connector != null);
+                    _Connector = (Connector)m.PluginHost.Plugins.Find(p => p is Connector);
                 }
 
                 return _Connector;
