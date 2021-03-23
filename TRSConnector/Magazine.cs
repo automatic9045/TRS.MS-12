@@ -17,7 +17,6 @@ namespace TRS.TMS12.Plugins.TRS
         public SendResult Reserve(int year, int count, string discount, Option option)
         {
             dynamic json = null;
-            SendResult result = null;
             switch (SendType)
             {
                 case SendTypes.Inquire:
@@ -32,7 +31,7 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
-                        result = ParseResult(json, true);
+                        return ParseResult(json, true);
                     }
                     catch (Exception ex)
                     {
@@ -45,7 +44,6 @@ namespace TRS.TMS12.Plugins.TRS
                             return SendResult.Error(ex);
                         }
                     }
-                    break;
 
                 case SendTypes.Sell:
                 case SendTypes.Reserve:
@@ -60,26 +58,23 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
-                        result = ParseResult(json, new Func<List<TicketBase>>(() =>
+                        NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
                         {
-                            NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
-                            {
-                                Title = "部誌購入証",
-                                Product = "部誌" + Strings.StrConv(year.ToString(), VbStrConv.Wide) + "号",
-                                Description = "出札にて保管すること",
-                                Amount_Adult = json.price,
-                                ValidType = TicketValidTypes.Once,
-                                UseDate = DateTime.Parse(json.now),
-                                Persons_Adult = 1,
-                                IssuedDate = DateTime.Parse(json.now),
-                                IssueNumber = 0,
-                                IsWorkingOnInternet = true,
-                                InfoTop = AdditionalInformation_Top.None,
-                                CountBeginNumber = 1,
-                            }, PrintSetting);
+                            Title = "部誌購入証",
+                            Product = "部誌" + Strings.StrConv(year.ToString(), VbStrConv.Wide) + "号",
+                            Description = "出札にて保管すること",
+                            Amount_Adult = json.price,
+                            ValidType = TicketValidTypes.Once,
+                            UseDate = DateTime.Parse(json.now),
+                            Persons_Adult = 1,
+                            IssuedDate = DateTime.Parse(json.now),
+                            IssueNumber = 0,
+                            IsWorkingOnInternet = true,
+                            InfoTop = AdditionalInformation_Top.None,
+                            CountBeginNumber = 1,
+                        }, PrintSetting);
 
-                            return ticket.ticketImages.Select((t, i) => (TicketBase)new EventTicket(ticket, i)).ToList();
-                        }));
+                        return ParseResult(json, ticket.ticketImages.Select((t, i) => (TicketBase)new EventTicket(ticket, i)).ToList());
                     }
                     catch (Exception ex)
                     {
@@ -92,10 +87,10 @@ namespace TRS.TMS12.Plugins.TRS
                             return SendResult.Error(ex);
                         }
                     }
-                    break;
-            }
 
-            return result;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 
