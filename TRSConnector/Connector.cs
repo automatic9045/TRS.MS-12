@@ -184,12 +184,12 @@ namespace TRS.TMS12.Plugins.TRS
             };
         }
 
-        private static SendResult ParseResult(dynamic json, Func<List<TicketBase>> createTicketsMethod, bool isFullScreen = false)
+        private static SendResult ParseResult(dynamic json, List<TicketBase> tickets, bool isFullScreen = false)
         {
             SendResultType resultType = ResultTypeStringToEnum(json);
             return resultType switch
             {
-                SendResultType.Yes => IssuableSendResult.Yes(createTicketsMethod, (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen),
+                SendResultType.Yes => IssuableSendResult.Yes(tickets, (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen),
                 SendResultType.No => SendResult.No((string)json.text.Replace("\n", "\n\n"), (string)json.message),
                 SendResultType.Rethink => SendResult.Rethink((string)json.message, (string)json.rethinkCode),
                 _ => throw new ArgumentOutOfRangeException(),
