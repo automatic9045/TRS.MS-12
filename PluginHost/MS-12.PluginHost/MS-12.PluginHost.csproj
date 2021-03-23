@@ -143,6 +143,11 @@
     <Compile Include="Classes\SendTypeChangedEvent.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="Classes\ModeEnabledChangedEvent.cs" />
+    <Compile Include="Interfaces\SendResult.cs" />
+    <Compile Include="Interfaces\Mode.cs" />
+    <Compile Include="Interfaces\SendResultType.cs" />
+    <Compile Include="Interfaces\Ticket.cs" />
+    <Compile Include="Interfaces\SendTypes.cs" />
     <Compile Include="Interfaces\ITicketPlugin.cs" />
     <Compile Include="Interfaces\IPrinterPlugin.cs" />
     <Compile Include="Interfaces\ITicketPluginExtension.cs" />
