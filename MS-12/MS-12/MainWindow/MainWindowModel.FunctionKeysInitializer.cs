@@ -263,7 +263,7 @@ namespace TRS.TMS12
 
                         if (result is IssuableSendResult)
                         {
-                            List<TicketBase> tickets = await Task.Run(((IssuableSendResult)result).CreateTicketsFunc);
+                            List<TicketBase> tickets = ((IssuableSendResult)result).Tickets;
                             switch (SendType)
                             {
                                 case SendTypes.Reserve:

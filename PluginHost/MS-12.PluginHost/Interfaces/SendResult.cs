@@ -81,25 +81,9 @@ namespace TRS.TMS12.Interfaces
 
     public class IssuableSendResult : SendResult
     {
-        private bool isTicketCreated = false;
-        public Func<List<TicketBase>> _CreateTicketsMethod;
-        public Func<List<TicketBase>> CreateTicketsFunc
-        {
-            get
-            {
-                if (!isTicketCreated)
-                {
-                    List<TicketBase> tickets = _CreateTicketsMethod.Invoke();
-                    CreateTicketsFunc = () => tickets;
-                    isTicketCreated = true;
-                }
+        public List<TicketBase> Tickets { get; protected set; }
 
-                return _CreateTicketsMethod;
-            }
-            protected set => _CreateTicketsMethod = value;
-        }
-
-        public static IssuableSendResult Yes(Func<List<TicketBase>> createTicketsFunc, string text, string message, bool isFullScreen)
+        public static IssuableSendResult Yes(List<TicketBase> tickets, string text, string message, bool isFullScreen)
         {
             IssuableSendResult result = new IssuableSendResult()
             {
@@ -107,7 +91,7 @@ namespace TRS.TMS12.Interfaces
                 Result = SendResultType.Yes,
                 Text = text,
                 Message = message,
-                CreateTicketsFunc = createTicketsFunc,
+                Tickets = tickets,
             };
             return result;
         }
