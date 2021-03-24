@@ -84,10 +84,12 @@ namespace TRS.TMS12
 
         public ObservableCollection<string> Errors { get; private set; } = new ObservableCollection<string>();
 
-        public DelegateCommand Stop { get; private set; } = new DelegateCommand(() =>
+        private DelegateCommand _Stop;
+        public DelegateCommand Stop
         {
-            Application.Current.Shutdown();
-        });
+            get => _Stop;
+            set => SetProperty(ref _Stop, value);
+        }
 
         public DelegateCommand Ignore { get; set; }
     }
