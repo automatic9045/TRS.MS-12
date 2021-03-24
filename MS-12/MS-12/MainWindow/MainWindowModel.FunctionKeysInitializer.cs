@@ -248,9 +248,8 @@ namespace TRS.TMS12
                     {
                         IsTicketSending = true;
 
-                        if (SendType == SendTypes.Reserve && !IsOneTimeMode) IsOneTimeMode = true;
-
                         SendResult result = await Task.Run(() => CurrentTicket.Sender.Send());
+
                         if (result.IsFullScreen)
                         {
                             FullScreenResultControlModel.Show(result);

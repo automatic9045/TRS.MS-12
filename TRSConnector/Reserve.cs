@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 using TRS.TMS12.Interfaces;
 using TRS.Tickets;
@@ -69,6 +70,13 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
+                        bool isFirstReservation = false;
+                        if (!PluginHost.IsOneTimeMode && SendType == SendTypes.Reserve)
+                        {
+                            PluginHost.IsOneTimeMode = true;
+                            isFirstReservation = true;
+                        }
+
                         result = ParseResult(json, new Func<List<TicketBase>>(() =>
                         {
                             NativeNumberedTicket ticket = new NativeNumberedTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new NumberedTicketInformation()
@@ -107,6 +115,12 @@ namespace TRS.TMS12.Plugins.TRS
 
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new NumberedTicket(ticket, i)).ToList();
                         }));
+
+                        if (SendType == SendTypes.Reserve)
+                        {
+                            result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedTickets.Count + 1}", VbStrConv.Wide);
+                        }
+                        if (isFirstReservation) result.Message = "一括一件開始しました";
                     }
                     catch (Exception ex)
                     {

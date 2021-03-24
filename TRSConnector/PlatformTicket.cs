@@ -38,6 +38,13 @@ namespace TRS.TMS12.Plugins.TRS
                     }
                     else
                     {
+                        bool isFirstReservation = false;
+                        if (!PluginHost.IsOneTimeMode && SendType == SendTypes.Reserve)
+                        {
+                            PluginHost.IsOneTimeMode = true;
+                            isFirstReservation = true;
+                        }
+
                         Func<List<TicketBase>> createTicketsFunc = () =>
                         {
                             NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
@@ -46,6 +53,7 @@ namespace TRS.TMS12.Plugins.TRS
                                 Product = StationName,
                                 Description = "旅客車内に立ち入ることはできません。",
                                 Amount_Adult = 140,
+                                Amount_Child = 70,
                                 ValidType = TicketValidTypes.Once,
                                 UseDate = new DateTime(now.Year, month, day),
                                 Persons_Adult = customer.Adult + customer.Student,
@@ -65,14 +73,15 @@ namespace TRS.TMS12.Plugins.TRS
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new PlatformTicket(ticket, i)).ToList();
                         };
 
-                        if (IsOneTimeMode)
+                        SendResult result = IsOneTimeMode ? IssueReservableSendResult.Yes(createTicketsFunc, "", "", false) : IssuableSendResult.Yes(createTicketsFunc(), "", "", false);
+
+                        if (SendType == SendTypes.Reserve)
                         {
-                            return IssueReservableSendResult.Yes(createTicketsFunc, "", "", false);
+                            result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedTickets.Count + 1}", VbStrConv.Wide);
                         }
-                        else
-                        {
-                            return IssuableSendResult.Yes(createTicketsFunc(), "", "", false);
-                        }
+                        if (isFirstReservation) result.Message = "一括一件開始しました";
+
+                        return result;
                     }
 
                 default:

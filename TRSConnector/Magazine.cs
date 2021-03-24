@@ -58,7 +58,14 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
-                        return ParseResult(json, new Func<List<TicketBase>>(() =>
+                        bool isFirstReservation = false;
+                        if (!PluginHost.IsOneTimeMode && SendType == SendTypes.Reserve)
+                        {
+                            PluginHost.IsOneTimeMode = true;
+                            isFirstReservation = true;
+                        }
+
+                        SendResult result = ParseResult(json, new Func<List<TicketBase>>(() =>
                         {
                             NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
                             {
@@ -78,6 +85,14 @@ namespace TRS.TMS12.Plugins.TRS
 
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new EventTicket(ticket, i)).ToList();
                         }));
+
+                        if (SendType == SendTypes.Reserve)
+                        {
+                            result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedTickets.Count + 1}", VbStrConv.Wide);
+                        }
+                        if (isFirstReservation) result.Message = "一括一件開始しました";
+
+                        return result;
                     }
                     catch (Exception ex)
                     {

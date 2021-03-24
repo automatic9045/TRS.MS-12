@@ -24,13 +24,15 @@ namespace TRS.TMS12.Interfaces
     /// </summary>
     public class SendResult
     {
-        public bool IsFullScreen { get; protected set; } = false;
-        public SendResultType? Result { get; protected set; } = null;
-        public string RethinkCode { get; protected set; } = "";
-        public string Message { get; protected set; } = "";
-        public string Text { get; protected set; } = "";
-        public string JsonString { get; protected set; } = "";
-        public Exception Exception { get; protected set; } = null;
+        public bool IsFullScreen { get; set; } = false;
+        public SendResultType? Result { get; set; } = null;
+        public string RethinkCode { get; set; } = "";
+        public string Message { get; set; } = "";
+        public string Text { get; set; } = "";
+        public string JsonString { get; set; } = "";
+        public Exception Exception { get; set; } = null;
+
+        protected SendResult() { }
 
         /// <summary>
         /// ＹＥＳの <see cref="SendResult"/> を作成します。
