@@ -84,7 +84,7 @@ namespace TRS.TMS12
                                 resentTickets[i].OnPrint();
                                 DialogModel.ShowInformationDialog($"再製中\n\n発券中（{i}／{resentTickets.Count}）", false);
                                 DoEvents();
-                            }, (ex, i) => DialogModel.ShowErrorDialog($"印刷時にエラーが発生しました。\n\n\n詳細：\n\n{ex}"));
+                            }, async (ex, i) => await DialogModel.ShowErrorDialogAsync($"印刷時にエラーが発生しました。\n\n\n詳細：\n\n{ex}"));
 
                             DialogModel.HideDialog();
                         }
@@ -259,7 +259,6 @@ namespace TRS.TMS12
                         {
                             ResultControlModel.Show(result);
                         }
-                        DoEvents();
 
                         if (result is IssuableSendResult)
                         {
@@ -267,7 +266,7 @@ namespace TRS.TMS12
                             switch (SendType)
                             {
                                 case SendTypes.Reserve:
-                                    PluginHost.ReservedTickets.AddRange(tickets);
+                                    ReservedTickets.AddRange(tickets);
                                     break;
 
                                 case SendTypes.Sell:
@@ -287,6 +286,7 @@ namespace TRS.TMS12
                                     break;
                             }
                         }
+
                         IsTicketSending = false;
                     }
                 }, () => CanExecute(FunctionKeys.Send) && !(SendType is null)).ObservesProperty(() => SendType) },
