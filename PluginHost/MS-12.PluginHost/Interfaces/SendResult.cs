@@ -81,7 +81,7 @@ namespace TRS.TMS12.Interfaces
 
     public class IssuableSendResult : SendResult
     {
-        public List<TicketBase> Tickets { get; protected set; }
+        public virtual List<TicketBase> Tickets { get; protected set; }
 
         public static IssuableSendResult Yes(List<TicketBase> tickets, string text, string message, bool isFullScreen)
         {
@@ -92,6 +92,28 @@ namespace TRS.TMS12.Interfaces
                 Text = text,
                 Message = message,
                 Tickets = tickets,
+            };
+            return result;
+        }
+    }
+
+    public class IssueReservableSendResult : IssuableSendResult
+    {
+        private Func<List<TicketBase>> createTicketsFunc;
+        public override List<TicketBase> Tickets
+        {
+            get => createTicketsFunc();
+        }
+
+        public static IssueReservableSendResult Yes(Func<List<TicketBase>> createTicketsFunc, string text, string message, bool isFullScreen)
+        {
+            IssueReservableSendResult result = new IssueReservableSendResult()
+            {
+                IsFullScreen = isFullScreen,
+                Result = SendResultType.Yes,
+                Text = text,
+                Message = message,
+                createTicketsFunc = createTicketsFunc,
             };
             return result;
         }
