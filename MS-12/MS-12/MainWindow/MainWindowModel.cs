@@ -90,8 +90,7 @@ namespace TRS.TMS12
             set => SetProperty(ref _IsTicketSending, value);
         }
 
-        public List<List<TicketInfo>> Tickets { get; } = new List<List<TicketInfo>>();
-
+        public List<List<TicketInfo>> AllSentTickets { get; } = new List<List<TicketInfo>>();
         public List<TicketBase> ReservedTickets { get; } = new List<TicketBase>();
 
         private bool _IsOneTimeMode = false;
