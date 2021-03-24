@@ -8,7 +8,7 @@ using Codeplex.Data;
 
 using TRS.TMS12.Interfaces;
 using TRS.Tickets;
-using NativePlatformTicket = TRS.Tickets.PlatformTicket;
+using NativeEventTicket = TRS.Tickets.EventTicket;
 
 namespace TRS.TMS12.Plugins.TRS
 {
@@ -38,19 +38,41 @@ namespace TRS.TMS12.Plugins.TRS
                     }
                     else
                     {
-                        NativePlatformTicket ticket = new NativePlatformTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new PlatformTicketInformation()
+                        Func<List<TicketBase>> createTicketsFunc = () =>
                         {
-                            ValidType = TicketValidTypes.Once,
-                            UseDate = new DateTime(now.Year, month, day),
-                            Persons_Adult = 1,
-                            IssuedDate = now,
-                            IssueNumber = 0,
-                            IsWorkingOnInternet = true,
-                            InfoTop = AdditionalInformation_Top.None,
-                            CountBeginNumber = 1,
-                        }, PrintSetting);
+                            NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
+                            {
+                                Title = "普通入場券",
+                                Product = StationName,
+                                Description = "旅客車内に立ち入ることはできません。",
+                                Amount_Adult = 140,
+                                ValidType = TicketValidTypes.Once,
+                                UseDate = new DateTime(now.Year, month, day),
+                                Persons_Adult = customer.Adult + customer.Student,
+                                Persons_Child = customer.Child + customer.Preschooler,
+                                IssuedDate = now,
+                                IssueNumber = PluginHost.AllSentTickets.Count + 1,
+                                CountBeginNumber = PluginHost.IsOneTimeMode ? PluginHost.ReservedTickets.Count + 1 : 1,
+                                IsWorkingOnInternet = true,
+                                InfoTop = IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
+                                {
+                                    PayType.Cash => AdditionalInformation_Top.None,
+                                    PayType.IC => AdditionalInformation_Top.IC,
+                                    _ => throw new ArgumentOutOfRangeException(),
+                                },
+                            }, PrintSetting);
 
-                        return IssuableSendResult.Yes(ticket.ticketImages.Select((t, i) => (TicketBase)new PlatformTicket(ticket, i)).ToList(), "", "", false);
+                            return ticket.ticketImages.Select((t, i) => (TicketBase)new PlatformTicket(ticket, i)).ToList();
+                        };
+
+                        if (IsOneTimeMode)
+                        {
+                            return IssueReservableSendResult.Yes(createTicketsFunc, "", "", false);
+                        }
+                        else
+                        {
+                            return IssuableSendResult.Yes(createTicketsFunc(), "", "", false);
+                        }
                     }
 
                 default:
@@ -61,10 +83,10 @@ namespace TRS.TMS12.Plugins.TRS
 
     public class PlatformTicket : TicketBase
     {
-        private NativePlatformTicket nativeTicket;
+        private NativeEventTicket nativeTicket;
         private int index;
 
-        public PlatformTicket(NativePlatformTicket nativeTicket, int index) : base(nativeTicket.ticketImages[index])
+        public PlatformTicket(NativeEventTicket nativeTicket, int index) : base(nativeTicket.ticketImages[index])
         {
             this.nativeTicket = nativeTicket;
             this.index = index;
