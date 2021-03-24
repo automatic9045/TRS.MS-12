@@ -58,23 +58,26 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
-                        NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
+                        return ParseResult(json, new Func<List<TicketBase>>(() =>
                         {
-                            Title = "部誌購入証",
-                            Product = "部誌" + Strings.StrConv(year.ToString(), VbStrConv.Wide) + "号",
-                            Description = "出札にて保管すること",
-                            Amount_Adult = json.price,
-                            ValidType = TicketValidTypes.Once,
-                            UseDate = DateTime.Parse(json.now),
-                            Persons_Adult = 1,
-                            IssuedDate = DateTime.Parse(json.now),
-                            IssueNumber = 0,
-                            IsWorkingOnInternet = true,
-                            InfoTop = AdditionalInformation_Top.None,
-                            CountBeginNumber = 1,
-                        }, PrintSetting);
+                            NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
+                            {
+                                Title = "部誌購入証",
+                                Product = "部誌" + Strings.StrConv(year.ToString(), VbStrConv.Wide) + "号",
+                                Description = "出札にて保管すること",
+                                Amount_Adult = json.price,
+                                ValidType = TicketValidTypes.Once,
+                                UseDate = DateTime.Parse(json.now),
+                                Persons_Adult = 1,
+                                IssuedDate = DateTime.Parse(json.now),
+                                IssueNumber = PluginHost.AllSentTickets.Count + 1,
+                                CountBeginNumber = PluginHost.IsOneTimeMode ? PluginHost.ReservedTickets.Count + 1 : 1,
+                                IsWorkingOnInternet = true,
+                                InfoTop = AdditionalInformation_Top.None,
+                            }, PrintSetting);
 
-                        return ParseResult(json, ticket.ticketImages.Select((t, i) => (TicketBase)new EventTicket(ticket, i)).ToList());
+                            return ticket.ticketImages.Select((t, i) => (TicketBase)new EventTicket(ticket, i)).ToList();
+                        }));
                     }
                     catch (Exception ex)
                     {

@@ -69,41 +69,44 @@ namespace TRS.TMS12.Plugins.TRS
 
                     try
                     {
-                        NativeNumberedTicket ticket = new NativeNumberedTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new NumberedTicketInformation()
+                        result = ParseResult(json, new Func<List<TicketBase>>(() =>
                         {
-                            StartDate = DateTime.Parse(json.date + " " + json.time1),
-                            EndDate = DateTime.Parse(json.date + " " + json.time2),
-                            Name = (GameName)game,
-                            Persons_Adult = customer.Adult + customer.Student,
-                            Persons_Child = customer.Child + customer.Preschooler,
-                            ReserveNumber = ((string[])json.number).Select(n => int.Parse(n)).ToArray(),
-                            CNumber = ((string[])json.cNumber).Select(n => int.Parse(n)).ToArray(),
-                            Forced = seatCode != -1,
-                            IssuedDate = DateTime.Parse(json.now),
-                            IssueNumber = PluginHost.IsOneTimeMode ? PluginHost.AllSentTickets.IndexOf(null) + 1 : PluginHost.AllSentTickets.Count + 1,
-                            CountBeginNumber = PluginHost.IsOneTimeMode ? PluginHost.ReservedTickets.Count + 1 : 1,
-                            IsWorkingOnInternet = true,
-                            WriteNumberOfPerson = IsOneTimeMode,
-                            IsIC = pay.PayType == PayType.IC,
-                            DoOmitGuides = options.Contains(Option.OmitGuidePrinting),
-                            DoHelp = !options.Contains(Option.NoHelp),
-                            IsChanged = options.Contains(Option.Changed),
-                            InfoTop = IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
+                            NativeNumberedTicket ticket = new NativeNumberedTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new NumberedTicketInformation()
                             {
-                                PayType.Cash => AdditionalInformation_Top.None,
-                                PayType.IC => AdditionalInformation_Top.IC,
-                                _ => throw new ArgumentOutOfRangeException(),
-                            },
-                            InfoBottom = discount switch
-                            {
-                                Discount.CompanyUse => AdditionalInformation_Bottom.CompanyUse,
-                                Discount.Member => AdditionalInformation_Bottom.Staff,
-                                Discount.School => AdditionalInformation_Bottom.Student,
-                                _ => AdditionalInformation_Bottom.None,
-                            },
-                        }, PrintSetting);
+                                StartDate = DateTime.Parse(json.date + " " + json.time1),
+                                EndDate = DateTime.Parse(json.date + " " + json.time2),
+                                Name = (GameName)game,
+                                Persons_Adult = customer.Adult + customer.Student,
+                                Persons_Child = customer.Child + customer.Preschooler,
+                                ReserveNumber = ((string[])json.number).Select(n => int.Parse(n)).ToArray(),
+                                CNumber = ((string[])json.cNumber).Select(n => int.Parse(n)).ToArray(),
+                                Forced = seatCode != -1,
+                                IssuedDate = DateTime.Parse(json.now),
+                                IssueNumber = PluginHost.AllSentTickets.Count + 1,
+                                CountBeginNumber = PluginHost.IsOneTimeMode ? PluginHost.ReservedTickets.Count + 1 : 1,
+                                IsWorkingOnInternet = true,
+                                WriteNumberOfPerson = IsOneTimeMode,
+                                IsIC = pay.PayType == PayType.IC,
+                                DoOmitGuides = options.Contains(Option.OmitGuidePrinting),
+                                DoHelp = !options.Contains(Option.NoHelp),
+                                IsChanged = options.Contains(Option.Changed),
+                                InfoTop = IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
+                                {
+                                    PayType.Cash => AdditionalInformation_Top.None,
+                                    PayType.IC => AdditionalInformation_Top.IC,
+                                    _ => throw new ArgumentOutOfRangeException(),
+                                },
+                                InfoBottom = discount switch
+                                {
+                                    Discount.CompanyUse => AdditionalInformation_Bottom.CompanyUse,
+                                    Discount.Member => AdditionalInformation_Bottom.Staff,
+                                    Discount.School => AdditionalInformation_Bottom.Student,
+                                    _ => AdditionalInformation_Bottom.None,
+                                },
+                            }, PrintSetting);
 
-                        result = ParseResult(json, ticket.ticketImages.Select((t, i) => (TicketBase)new NumberedTicket(ticket, i)).ToList());
+                            return ticket.ticketImages.Select((t, i) => (TicketBase)new NumberedTicket(ticket, i)).ToList();
+                        }));
                     }
                     catch (Exception ex)
                     {
