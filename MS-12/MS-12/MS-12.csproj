@@ -246,10 +246,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LayoutDefinitions\GroupMenu\PlatformTickets.xml">
+    <Content Include="LayoutDefinitions\GroupMenu\LiteInventoryManager\Sell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="LayoutDefinitions\GroupMenu\NumberedTickets.xml">
+    <Content Include="LayoutDefinitions\GroupMenu\LiteInventoryManager\Management.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LayoutDefinitions\GroupMenu\TRS\PlatformTickets.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LayoutDefinitions\GroupMenu\TRS\NumberedTickets.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="LayoutDefinitions\MainMenu\MainMenuLayout.xml">
