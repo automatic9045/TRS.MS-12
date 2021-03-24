@@ -136,7 +136,7 @@ namespace TRS.TMS12
 
         public List<List<TicketInfo>> AllSentTickets
         {
-            get => mainWindowModel.Tickets;
+            get => mainWindowModel.AllSentTickets;
         }
 
         public List<TicketBase> ReservedTickets
