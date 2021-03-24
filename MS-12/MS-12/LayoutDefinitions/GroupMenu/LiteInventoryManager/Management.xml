@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GroupMenuLayout>
+	<Content Name="商品登録" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="商品削除" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="商品仕入" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="手動在庫登録" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="手動在庫削除" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+</GroupMenuLayout>
