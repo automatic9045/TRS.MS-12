@@ -91,6 +91,7 @@ namespace TRS.TMS12
 
             var splashVM = new SplashScreenViewModel()
             {
+                Stop = new DelegateCommand(() => Shutdown()),
                 Ignore = new DelegateCommand(() => Start()),
             };
             splash = new SplashScreen(splashVM);
@@ -131,6 +132,12 @@ namespace TRS.TMS12
 
                 if (splashVM.Errors.Count > 0)
                 {
+                    splashVM.Stop = new DelegateCommand(() =>
+                    {
+                        MainWindowVM.M.CurrentPrinter.Dispose();
+                        Shutdown();
+                    });
+
                     splashVM.IsErrorIgnorable = !splashVM.Errors.Any(err => err.StartsWith("(ｴﾗｰ ) "));
                     splashVM.IsErrorShown = true;
                 }
