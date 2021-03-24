@@ -20,6 +20,7 @@ using Prism.Mvvm;
 using Prism.Commands;
 
 using TRS.TMS12.Interfaces;
+using static TRS.TMS12.Static.App;
 
 namespace TRS.TMS12
 {
@@ -68,7 +69,7 @@ namespace TRS.TMS12
                 switch (e.PropertyName)
                 {
                     case nameof(m.SendResult):
-                        if (m.SendResult == null)
+                        if (m.SendResult is null)
                         {
                             IsVisible = false;
                         }
@@ -85,13 +86,14 @@ namespace TRS.TMS12
                             Caption = m.SendResult.Message;
                             Text = m.SendResult.Text;
 
-                            if (m.SendResult.Exception != null)
+                            if (!(m.SendResult.Exception is null))
                             {
                                 m.DialogModel.ShowErrorDialog("ＴＲＳとの通信でエラーが発生しました。\n\n\n回答：\n\n" + m.SendResult.JsonString + "\n\n\n詳細：\n\n" + m.SendResult.Exception.ToString());
                             }
 
                             IsVisible = true;
                         }
+                        DoEvents();
                         break;
                 }
             });
