@@ -90,7 +90,7 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
                         break;
 
                     case ErrorCode.Illegal:
-                        PluginHost.ThrowWarning($"ソフトウェアの不具合です。お手数ですが開発者へご連絡下さい。ご連絡の際にはこちらのエラーコードをお伝え下さい：【CA-IL】", "プリンター Claim エラー");
+                        PluginHost.ThrowWarning($"プリンターに接続出来ませんでした。", "プリンター Claim エラー");
                         break;
 
                     case ErrorCode.Timeout:
