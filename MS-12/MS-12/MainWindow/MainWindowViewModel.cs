@@ -145,6 +145,7 @@ namespace TRS.TMS12
                         InputControlIsEnabled = true;
                         KeyControlIsEnabled = true;
                     }
+                    DoEvents();
                 }
             });
 
@@ -166,6 +167,7 @@ namespace TRS.TMS12
                         InputControlIsEnabled = true;
                         KeyControlIsEnabled = true;
                     }
+                    DoEvents();
                 }
             });
 

@@ -22,6 +22,7 @@ using Gayak.Collections;
 
 using TRS.TMS12.Static;
 using TRS.TMS12.Interfaces;
+using static TRS.TMS12.Static.App;
 
 namespace TRS.TMS12
 {
@@ -65,14 +66,14 @@ namespace TRS.TMS12
         public Visibility InputControlVisibility
         {
             get { return _InputControlVisibility; }
-            set { SetProperty(ref _InputControlVisibility, value); }
+            set { SetProperty(ref _InputControlVisibility, value); DoEvents(); }
         }
 
         private Visibility _KeyControlVisibility = Visibility.Visible;
         public Visibility KeyControlVisibility
         {
             get { return _KeyControlVisibility; }
-            set { SetProperty(ref _KeyControlVisibility, value); }
+            set { SetProperty(ref _KeyControlVisibility, value); DoEvents(); }
         }
 
         public ObservableDictionary<FunctionKeys, bool> FIsChecked { get; private set; } = new ObservableDictionary<FunctionKeys, bool>()
