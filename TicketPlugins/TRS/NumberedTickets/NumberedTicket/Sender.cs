@@ -22,7 +22,7 @@ using TRS.TMS12.Resources;
 using TRS.TMS12.Plugins.TRS;
 using static TRS.TMS12.Static.App;
 
-namespace TRS.TMS12.TicketPlugins.NumberedTickets.NumberedTicket
+namespace TRS.TMS12.TicketPlugins.TRS.NumberedTickets.NumberedTicket
 {
     public class Sender : ISender
     {
