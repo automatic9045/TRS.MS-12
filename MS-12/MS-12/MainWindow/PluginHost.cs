@@ -126,7 +126,7 @@ namespace TRS.TMS12
 
             mainWindowModel.FunctionKeyToggleButtonsIsChecked.CollectionChanged += (sender, e) =>
             {
-                switch (((KeyValuePair<FunctionKeys, bool>)e.NewItems[e.NewStartingIndex]).Key)
+                switch (mainWindowModel.FunctionKeyToggleButtonsIsChecked.Keys[e.NewStartingIndex])
                 {
                     case FunctionKeys.F1:
                         RaiseModeEnabledChanged(Mode.Test, mainWindowModel.FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
@@ -234,11 +234,13 @@ namespace TRS.TMS12
 
         public void RaiseModeEnabledChanged(Mode targetMode, bool isModeEnabled)
         {
+            if (ModeEnabledChanged is null) return;
             ModeEnabledChanged(new ModeEnabledChangedEventArgs(targetMode, isModeEnabled));
         }
 
         public void RaiseSendTypeChanged(SendTypes? newSendType)
         {
+            if (SendTypeChanged is null) return;
             SendTypeChanged(new SendTypeChangedEventArgs(newSendType));
         }
     }
