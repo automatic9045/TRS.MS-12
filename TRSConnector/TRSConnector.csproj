@@ -120,11 +120,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TRSTicket\Microsoft.PointOfService.dll" />
-    <Content Include="TRSTicket\StarIO.dll" />
-    <Content Include="TRSTicket\StarIOExtension.dll" />
-    <Content Include="TRSTicket\StarIOPort_x64.dll" />
-    <Content Include="TRSTicket\StarIOPort_x86.dll" />
     <Content Include="TRSTicket\TRSTicket.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
