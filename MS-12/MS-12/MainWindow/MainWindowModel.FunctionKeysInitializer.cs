@@ -259,21 +259,26 @@ namespace TRS.TMS12
                             ResultControlModel.Show(result);
                         }
 
-                        if (result is IssuableSendResult)
+                        if (result is IssueReservableSendResult issueReservableSendResult)
                         {
-                            List<TicketBase> tickets = ((IssuableSendResult)result).Tickets;
-                            switch (SendType)
+                            if (SendType == SendTypes.Reserve)
                             {
-                                case SendTypes.Reserve:
-                                    ReservedTickets.AddRange(tickets);
-                                    break;
-
-                                case SendTypes.Sell:
-                                    List<TicketInfo> ticketInfos = tickets.ConvertAll(t => new TicketInfo(t));
-                                    PluginHost.AllSentTickets.Add(ticketInfos);   
+                                ReservedResults.Add(issueReservableSendResult);
+                            }
+                            else
+                            {
+                                DialogModel.ShowErrorDialog("プラグイン実装エラー\n\n一括一件外の発信で IssueReservableResult が返されました。");
+                            }
+                        }
+                        else if (result is IssuableSendResult issuableResult)
+                        {
+                            if (SendType == SendTypes.Sell)
+                            {
+                                    List<TicketInfo> ticketInfos = issuableResult.Tickets.ConvertAll(t => new TicketInfo(t));
+                                    PluginHost.AllSentTickets.Add(ticketInfos);
                                     try
                                     {
-                                        CurrentPrinter.Print(tickets, PluginHost.AllSentTickets.Count + PluginHost.AllSentTickets.Count % 7 * 10000, i =>
+                                        CurrentPrinter.Print(issuableResult.Tickets, PluginHost.AllSentTickets.Count + PluginHost.AllSentTickets.Count % 7 * 10000, i =>
                                         {
                                             ticketInfos[i].OnPrint();
                                         }, (ex, i) => DialogModel.ShowErrorDialog($"印刷時にエラーが発生しました。\n\n\n詳細：{ex}"));
@@ -282,7 +287,10 @@ namespace TRS.TMS12
                                     {
                                         DialogModel.ShowErrorDialog($"プリンターの呼び出しに失敗しました。\n\n\n詳細：\n\n{ex}");
                                     }
-                                    break;
+                            }
+                            else
+                            {
+                                DialogModel.ShowErrorDialog("プラグイン実装エラー\n\n発売以外の発信で IssuableResult が返されました。");
                             }
                         }
 

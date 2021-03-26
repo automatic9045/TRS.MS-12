@@ -184,14 +184,15 @@ namespace TRS.TMS12.Plugins.TRS
             };
         }
 
-        private SendResult ParseResult(dynamic json, Func<List<TicketBase>> createTicketsFunc, bool isFullScreen = false)
+        private SendResult ParseResult(dynamic json, Func<int, int, List<TicketBase>> createTicketsFunc, bool isFullScreen = false)
         {
             SendResultType resultType = ResultTypeStringToEnum(json);
+
             return resultType switch
             {
                 SendResultType.Yes => IsOneTimeMode ?
-                IssueReservableSendResult.Yes(createTicketsFunc, (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen) :
-                IssuableSendResult.Yes(createTicketsFunc(), (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen),
+                (SendResult)IssueReservableSendResult.Yes(createTicketsFunc, (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen) :
+                IssuableSendResult.Yes(createTicketsFunc(PluginHost.GetIssueNumber(), 1), (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen),
                 SendResultType.No => SendResult.No((string)json.text.Replace("\n", "\n\n"), (string)json.message),
                 SendResultType.Rethink => SendResult.Rethink((string)json.message, (string)json.rethinkCode),
                 _ => throw new ArgumentOutOfRangeException(),

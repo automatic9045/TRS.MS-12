@@ -45,7 +45,7 @@ namespace TRS.TMS12.Plugins.TRS
                             isFirstReservation = true;
                         }
 
-                        Func<List<TicketBase>> createTicketsFunc = () =>
+                        Func<int, int, List<TicketBase>> createTicketsFunc = (issueNumber, countStartNumber) =>
                         {
                             NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
                             {
@@ -59,8 +59,8 @@ namespace TRS.TMS12.Plugins.TRS
                                 Persons_Adult = customer.Adult + customer.Student,
                                 Persons_Child = customer.Child + customer.Preschooler,
                                 IssuedDate = now,
-                                IssueNumber = PluginHost.AllSentTickets.Count + 1,
-                                CountBeginNumber = PluginHost.IsOneTimeMode ? PluginHost.ReservedTickets.Count + 1 : 1,
+                                IssueNumber = issueNumber,
+                                CountBeginNumber = countStartNumber,
                                 IsWorkingOnInternet = true,
                                 InfoTop = IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
                                 {
@@ -73,11 +73,13 @@ namespace TRS.TMS12.Plugins.TRS
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new PlatformTicket(ticket, i)).ToList();
                         };
 
-                        SendResult result = IsOneTimeMode ? IssueReservableSendResult.Yes(createTicketsFunc, "", "", false) : IssuableSendResult.Yes(createTicketsFunc(), "", "", false);
+                        SendResult result = IsOneTimeMode ?
+                            (SendResult)IssueReservableSendResult.Yes(createTicketsFunc, "", "", false) :
+                            IssuableSendResult.Yes(createTicketsFunc(PluginHost.GetIssueNumber(), 1), "", "", false);
 
                         if (SendType == SendTypes.Reserve)
                         {
-                            result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedTickets.Count + 1}", VbStrConv.Wide);
+                            result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedResults.Count + 1}", VbStrConv.Wide);
                         }
                         if (isFirstReservation) result.Message = "一括一件開始しました";
 

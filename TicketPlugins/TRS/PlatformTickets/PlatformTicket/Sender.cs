@@ -61,10 +61,5 @@ namespace TRS.TMS12.TicketPlugins.PlatformTickets.PlatformTicket
             SendResult result = Connector.SendPlatformTicket(month, day, customer, Pay.Cash());
             return result;
         }
-
-        public List<TimeInquiringInfo> InquireTimeNumbers(Game game)
-        {
-            return Connector.InquireTimeNumbers(game);
-        }
     }
 }

@@ -91,7 +91,8 @@ namespace TRS.TMS12
         }
 
         public List<List<TicketInfo>> AllSentTickets { get; } = new List<List<TicketInfo>>();
-        public List<TicketBase> ReservedTickets { get; } = new List<TicketBase>();
+
+        public List<IssueReservableSendResult> ReservedResults { get; } = new List<IssueReservableSendResult>();
 
         private bool _IsOneTimeMode = false;
         public bool IsOneTimeMode
