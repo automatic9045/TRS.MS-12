@@ -21,7 +21,7 @@ using Prism.Commands;
 
 using TRS.TMS12.Resources;
 
-namespace TRS.TMS12.TicketPlugins.PlatformTickets.PlatformTicket
+namespace TRS.TMS12.TicketPlugins.TRS.PlatformTickets.PlatformTicket
 {
     public class KeyControlViewModel : BindableBase
     {
