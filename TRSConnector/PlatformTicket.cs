@@ -73,7 +73,7 @@ namespace TRS.TMS12.Plugins.TRS
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new PlatformTicket(ticket, i)).ToList();
                         };
 
-                        SendResult result = PluginHost.IsOneTimeMode ?
+                        SendResult result = PluginHost.SendType == SendTypes.Reserve ?
                             (SendResult)IssueReservableSendResult.Yes(createTicketsFunc, "", "", false) :
                             IssuableSendResult.Yes(createTicketsFunc(PluginHost.GetIssueNumber(), 1), "", "", false);
 
