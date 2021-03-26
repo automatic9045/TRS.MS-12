@@ -123,9 +123,13 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
 
         public void Dispose()
         {
-            posPrinter.DeviceEnabled = false;
-            posPrinter.Release();
-            posPrinter.Close();
+            try
+            {
+                posPrinter.DeviceEnabled = false;
+                posPrinter.Release();
+                posPrinter.Close();
+            }
+            catch { } // 握り潰し
         }
 
         public void Print(List<TicketBase> tickets, int issuingNumber, Action<int> onPrint, Action<Exception, int> onError)
