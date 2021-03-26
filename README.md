@@ -8,7 +8,7 @@
 
 ## 実行に必要なもの
 - .NET Framework 4.8
-- [Microsoft Point of Service for .NET（POS for .NET）](https://www.microsoft.com/en-us/download/details.aspx?id=55758)
+- [Microsoft Point of Service for .NET（POS for .NET）](https://www.microsoft.com/en-us/download/details.aspx?id=55758)（一部のプリンタープラグインを使用する場合のみ）
 
 ## 注意
 
