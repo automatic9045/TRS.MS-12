@@ -18,7 +18,7 @@ namespace TRS.TMS12.Plugins.TRS
         {
             DateTime now = DateTime.Now;
 
-            switch (SendType)
+            switch (PluginHost.SendType)
             {
                 case SendTypes.Inquire:
                     if (customer.Total > 5)
@@ -39,7 +39,7 @@ namespace TRS.TMS12.Plugins.TRS
                     else
                     {
                         bool isFirstReservation = false;
-                        if (!PluginHost.IsOneTimeMode && SendType == SendTypes.Reserve)
+                        if (!PluginHost.IsOneTimeMode && PluginHost.SendType == SendTypes.Reserve)
                         {
                             PluginHost.IsOneTimeMode = true;
                             isFirstReservation = true;
@@ -62,7 +62,7 @@ namespace TRS.TMS12.Plugins.TRS
                                 IssueNumber = issueNumber,
                                 CountBeginNumber = countStartNumber,
                                 IsWorkingOnInternet = true,
-                                InfoTop = IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
+                                InfoTop = PluginHost.IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
                                 {
                                     PayType.Cash => AdditionalInformation_Top.None,
                                     PayType.IC => AdditionalInformation_Top.IC,
@@ -73,11 +73,11 @@ namespace TRS.TMS12.Plugins.TRS
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new PlatformTicket(ticket, i)).ToList();
                         };
 
-                        SendResult result = IsOneTimeMode ?
+                        SendResult result = PluginHost.IsOneTimeMode ?
                             (SendResult)IssueReservableSendResult.Yes(createTicketsFunc, "", "", false) :
                             IssuableSendResult.Yes(createTicketsFunc(PluginHost.GetIssueNumber(), 1), "", "", false);
 
-                        if (SendType == SendTypes.Reserve)
+                        if (PluginHost.SendType == SendTypes.Reserve)
                         {
                             result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedResults.Count + 1}", VbStrConv.Wide);
                         }

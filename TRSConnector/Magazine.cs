@@ -17,7 +17,7 @@ namespace TRS.TMS12.Plugins.TRS
         public SendResult Reserve(int year, int count, string discount, Option option)
         {
             dynamic json = null;
-            switch (SendType)
+            switch (PluginHost.SendType)
             {
                 case SendTypes.Inquire:
                     try
@@ -49,7 +49,7 @@ namespace TRS.TMS12.Plugins.TRS
                 case SendTypes.Reserve:
                     try
                     {
-                        json = Communicator.BuyClubMagazine(year, count, discount, StationName + TerminalName, IsTestMode);
+                        json = Communicator.BuyClubMagazine(year, count, discount, StationName + TerminalName, PluginHost.IsTestMode);
                     }
                     catch (Exception ex)
                     {
@@ -59,7 +59,7 @@ namespace TRS.TMS12.Plugins.TRS
                     try
                     {
                         bool isFirstReservation = false;
-                        if (!PluginHost.IsOneTimeMode && SendType == SendTypes.Reserve)
+                        if (!PluginHost.IsOneTimeMode && PluginHost.SendType == SendTypes.Reserve)
                         {
                             PluginHost.IsOneTimeMode = true;
                             isFirstReservation = true;
@@ -86,7 +86,7 @@ namespace TRS.TMS12.Plugins.TRS
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new EventTicket(ticket, i)).ToList();
                         }));
 
-                        if (SendType == SendTypes.Reserve)
+                        if (PluginHost.SendType == SendTypes.Reserve)
                         {
                             result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedResults.Count + 1}", VbStrConv.Wide);
                         }

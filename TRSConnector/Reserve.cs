@@ -26,7 +26,7 @@ namespace TRS.TMS12.Plugins.TRS
 
             dynamic json = null;
             SendResult result = null;
-            switch (SendType)
+            switch (PluginHost.SendType)
             {
                 case SendTypes.Inquire:
                     try
@@ -60,8 +60,8 @@ namespace TRS.TMS12.Plugins.TRS
                     try
                     {
                         json = seatCode == -1 ?
-                            Communicator.Reserve(number, customer.Total, payType, StationName + TerminalName, IsTestMode) :
-                            Communicator.Reserve_Forced(number, seatCode, cNumber, payType, StationName + TerminalName, IsTestMode);
+                            Communicator.Reserve(number, customer.Total, payType, StationName + TerminalName, PluginHost.IsTestMode) :
+                            Communicator.Reserve_Forced(number, seatCode, cNumber, payType, StationName + TerminalName, PluginHost.IsTestMode);
                     }
                     catch (Exception ex)
                     {
@@ -71,7 +71,7 @@ namespace TRS.TMS12.Plugins.TRS
                     try
                     {
                         bool isFirstReservation = false;
-                        if (!PluginHost.IsOneTimeMode && SendType == SendTypes.Reserve)
+                        if (!PluginHost.IsOneTimeMode && PluginHost.SendType == SendTypes.Reserve)
                         {
                             PluginHost.IsOneTimeMode = true;
                             isFirstReservation = true;
@@ -93,12 +93,12 @@ namespace TRS.TMS12.Plugins.TRS
                                 IssueNumber = issueNumber,
                                 CountBeginNumber = countStartNumber,
                                 IsWorkingOnInternet = true,
-                                WriteNumberOfPerson = IsOneTimeMode,
+                                WriteNumberOfPerson = PluginHost.IsOneTimeMode,
                                 IsIC = pay.PayType == PayType.IC,
                                 DoOmitGuides = options.Contains(Option.OmitGuidePrinting),
                                 DoHelp = !options.Contains(Option.NoHelp),
                                 IsChanged = options.Contains(Option.Changed),
-                                InfoTop = IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
+                                InfoTop = PluginHost.IsTestMode ? AdditionalInformation_Top.Test : pay.PayType switch
                                 {
                                     PayType.Cash => AdditionalInformation_Top.None,
                                     PayType.IC => AdditionalInformation_Top.IC,
@@ -116,7 +116,7 @@ namespace TRS.TMS12.Plugins.TRS
                             return ticket.ticketImages.Select((t, i) => (TicketBase)new NumberedTicket(ticket, i)).ToList();
                         }));
 
-                        if (SendType == SendTypes.Reserve)
+                        if (PluginHost.SendType == SendTypes.Reserve)
                         {
                             result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedResults.Count + 1}", VbStrConv.Wide);
                         }
