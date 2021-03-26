@@ -49,6 +49,16 @@ namespace TRS.TMS12.Interfaces
         bool IsOneTimeMode { get; set; }
 
         /// <summary>
+        /// 現在営業試験中であるかを取得・設定します。
+        /// </summary>
+        bool IsTestMode { get; }
+
+        /// <summary>
+        /// 現在の操作種別を取得・設定します。
+        /// </summary>
+        SendTypes? SendType { get; set; }
+
+        /// <summary>
         /// アプリケーションを起動してからこれまでに発信された全ての <see cref="TicketBase"/> の <see cref="TicketInfo"/> のリストを取得します。
         /// </summary>
         List<List<TicketInfo>> AllSentTickets { get; }
@@ -90,12 +100,6 @@ namespace TRS.TMS12.Interfaces
         /// <param name="text">表示するテキスト。</param>
         /// <param name="caption">情報の概要を表すキャプション。</param>
         void ThrowInformation(string text, string caption);
-
-        /// <summary>
-        /// 操作種別（発売・予約・照会）を切り替えます。
-        /// </summary>
-        /// <param name="sendType">新しい <see cref="SendTypes">。</param>
-        void ChangeSendType(SendTypes? sendType);
 
         /// <summary>
         /// サイドメニューに画面を遷移します。

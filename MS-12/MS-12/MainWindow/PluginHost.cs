@@ -21,6 +21,7 @@ using Prism.Commands;
 
 using Gayak.Collections;
 
+using TRS.TMS12.Static;
 using TRS.TMS12.Interfaces;
 using TRS.TMS12.Resources;
 using static TRS.TMS12.Static.App;
@@ -110,7 +111,32 @@ namespace TRS.TMS12
         public PluginHost(MainWindowModel mainWindowModel)
         {
             this.mainWindowModel = mainWindowModel;
+
             Dialog = new DialogService(mainWindowModel);
+
+            mainWindowModel.PropertyChanged += (sender, e) =>
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(mainWindowModel.IsOneTimeMode):
+                        RaiseModeEnabledChanged(Mode.OneTime, mainWindowModel.IsOneTimeMode);
+                        break;
+                }
+            };
+
+            mainWindowModel.FunctionKeyToggleButtonsIsChecked.CollectionChanged += (sender, e) =>
+            {
+                switch (((KeyValuePair<FunctionKeys, bool>)e.NewItems[e.NewStartingIndex]).Key)
+                {
+                    case FunctionKeys.F1:
+                        RaiseModeEnabledChanged(Mode.Test, mainWindowModel.FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1]);
+                        break;
+
+                    case FunctionKeys.Relay:
+                        RaiseModeEnabledChanged(Mode.Relay, mainWindowModel.FunctionKeyToggleButtonsIsChecked[FunctionKeys.Relay]);
+                        break;
+                }
+            };
         }
 
         public event ModeEnabledChangedEventHandler ModeEnabledChanged;
@@ -139,9 +165,9 @@ namespace TRS.TMS12
             get => mainWindowModel.AllSentTickets;
         }
 
-        public List<TicketBase> ReservedTickets
+        public List<IssueReservableSendResult> ReservedResults
         {
-            get => mainWindowModel.ReservedTickets;
+            get => mainWindowModel.ReservedResults;
         }
 
 
@@ -150,6 +176,18 @@ namespace TRS.TMS12
             get => mainWindowModel.IsOneTimeMode;
             set => mainWindowModel.IsOneTimeMode = value;
         }
+
+        public bool IsTestMode
+        {
+            get => mainWindowModel.FunctionKeyToggleButtonsIsChecked[FunctionKeys.F1];
+        }
+
+        public SendTypes? SendType
+        {
+            get => mainWindowModel.SendType;
+            set => mainWindowModel.SendType = value;
+        }
+
 
         public void ThrowError(string text, string caption)
         {
@@ -166,6 +204,19 @@ namespace TRS.TMS12
             mainWindowModel.UserControlHost.Throw(text, caption, ErrorType.Information);
         }
 
+        public void GoToSideMenu()
+        {
+            mainWindowModel.CurrentScreen = Screen.None;
+            DoEvents();
+            mainWindowModel.CurrentScreen = Screen.GroupMenu;
+        }
+
+        public int GetIssueNumber()
+        {
+            int count = mainWindowModel.AllSentTickets.Count + 1;
+            return /*mainWindowModel.IsOfflineMode ? ((count % 3 + 7) * 10000) + count : */count % 7 * 10000 + count;
+        }
+
         public KeyTab GetKeyLayoutFromFile(string path, int keyCount = 60)
         {
             return KeyLayoutLoader.LoadFromXmlFile(path, keyCount, ThrowError, ThrowWarning, ThrowInformation);
@@ -179,18 +230,6 @@ namespace TRS.TMS12
         public void CurrentPrinterChanged()
         {
             RaisePropertyChanged(nameof(CurrentPrinter));
-        }
-
-        public void ChangeSendType(SendTypes? sendType)
-        {
-            mainWindowModel.SendType = sendType;
-        }
-
-        public void GoToSideMenu()
-        {
-            mainWindowModel.CurrentScreen = Screen.None;
-            DoEvents();
-            mainWindowModel.CurrentScreen = Screen.GroupMenu;
         }
 
         public void RaiseModeEnabledChanged(Mode targetMode, bool isModeEnabled)
