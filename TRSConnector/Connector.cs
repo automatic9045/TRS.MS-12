@@ -147,7 +147,7 @@ namespace TRS.TMS12.Plugins.TRS
 
             return resultType switch
             {
-                SendResultType.Yes => PluginHost.IsOneTimeMode ?
+                SendResultType.Yes => PluginHost.SendType == SendTypes.Reserve ?
                 (SendResult)IssueReservableSendResult.Yes(createTicketsFunc, (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen) :
                 IssuableSendResult.Yes(createTicketsFunc(PluginHost.GetIssueNumber(), 1), (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen),
                 SendResultType.No => SendResult.No((string)json.text.Replace("\n", "\n\n"), (string)json.message),
