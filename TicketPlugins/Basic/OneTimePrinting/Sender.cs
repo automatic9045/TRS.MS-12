@@ -44,14 +44,19 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
 
         public SendResult Send()
         {
-            List<TicketBase> tickets = new List<TicketBase>(m.PluginHost.ReservedTickets);
+            List<TicketBase> ticketsToPrint = new List<TicketBase>();
+            int issueNumber = m.PluginHost.GetIssueNumber();
+            m.PluginHost.ReservedResults.ForEach(r =>
+            {
+                List<TicketBase> tickets = r.CreateTickets(issueNumber, ticketsToPrint.Count + 1);
+                ticketsToPrint.AddRange(tickets);
+            });
 
-            m.PluginHost.ReservedTickets.Clear();
+            m.PluginHost.ReservedResults.Clear();
             m.PluginHost.IsOneTimeMode = false;
             m.FunctionKeysIsEnabled[(int)FunctionKeys.Send] = false;
 
-            SendResult result = IssuableSendResult.Yes(tickets, "", "", false);
-            return result;
+            return IssuableSendResult.Yes(ticketsToPrint, "", "", false);
         }
     }
 }

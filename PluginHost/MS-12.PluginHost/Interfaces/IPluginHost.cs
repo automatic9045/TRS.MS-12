@@ -54,9 +54,9 @@ namespace TRS.TMS12.Interfaces
         List<List<TicketInfo>> AllSentTickets { get; }
 
         /// <summary>
-        /// 一括一件操作において予約され、まだ発券されていない <see cref="TicketBase"/> のリストを取得します。
+        /// 一括一件操作において予約され、まだ発券されていない <see cref="IssueReservableSendResult"/> のリストを取得します。
         /// </summary>
-        List<TicketBase> ReservedTickets { get; }
+        List<IssueReservableSendResult> ReservedResults { get; }
 
         /// <summary>
         /// 各モードの有効・無効が変更されたときに発生します。
@@ -92,14 +92,6 @@ namespace TRS.TMS12.Interfaces
         void ThrowInformation(string text, string caption);
 
         /// <summary>
-        /// キーレイアウトを表現する <see cref="List<KeyInfo>"/> を XML ファイルから生成します。
-        /// </summary>
-        /// <param name="path">XML ファイルのパス。</param>
-        /// <param name="keyCount">ボタンの個数。</param>
-        /// <returns>キーレイアウトを表現する <see cref="List<KeyInfo>"/>。</returns>
-        KeyTab GetKeyLayoutFromFile(string path, int keyCount = 60);
-
-        /// <summary>
         /// 操作種別（発売・予約・照会）を切り替えます。
         /// </summary>
         /// <param name="sendType">新しい <see cref="SendTypes">。</param>
@@ -109,5 +101,19 @@ namespace TRS.TMS12.Interfaces
         /// サイドメニューに画面を遷移します。
         /// </summary>
         void GoToSideMenu();
+
+        /// <summary>
+        /// 次に発売する券の発行番号を取得します。
+        /// </summary>
+        /// <returns>発行番号。</returns>
+        int GetIssueNumber();
+
+        /// <summary>
+        /// キーレイアウトを表現する <see cref="List<KeyInfo>"/> を XML ファイルから生成します。
+        /// </summary>
+        /// <param name="path">XML ファイルのパス。</param>
+        /// <param name="keyCount">ボタンの個数。</param>
+        /// <returns>キーレイアウトを表現する <see cref="List<KeyInfo>"/>。</returns>
+        KeyTab GetKeyLayoutFromFile(string path, int keyCount = 60);
     }
 }

@@ -65,7 +65,7 @@ namespace TRS.TMS12.Plugins.TRS
                             isFirstReservation = true;
                         }
 
-                        SendResult result = ParseResult(json, new Func<List<TicketBase>>(() =>
+                        SendResult result = ParseResult(json, new Func<int, int, List<TicketBase>>((issueNumber, countStartNumber) =>
                         {
                             NativeEventTicket ticket = new NativeEventTicket(new IssueInformation() { TerminalName = StationName + TerminalName, Number = CompanyNumber }, new EventTicketInformation()
                             {
@@ -77,8 +77,8 @@ namespace TRS.TMS12.Plugins.TRS
                                 UseDate = DateTime.Parse(json.now),
                                 Persons_Adult = 1,
                                 IssuedDate = DateTime.Parse(json.now),
-                                IssueNumber = PluginHost.AllSentTickets.Count + 1,
-                                CountBeginNumber = PluginHost.IsOneTimeMode ? PluginHost.ReservedTickets.Count + 1 : 1,
+                                IssueNumber = issueNumber,
+                                CountBeginNumber = countStartNumber,
                                 IsWorkingOnInternet = true,
                                 InfoTop = AdditionalInformation_Top.None,
                             }, PrintSetting);
@@ -88,7 +88,7 @@ namespace TRS.TMS12.Plugins.TRS
 
                         if (SendType == SendTypes.Reserve)
                         {
-                            result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedTickets.Count + 1}", VbStrConv.Wide);
+                            result.Text = "＃" + Strings.StrConv($"{PluginHost.ReservedResults.Count + 1}", VbStrConv.Wide);
                         }
                         if (isFirstReservation) result.Message = "一括一件開始しました";
 
