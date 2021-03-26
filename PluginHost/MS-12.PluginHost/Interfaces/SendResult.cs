@@ -99,15 +99,11 @@ namespace TRS.TMS12.Interfaces
         }
     }
 
-    public class IssueReservableSendResult : IssuableSendResult
+    public class IssueReservableSendResult : SendResult
     {
-        private Func<List<TicketBase>> createTicketsFunc;
-        public override List<TicketBase> Tickets
-        {
-            get => createTicketsFunc();
-        }
+        private Func<int, int, List<TicketBase>> createTicketsFunc;
 
-        public static IssueReservableSendResult Yes(Func<List<TicketBase>> createTicketsFunc, string text, string message, bool isFullScreen)
+        public static IssueReservableSendResult Yes(Func<int, int, List<TicketBase>> createTicketsFunc, string text, string message, bool isFullScreen)
         {
             IssueReservableSendResult result = new IssueReservableSendResult()
             {
@@ -119,5 +115,7 @@ namespace TRS.TMS12.Interfaces
             };
             return result;
         }
+
+        public List<TicketBase> CreateTickets(int issueNumber, int countStartNumber) => createTicketsFunc(issueNumber, countStartNumber);
     }
 }
