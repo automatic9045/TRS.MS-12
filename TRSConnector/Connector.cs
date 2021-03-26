@@ -115,26 +115,6 @@ namespace TRS.TMS12.Plugins.TRS
 
         public PrintSetting PrintSetting { get; private set; }
 
-        /// <summary>
-        /// 現在の発信モード（発売／予約／照会）を取得・設定します。
-        /// </summary>
-        public SendTypes? SendType { get; private set; } = null;
-
-        /// <summary>
-        /// 営業試験モードであるかを取得・設定します。
-        /// </summary>
-        public bool IsTestMode { get; private set; } = false;
-
-        /// <summary>
-        /// 中継モードであるかを取得・設定します。
-        /// </summary>
-        public bool IsRelayMode { get; private set; } = false;
-
-        /// <summary>
-        /// 一件モードであるかを取得・設定します。
-        /// </summary>
-        public bool IsOneTimeMode { get; private set; }
-
         public void Initialize(int companyNumber, string stationName, string terminalName, string printSetting)
         {
             CompanyNumber = companyNumber;
@@ -147,29 +127,6 @@ namespace TRS.TMS12.Plugins.TRS
                 "EpsonTML90" => PrintSetting.PrintByEpsonTML90,
                 _ => PrintSetting.SaveTicketAsPicture,
             };
-        }
-
-        public void ModeChanged(Mode mode, object value)
-        {
-            switch (mode)
-            {
-                case Mode.Test:
-                    IsTestMode = (bool)value;
-                    break;
-
-                case Mode.OneTime:
-                    IsOneTimeMode = (bool)value;
-                    break;
-
-                case Mode.Relay:
-                    IsRelayMode = (bool)value;
-                    break;
-            }
-        }
-
-        public void SendTypeChanged(SendTypes? sendType)
-        {
-            SendType = sendType;
         }
 
         private SendResult ParseResult(dynamic json, bool isFullScreen = false)
@@ -190,7 +147,7 @@ namespace TRS.TMS12.Plugins.TRS
 
             return resultType switch
             {
-                SendResultType.Yes => IsOneTimeMode ?
+                SendResultType.Yes => PluginHost.IsOneTimeMode ?
                 (SendResult)IssueReservableSendResult.Yes(createTicketsFunc, (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen) :
                 IssuableSendResult.Yes(createTicketsFunc(PluginHost.GetIssueNumber(), 1), (string)json.text.Replace("\n", "\n\n"), (string)json.message, isFullScreen),
                 SendResultType.No => SendResult.No((string)json.text.Replace("\n", "\n\n"), (string)json.message),
