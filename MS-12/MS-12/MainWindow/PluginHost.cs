@@ -191,17 +191,17 @@ namespace TRS.TMS12
 
         public void ThrowError(string text, string caption)
         {
-            mainWindowModel.UserControlHost.Throw(text, caption, ErrorType.Error);
+            mainWindowModel.AppConnector.OnError(text, caption, ErrorType.Error);
         }
 
         public void ThrowWarning(string text, string caption)
         {
-            mainWindowModel.UserControlHost.Throw(text, caption, ErrorType.Warning);
+            mainWindowModel.AppConnector.OnError(text, caption, ErrorType.Warning);
         }
 
         public void ThrowInformation(string text, string caption)
         {
-            mainWindowModel.UserControlHost.Throw(text, caption, ErrorType.Information);
+            mainWindowModel.AppConnector.OnError(text, caption, ErrorType.Information);
         }
 
         public void GoToSideMenu()

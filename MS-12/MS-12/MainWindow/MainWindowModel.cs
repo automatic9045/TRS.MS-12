@@ -166,6 +166,7 @@ namespace TRS.TMS12
             LoadedPlugin<IPrinterPlugin> plugin = Plugins.PrinterPlugins.Find(p => p.Plugin.GetType().FullName == PrinterPluginsNamespace + AppConnector.PrinterClass);
             if (!(plugin is null))
             {
+                plugin.Plugin.PluginHost = PluginHost;
                 CurrentPrinter = plugin.Plugin;
 
                 try
@@ -188,11 +189,6 @@ namespace TRS.TMS12
                 p.Plugin.PluginHost = PluginHost;
             }
             foreach (LoadedPlugin<ITicketPlugin> p in Plugins.TicketPlugins)
-            {
-                AppConnector.ChangeProgressStatus("プラグインを読み込んでいます\n\n　" + p.Path, Progress.LoadingPlugins);
-                p.Plugin.PluginHost = PluginHost;
-            }
-            foreach (LoadedPlugin<IPrinterPlugin> p in Plugins.PrinterPlugins)
             {
                 AppConnector.ChangeProgressStatus("プラグインを読み込んでいます\n\n　" + p.Path, Progress.LoadingPlugins);
                 p.Plugin.PluginHost = PluginHost;
