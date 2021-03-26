@@ -259,21 +259,23 @@ namespace TRS.TMS12
                             ResultControlModel.Show(result);
                         }
 
-                        if (result is IssueReservableSendResult issueReservableSendResult)
+                        await Task.Run(() =>
                         {
-                            if (SendType == SendTypes.Reserve)
+                            if (result is IssueReservableSendResult issueReservableSendResult)
                             {
-                                ReservedResults.Add(issueReservableSendResult);
+                                if (SendType == SendTypes.Reserve)
+                                {
+                                    ReservedResults.Add(issueReservableSendResult);
+                                }
+                                else
+                                {
+                                    DialogModel.ShowErrorDialog("プラグイン実装エラー\n\n一括一件外の発信で IssueReservableResult が返されました。");
+                                }
                             }
-                            else
+                            else if (result is IssuableSendResult issuableResult)
                             {
-                                DialogModel.ShowErrorDialog("プラグイン実装エラー\n\n一括一件外の発信で IssueReservableResult が返されました。");
-                            }
-                        }
-                        else if (result is IssuableSendResult issuableResult)
-                        {
-                            if (SendType == SendTypes.Sell)
-                            {
+                                if (SendType == SendTypes.Sell)
+                                {
                                     List<TicketInfo> ticketInfos = issuableResult.Tickets.ConvertAll(t => new TicketInfo(t));
                                     PluginHost.AllSentTickets.Add(ticketInfos);
                                     try
@@ -287,12 +289,13 @@ namespace TRS.TMS12
                                     {
                                         DialogModel.ShowErrorDialog($"プリンターの呼び出しに失敗しました。\n\n\n詳細：\n\n{ex}");
                                     }
+                                }
+                                else
+                                {
+                                    DialogModel.ShowErrorDialog("プラグイン実装エラー\n\n発売以外の発信で IssuableResult が返されました。");
+                                }
                             }
-                            else
-                            {
-                                DialogModel.ShowErrorDialog("プラグイン実装エラー\n\n発売以外の発信で IssuableResult が返されました。");
-                            }
-                        }
+                        });
 
                         IsTicketSending = false;
                     }
@@ -347,17 +350,29 @@ namespace TRS.TMS12
 
         private bool CanExecute(FunctionKeys key)
         {
+            bool newValue;
+
             switch (CurrentScreen)
             {
                 case Screen.None:
-                    return false;
+                    newValue = false;
+                    break;
 
                 case Screen.Tickets:
-                    return CurrentTicket.FunctionKeysIsEnabled[(int)key];
+                    newValue = CurrentTicket.FunctionKeysIsEnabled[(int)key];
+                    break;
 
                 default:
-                    return Models[CurrentScreen].FIsEnabled[(int)key];
+                    newValue = Models[CurrentScreen].FIsEnabled[(int)key];
+                    break;
             }
+
+            if (!newValue && FunctionKeyToggleButtonsIsChecked.Keys.Contains(key) && FunctionKeyToggleButtonsIsChecked[key])
+            {
+                FunctionKeyToggleButtonsIsChecked[key] = false;
+            }
+
+            return newValue;
         }
 
         private DelegateCommand CreateObserveDelegateCommand(Action executeMethod, Func<bool> canExecuteMethod)
