@@ -122,7 +122,7 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
             foreach (InputControlTextBox key in textBoxKeys) TextBoxes[(int)key] = "";
 
             KeyBaseModel.CurrentTab = 0;
-            PluginHost.ChangeSendType(SendTypes.Sell);
+            PluginHost.SendType = SendTypes.Sell;
             FunctionKeysIsEnabled[(int)FunctionKeys.Send] = PluginHost.IsOneTimeMode;
         }
 
