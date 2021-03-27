@@ -181,7 +181,7 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
                     return;
                 }
 
-                onPrint(i);
+                if (i != tickets.Count - 1) onPrint(i);
             });
 
             try
@@ -196,6 +196,7 @@ namespace TRS.TMS12.PrinterPlugins.Epson.TML90
                 return;
             }
 
+            onPrint(tickets.Count - 1);
             DeleteTempFiles();
 
 
