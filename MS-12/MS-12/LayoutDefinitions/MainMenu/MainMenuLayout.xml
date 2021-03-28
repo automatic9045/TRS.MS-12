@@ -11,12 +11,12 @@
 	-->
 	<Left>
 		<GroupBox Header="ＬＩＭ業務（在庫管理サンプル）" Row="3">
-			<Content GroupName="発売" GroupSource="../GroupMenu/LiteInventoryManager/Sell.xml" TypicalTicketName="商品発売" TypicalTicketType="TRS.NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content GroupName="登録／管理" GroupSource="../GroupMenu/LiteInventoryManager/Management.xml" TypicalTicketName="商品登録" TypicalTicketType="TRS.NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content GroupName="発売" GroupSource="../GroupMenu/LiteInventoryManager/Sell.xml" TypicalTicketName="商品発売" TypicalTicketType="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content GroupName="登録／管理" GroupSource="../GroupMenu/LiteInventoryManager/Management.xml" TypicalTicketName="商品登録" TypicalTicketType="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
 		</GroupBox>
 		<GroupBox Header="ＴＲＳ業務（予約・整理券発券サンプル）" Row="2">
-			<Content GroupName="整理券" GroupSource="../GroupMenu/TRS/NumberedTickets.xml" TypicalTicketName="整　理　券" TypicalTicketType="TRS.NumberedTickets.NumberedTicket.PluginInfo"/>
-			<Content GroupName="入場券" GroupSource="../GroupMenu/TRS/PlatformTickets.xml" TypicalTicketName="入　場　券" TypicalTicketType="TRS.PlatformTickets.PlatformTicket.PluginInfo"/>
+			<Content GroupName="整理券" GroupSource="../GroupMenu/TRS/NumberedTickets.xml" TypicalTicketName="整　理　券" TypicalTicketType="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
+			<Content GroupName="入場券" GroupSource="../GroupMenu/TRS/PlatformTickets.xml" TypicalTicketName="入　場　券" TypicalTicketType="TRSTickets.PlatformTickets.PlatformTicket.PluginInfo"/>
 		</GroupBox>
 	</Left>
 	<Right>

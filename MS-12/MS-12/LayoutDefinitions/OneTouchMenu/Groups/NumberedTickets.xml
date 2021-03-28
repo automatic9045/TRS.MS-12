@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <OneTouchMenuGroup>
 	<Shortcuts>
-		<Shortcut Name="あははははは" Type="NumberedTickets.NumberedTicket.PluginInfo"/>
+		<Shortcut Name="あははははは" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
 	</Shortcuts>
 	<Pages>
 		<Page Name="整理券">
-			<Content Name="ＴＳ" Type="TRS.NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Service,トレインシミュレーター/SET;Adult,１"/>
-			<Content Name="模型&#10;体験運転" Type="TRS.NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Service,模型体験運転/SET;Adult,１"/>
+			<Content Name="ＴＳ" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Service,トレインシミュレーター/SET;Adult,１"/>
+			<Content Name="模型&#10;体験運転" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Service,模型体験運転/SET;Adult,１"/>
 		</Page>
 		<Page Name="整理券２">
-			<Content Name="整理" Type="TRS.NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Adult,１"/>
+			<Content Name="整理" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo" Command="SET_DATE;0,0/SET;Adult,１"/>
 		</Page>
 	</Pages>
 </OneTouchMenuGroup>

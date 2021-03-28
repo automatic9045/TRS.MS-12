@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GroupMenuLayout>
-	<Content Name="商品発売" Type="TRS.NumberedTickets.NumberedTicket.PluginInfo"/>
-	<Content Name="商品払戻" Type="TRS.NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="商品発売" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="商品払戻" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
 </GroupMenuLayout>

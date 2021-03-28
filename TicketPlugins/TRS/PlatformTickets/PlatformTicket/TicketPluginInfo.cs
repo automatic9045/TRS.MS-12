@@ -22,7 +22,7 @@ using TRS.TMS12.Resources;
 using TRS.TMS12.Static;
 using TRS.TMS12.Plugins.TRS;
 
-namespace TRS.TMS12.TicketPlugins.TRS.PlatformTickets.PlatformTicket
+namespace TRS.TMS12.TicketPlugins.TRSTickets.PlatformTickets.PlatformTicket
 {
     public enum InputControlTextBox
     {

@@ -21,7 +21,7 @@ using Prism.Commands;
 
 using TRS.TMS12.Resources;
 
-namespace TRS.TMS12.TicketPlugins.TRS.NumberedTickets.NumberedTicket
+namespace TRS.TMS12.TicketPlugins.TRSTickets.NumberedTickets.NumberedTicket
 {
     public class KeyControlViewModel : BindableBase
     {

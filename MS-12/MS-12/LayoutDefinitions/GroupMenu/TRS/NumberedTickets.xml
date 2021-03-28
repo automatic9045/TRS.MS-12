@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GroupMenuLayout>
-	<Content Name="整理券" Type="TRS.NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="整理券" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="整理券控除" Type="TRSTickets.NumberedTickets.Cancel.PluginInfo"/>
 </GroupMenuLayout>
