@@ -27,7 +27,7 @@ using TRS.TMS12.Interfaces;
 using TRS.TMS12.Static;
 using TRS.TMS12.Plugins.TRS;
 
-namespace TRS.TMS12.TicketPlugins.TRS.NumberedTickets.NumberedTicket
+namespace TRS.TMS12.TicketPlugins.TRSTickets.NumberedTickets.NumberedTicket
 {
     public class TimeNumberInquirerViewModel : BindableBase
     {
