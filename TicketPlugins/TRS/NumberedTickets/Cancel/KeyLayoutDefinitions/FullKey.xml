@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<KeyLayout Header="フルキー">
+	<Key Name="１" Command="ADD;１"/>
+	<Key Name="２" Command="ADD;２"/>
+	<Key Name="３" Command="ADD;３"/>
+	<Key Name="４" Command="ADD;４"/>
+	<Key Name="５" Command="ADD;５"/>
+	<Key Name="枠コード&#10;入力" Command="FOCUS;Service"/>
+	
+	<Key Name="６" Command="ADD;６"/>
+	<Key Name="７" Command="ADD;７"/>
+	<Key Name="８" Command="ADD;８"/>
+	<Key Name="９" Command="ADD;９"/>
+	<Key Name="０" Command="ADD;０"/>
+	<Key Name="枠コード&#10;削除" Command="CLEAR;TimeCode/CLEAR;Service"/>
+	
+	<Key Name="ＴＳ" Command="SET;Service,トレインシミュレーター"/>
+	<Key Name="模型&#10;体験運転" Command="SET;Service,模型体験運転"/>
+	<Key Name="窓口体験" Command="SET;Service,窓口体験"/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	
+	<Key Name="本日" Command="SET_DATE;0,0"/>
+	<Key Name="明日" Command="SET_DATE;0,1"/>
+	<Key Name="明後日" Command="SET_DATE;0,2"/>
+	<Key Name="１ヶ月前" Command="SET_DATE;1,0"/>
+	<Key Name="カレンダ&#10;日付入力" Command="OPEN;Calender"/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+	<Key Name="" Command=""/>
+</KeyLayout>
