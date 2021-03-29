@@ -143,6 +143,7 @@
     <Compile Include="Classes\SendTypeChangedEvent.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="Classes\ModeEnabledChangedEvent.cs" />
+    <Compile Include="Interfaces\ICharge.cs" />
     <Compile Include="Interfaces\SendResult.cs" />
     <Compile Include="Interfaces\Mode.cs" />
     <Compile Include="Interfaces\SendResultType.cs" />
