@@ -43,7 +43,7 @@ namespace TRS.TMS12.TicketPlugins.OneTimePrinting
 
                 List<KeyTab> tabs = new List<KeyTab>()
                 {
-                    PluginHost.GetKeyLayoutFromFile(Path.Combine(assemblyPath, @"KeyLayoutDefinitions\FullKey.xml")),
+                    PluginHost.CreateKeyTabFromFile(Path.Combine(assemblyPath, @"KeyLayoutDefinitions\FullKey.xml")),
                     new KeyTab("", null),
                     new KeyTab("", null),
                     new KeyTab("", null),

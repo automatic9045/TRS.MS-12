@@ -50,8 +50,8 @@ namespace TRS.TMS12.TicketPlugins.TRSTickets.NumberedTickets.Cancel
 
                 List<KeyTab> tabs = new List<KeyTab>()
                 {
-                    PluginHost.GetKeyLayoutFromFile(Path.Combine(assemblyPath, @"KeyLayoutDefinitions\FullKey.xml")),
-                    PluginHost.GetKeyLayoutFromFile(Path.Combine(assemblyPath, @"KeyLayoutDefinitions\Number.xml")),
+                    PluginHost.CreateKeyTabFromFile(Path.Combine(assemblyPath, @"KeyLayoutDefinitions\FullKey.xml")),
+                    PluginHost.CreateKeyTabFromFile(Path.Combine(assemblyPath, @"KeyLayoutDefinitions\Number.xml")),
                     new KeyTab("", null),
                     new KeyTab("", null),
                 };

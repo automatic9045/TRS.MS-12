@@ -217,7 +217,7 @@ namespace TRS.TMS12
             return /*mainWindowModel.IsOfflineMode ? ((count % 3 + 7) * 10000) + count : */count % 7 * 10000 + count;
         }
 
-        public KeyTab GetKeyLayoutFromFile(string path, int keyCount = 60)
+        public KeyTab CreateKeyTabFromFile(string path, int keyCount = 60)
         {
             return KeyLayoutLoader.LoadFromXmlFile(path, keyCount, ThrowError, ThrowWarning, ThrowInformation);
         }

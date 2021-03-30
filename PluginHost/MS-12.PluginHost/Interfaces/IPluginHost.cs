@@ -118,6 +118,6 @@ namespace TRS.TMS12.Interfaces
         /// <param name="path">XML ファイルのパス。</param>
         /// <param name="keyCount">ボタンの個数。</param>
         /// <returns>キーレイアウトを表現する <see cref="List<KeyInfo>"/>。</returns>
-        KeyTab GetKeyLayoutFromFile(string path, int keyCount = 60);
+        KeyTab CreateKeyTabFromFile(string path, int keyCount = 60);
     }
 }
