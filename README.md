@@ -3,9 +3,9 @@
 
 【開発中】駅の窓口で見かける座席予約端末をモチーフにした、POS向け汎用端末ソフトウェアです。
 
-ダウンロード：https://github.com/Automatic9045/TRS.MS-12/releases/latest
-Wiki：https://github.com/Automatic9045/TRS.MS-12/wiki/
-自サイト内の紹介ページ：https://Automatic9045.github.io/contents/software/TRS.MS-12/
+ダウンロード：https://github.com/Automatic9045/TRS.MS-12/releases/latest  
+Wiki：https://github.com/Automatic9045/TRS.MS-12/wiki/  
+自サイト内の紹介ページ：https://Automatic9045.github.io/contents/software/TRS.MS-12/  
 
 ## 使用ライブラリ
 - [CommonServiceLocator](https://www.nuget.org/packages/CommonServiceLocator) &copy; .NET Foundation and Contributors (Ms-PL)
