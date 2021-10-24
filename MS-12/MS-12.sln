@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS-12", "MS-12\MS-12.csproj", "{64F3C827-3049-42B8-ACBD-41AD2491CE98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS-12.PluginHost", "..\PluginHost\MS-12.PluginHost\MS-12.PluginHost.csproj", "{31FF6588-AA25-4100-AAFC-6D4C733A6EB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS-12.PluginHost", "..\PluginHost\MS-12.PluginHost.csproj", "{31FF6588-AA25-4100-AAFC-6D4C733A6EB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRSConnector", "..\TRSConnector\TRSConnector.csproj", "{18EA0DED-C1AC-4AA1-AB7D-A8BB2B3D591A}"
 EndProject
