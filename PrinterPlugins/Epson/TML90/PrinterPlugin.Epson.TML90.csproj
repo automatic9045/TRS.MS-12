@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\MS-12\MS-12\bin\Debug\Any CPU\Printers\Epson\</OutputPath>
+    <OutputPath>..\..\..\MS-12\bin\Debug\Any CPU\Printers\Epson\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\MS-12\MS-12\bin\Release\Any CPU\Printers\Epson\</OutputPath>
+    <OutputPath>..\..\..\MS-12\bin\Release\Any CPU\Printers\Epson\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,7 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\PluginHost\MS-12.PluginHost\MS-12.PluginHost.csproj">
+    <ProjectReference Include="..\..\..\PluginHost\MS-12.PluginHost.csproj">
       <Project>{31ff6588-aa25-4100-aafc-6d4c733a6eb8}</Project>
       <Name>MS-12.PluginHost</Name>
       <Private>False</Private>
