@@ -59,30 +59,39 @@ namespace TRS.TMS12
 
     public partial class MainMenuModel : BindableBase, IModel
     {
-        public void LoadFromFile(string path, Action<string> changeProgressStatusAction)
+        private string GetErrorTypeString(ErrorType errorType)
         {
-            void ThrowError(string text, bool isInGroupMenu = false)
+            switch (errorType)
             {
-                string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlHost.Throw(text, menuName + "設定に関するエラー", ErrorType.Error);
+                case ErrorType.Information: return "情報";
+                case ErrorType.Warning: return "警告";
+                case ErrorType.Error: return "エラー";
+                default: throw new ArgumentException();
             }
+        }
 
-            void ThrowWarning(string text, bool isInGroupMenu = false)
+        private string GetMenuTypeString(Screen menuType)
+        {
+            switch (menuType)
             {
-                string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlHost.Throw(text, menuName + "設定に関する警告", ErrorType.Warning);
+                case Screen.MainMenu: return "メインメニュー";
+                case Screen.GroupMenu: return "券種メニュー";
+                case Screen.MaintenanceMenu: return "メインテナンスメニュー";
+                default: throw new ArgumentException();
             }
+        }
 
-            void ThrowInformation(string text, bool isInGroupMenu = false)
-            {
-                string menuName = isInGroupMenu ? "券種メニュー" : "メインメニュー";
-                UserControlHost.Throw(text, menuName + "設定に関する情報", ErrorType.Warning);
-            }
+        private void Throw(string text, ErrorType errorType, Screen menuType = Screen.MainMenu)
+        {
+            UserControlHost.Throw(text, GetMenuTypeString(menuType) + "設定に関する" + GetErrorTypeString(errorType), errorType);
+        }
 
 
+        public void LoadGroupBoxesFromFile(string path, Action<string> changeProgressStatusAction)
+        {
             path = IOPath.GetFullPath(path);
 
-            changeProgressStatusAction.Invoke("メインメニューレイアウトファイルの読込中：　" + path.Replace(AppDirectory + @"\", ""));
+            changeProgressStatusAction.Invoke($"メインメニューレイアウトファイルの読込中：　{path.Replace(AppDirectory + @"\", "")}");
             XDocument xDocument;
             try
             {
@@ -90,29 +99,28 @@ namespace TRS.TMS12
             }
             catch
             {
-                ThrowError("ファイル \"" + path + "\" の読込に失敗しました。");
+                Throw($"ファイル \"{path}\" の読込に失敗しました。", ErrorType.Error);
                 return;
             }
 
             XElement mainMenuLayout = xDocument.Element("MainMenuLayout");
             if (mainMenuLayout == null)
             {
-                ThrowError("ファイル \"" + IOPath.GetFileName(path) + "\" はメインメニューレイアウトファイルではありません。\n" +
-                    "MainMenuLayout タグが見つかりません。");
+                Throw($"ファイル \"{IOPath.GetFileName(path)}\" はメインメニューレイアウトファイルではありません。\nMainMenuLayout タグが見つかりません。", ErrorType.Error);
                 return;
             }
 
             XElement left = mainMenuLayout.Element("Left");
             if (left == null)
             {
-                ThrowError("Left タグが見つかりません。");
+                Throw("Left タグが見つかりません。", ErrorType.Error);
                 return;
             }
 
             XElement right = mainMenuLayout.Element("Right");
             if (right == null)
             {
-                ThrowError("Right タグが見つかりません。");
+                Throw("Right タグが見つかりません。", ErrorType.Error);
                 return;
             }
 
@@ -136,12 +144,12 @@ namespace TRS.TMS12
                     int row = (int?)groupBox.Attribute("Row") ?? -1;
                     if (row == -1)
                     {
-                        ThrowError("グループボックス \"" + header + "\" に Height 属性が見つかりません。");
+                        Throw($"グループボックス \"{header}\" に Height 属性が見つかりません。", ErrorType.Error);
                         return;
                     }
                     else if (row == 0)
                     {
-                        ThrowWarning("グループボックス \"" + header + "\" の高さ \"" + row + "\" は非推奨の値です。");
+                        Throw($"グループボックス \"{header}\" の高さ \"{row}\" は非推奨の値です。", ErrorType.Warning);
                     }
 
                     List<MainMenuContent> contentInfos = new List<MainMenuContent>();
@@ -153,10 +161,10 @@ namespace TRS.TMS12
                         List<TicketButton> tickets = new List<TicketButton>();
 
                         string groupSource = IOPath.GetFullPath(IOPath.Combine(IOPath.GetDirectoryName(path), (string)content.Attribute("GroupSource") ?? ""));
-                        changeProgressStatusAction.Invoke("券種メニューレイアウトファイルの読込中：　" + groupSource.Replace(AppDirectory, ""));
+                        changeProgressStatusAction.Invoke($"券種メニューレイアウトファイルの読込中：　{groupSource.Replace(AppDirectory, "")}");
                         if (!File.Exists(groupSource))
                         {
-                            ThrowWarning("ファイル \"" + groupSource + "\" の読込に失敗しました。");
+                            Throw($"ファイル \"{groupSource}\" の読込に失敗しました。", ErrorType.Warning);
                         }
                         else
                         {
@@ -165,8 +173,7 @@ namespace TRS.TMS12
                             XElement groupMenuLayout = groupDocument.Element("GroupMenuLayout");
                             if (groupMenuLayout == null)
                             {
-                                ThrowWarning("ファイル \"" + IOPath.GetFileName(groupSource) + "\" は券種メニューレイアウトファイルではありません。\n" +
-                                    "GroupMenuLayout タグが見つかりません。", true);
+                                Throw($"ファイル \"{IOPath.GetFileName(groupSource)}\" は券種メニューレイアウトファイルではありません。\nGroupMenuLayout タグが見つかりません。", ErrorType.Warning, Screen.GroupMenu);
                             }
                             else
                             {
@@ -181,7 +188,7 @@ namespace TRS.TMS12
                                     }
                                     else if (ticketPlugin == null)
                                     {
-                                        ThrowWarning("券種 \"" + TicketPluginsNamespace + ticketPluginClassName + "\" が見つかりません。", true);
+                                        Throw($"券種 \"{TicketPluginsNamespace}{ticketPluginClassName}\" が見つかりません。", ErrorType.Warning, Screen.GroupMenu);
                                     }
                                     else
                                     {
@@ -212,7 +219,7 @@ namespace TRS.TMS12
                         }
                         else if (typicalTicketPlugin == null)
                         {
-                            ThrowWarning("券種 \"" + TicketPluginsNamespace + typicalTicketPluginClassName + "\" が見つかりません。");
+                            Throw($"券種 \"{TicketPluginsNamespace}{typicalTicketPluginClassName}\" が見つかりません。", ErrorType.Warning);
                         }
 
                         string ticketGroupName = (string)content.Attribute("GroupName") ?? "";
@@ -262,13 +269,13 @@ namespace TRS.TMS12
                 {
                     if (totalRow > 5 && !((bool?)left.Attribute("IgnoreRowExcess") ?? false))
                     {
-                        ThrowWarning("左側について、行数が多すぎる ( " + totalRow + "行 ) ため、レイアウトが崩れる恐れがあります。\n" +
-                            "この警告を表示しないようにするには、Left タグの属性に「IgnoreRowExcess=\"True\"」を追加して下さい。");
+                        Throw("左側について、行数が多すぎる ( " + totalRow + "行 ) ため、レイアウトが崩れる恐れがあります。\n" +
+                            "この警告を表示しないようにするには、Left タグの属性に「IgnoreRowExcess=\"True\"」を追加して下さい。", ErrorType.Warning);
                     }
                     else if (totalRow < 5 && !((bool?)left.Attribute("IgnoreRowShortage") ?? false))
                     {
-                        ThrowWarning("左側について、行数が少なすぎる ( " + totalRow + "行 ) ため、" + (5 - totalRow) + " 行分の空白が表示されます。\n" +
-                            "この警告を表示しないようにするには、Left タグの属性に「IgnoreRowShortage=\"True\"」を追加して下さい。");
+                        Throw("左側について、行数が少なすぎる ( " + totalRow + "行 ) ため、" + (5 - totalRow) + " 行分の空白が表示されます。\n" +
+                            "この警告を表示しないようにするには、Left タグの属性に「IgnoreRowShortage=\"True\"」を追加して下さい。", ErrorType.Warning);
                     }
 
                     leftTotalRow = totalRow;
@@ -282,27 +289,85 @@ namespace TRS.TMS12
 
                     if (totalRow > 5 && !((bool?)right.Attribute("IgnoreRowExcess") ?? false))
                     {
-                        ThrowWarning("右側について、行数が多すぎる ( " + totalRow + "行 ) ため、レイアウトが崩れる恐れがあります。\n" +
-                            "この警告を表示しないようにするには、Right タグの属性に「IgnoreRowExcess=\"True\"」を追加して下さい。");
+                        Throw("右側について、行数が多すぎる ( " + totalRow + "行 ) ため、レイアウトが崩れる恐れがあります。\n" +
+                            "この警告を表示しないようにするには、Right タグの属性に「IgnoreRowExcess=\"True\"」を追加して下さい。", ErrorType.Warning);
                     }
                     else if (totalRow < 5 && !((bool?)right.Attribute("IgnoreRowShortage") ?? false))
                     {
-                        ThrowWarning("右側について、行数が少なすぎる ( " + totalRow + "行 ) ため、" + (5 - totalRow) + " 行分の空白が表示されます。\n" +
-                            "この警告を表示しないようにするには、Right タグの属性に「IgnoreRowShortage=\"True\"」を追加して下さい。");
+                        Throw("右側について、行数が少なすぎる ( " + totalRow + "行 ) ため、" + (5 - totalRow) + " 行分の空白が表示されます。\n" +
+                            "この警告を表示しないようにするには、Right タグの属性に「IgnoreRowShortage=\"True\"」を追加して下さい。", ErrorType.Warning);
                     }
                     else if (leftGroupBoxCount != groupBoxCount)
                     {
-                        ThrowWarning("グループボックスの個数が左側と右側で異なる ( 左： " + leftGroupBoxCount + "個、右： " + groupBoxCount + "個 ) ため、ボタンの高さが不均一になります。");
+                        Throw("グループボックスの個数が左側と右側で異なる ( 左： " + leftGroupBoxCount + "個、右： " + groupBoxCount + "個 ) ため、ボタンの高さが不均一になります。", ErrorType.Warning);
                     }
                     else if (leftTotalRow != totalRow)
                     {
-                        ThrowWarning("行数の合計が左側と右側で異なる ( 左： " + leftTotalRow + "行、右： " + totalRow + " 行 ) ため、ボタンの高さが不均一になります。");
+                        Throw("行数の合計が左側と右側で異なる ( 左： " + leftTotalRow + "行、右： " + totalRow + " 行 ) ため、ボタンの高さが不均一になります。", ErrorType.Warning);
                     }
                 }
             }
 
             changeProgressStatusAction.Invoke("メインメニューレイアウトの登録中");
             GroupBoxInfos = groupBoxInfos;
+        }
+
+        public void LoadMaintenanceMenuFromFile(string path, Action<string> changeProgressStatusAction)
+        {
+            List<TicketButton> tickets = new List<TicketButton>();
+
+            path = IOPath.GetFullPath(path);
+            changeProgressStatusAction.Invoke($"メインテナンスメニューレイアウトファイルの読込中：　{path.Replace(AppDirectory, "")}");
+            if (!File.Exists(path))
+            {
+                Throw($"ファイル \"{path}\" の読込に失敗しました。", ErrorType.Warning);
+            }
+            else
+            {
+                XDocument groupDocument = XDocument.Load(path);
+
+                XElement groupMenuLayout = groupDocument.Element("GroupMenuLayout");
+                if (groupMenuLayout == null)
+                {
+                    Throw($"ファイル \"{IOPath.GetFileName(path)}\" はメインテナンスメニューレイアウトファイルではありません。\nGroupMenuLayout タグが見つかりません。", ErrorType.Warning, Screen.GroupMenu);
+                }
+                else
+                {
+                    IEnumerable<XElement> groupMenuContents = groupMenuLayout.Elements("Content");
+                    foreach (XElement groupMenuContent in groupMenuContents)
+                    {
+                        string ticketPluginClassName = (string)groupMenuContent.Attribute("Type") ?? "";
+                        ITicketPlugin ticketPlugin = UserControlHost.TicketPlugins.Find(p => p.GetType().FullName == TicketPluginsNamespace + ticketPluginClassName);
+                        if (ticketPluginClassName == "")
+                        {
+
+                        }
+                        else if (ticketPlugin == null)
+                        {
+                            Throw($"メインテナンス項目 \"{TicketPluginsNamespace}{ticketPluginClassName}\" が見つかりません。", ErrorType.Warning, Screen.GroupMenu);
+                        }
+                        else
+                        {
+                            string typeName = (string)groupMenuContent.Attribute("Name") ?? "";
+                            tickets.Add(new TicketButton()
+                            {
+                                TypeName = typeName,
+                                TicketPlugin = ticketPlugin,
+                            });
+                        }
+                    }
+                    while (tickets.Count % 60 != 0)
+                    {
+                        tickets.Add(new TicketButton()
+                        {
+                            TypeName = "",
+                            TicketPlugin = null,
+                        });
+                    }
+                }
+            }
+
+            MaintenanceMenuContentGroup = new TicketGroup("メインテナンス", tickets);
         }
 
 
@@ -312,6 +377,8 @@ namespace TRS.TMS12
             get { return _GroupBoxInfos; }
             set { SetProperty(ref _GroupBoxInfos, value); }
         }
+
+        public TicketGroup MaintenanceMenuContentGroup { get; private set; }
     }
 
     public partial class MainMenu : UserControl

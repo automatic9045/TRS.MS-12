@@ -218,8 +218,9 @@ namespace TRS.TMS12
         public void Loaded()
         {
             AppConnector.ChangeProgressStatus("メインメニュー・券種メニューのレイアウトを構築しています\n\n　初期化中", Progress.LoadingMainMenuAndGroupMenuLayout);
-            ((MainMenuModel)Models[Screen.MainMenu]).LoadFromFile(AppConnector.MainMenuLayoutSourcePath,
-                message => AppConnector.ChangeProgressStatus("メインメニュー・券種メニューのレイアウトを構築しています\n\n　" + message));
+            Action<string> changeProgressStatus = message => AppConnector.ChangeProgressStatus("メインメニュー・券種メニューのレイアウトを構築しています\n\n　" + message);
+            ((MainMenuModel)Models[Screen.MainMenu]).LoadGroupBoxesFromFile(AppConnector.MainMenuLayoutSourcePath, changeProgressStatus);
+            ((MainMenuModel)Models[Screen.MainMenu]).LoadMaintenanceMenuFromFile(AppConnector.MaintenanceMenuLayoutSourcePath, changeProgressStatus);
 
             AppConnector.ChangeProgressStatus("ワンタッチメニューのレイアウトを構築しています", Progress.LoadingOneTouchMenuLayout);
             ((OneTouchMenuModel)Models[Screen.OneTouchMenu]).LoadFromFile(AppConnector.OneTouchMenuLayoutSourcePath);

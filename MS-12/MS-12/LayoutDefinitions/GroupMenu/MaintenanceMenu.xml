@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GroupMenuLayout>
+	<Content Name="実行設定" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="プリンター設定" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
+	<Content Name="端末設定" Type="TRSTickets.NumberedTickets.NumberedTicket.PluginInfo"/>
+</GroupMenuLayout>

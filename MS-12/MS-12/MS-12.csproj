@@ -261,6 +261,9 @@
     <Content Include="LayoutDefinitions\MainMenu\MainMenuLayout.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="LayoutDefinitions\GroupMenu\MaintenanceMenu.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="LayoutDefinitions\OneTouchMenu\Groups\PlatformTickets.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

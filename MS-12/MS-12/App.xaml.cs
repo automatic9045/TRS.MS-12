@@ -43,21 +43,16 @@ namespace TRS.TMS12
 
         public bool ShowNotImplementedDialog { get; set; }
 
-        public string PrinterClass { get; }
-        public string PrinterName { get; }
+        public string PrinterClass { get; internal set; } = "";
+        public string PrinterName { get; internal set; } = "";
 
-        public string MainMenuLayoutSourcePath { get; }
-        public string OneTouchMenuLayoutSourcePath { get; }
+        public string MainMenuLayoutSourcePath { get; internal set; } = "";
+        public string OneTouchMenuLayoutSourcePath { get; internal set; } = "";
+        public string MaintenanceMenuLayoutSourcePath { get; internal set; } = "";
 
-        public AppConnector(SplashScreenViewModel splashScreenVM, string printerClass, string printerName, string mainMenuLayoutSourcePath, string oneTouchMenuLayoutSourcePath)
+        public AppConnector(SplashScreenViewModel splashScreenVM)
         {
             splashVM = splashScreenVM;
-
-            PrinterClass = printerClass;
-            PrinterName = printerName;
-
-            MainMenuLayoutSourcePath = mainMenuLayoutSourcePath;
-            OneTouchMenuLayoutSourcePath = oneTouchMenuLayoutSourcePath;
         }
 
         public void OnError(string text, string caption, ErrorType type)
@@ -110,11 +105,15 @@ namespace TRS.TMS12
 
                 XElement menuLayoutSources = XDocument.Load(@"Settings\MenuLayoutSources.xml").Element("MenuLayoutSources");
 
-                appConnector = new AppConnector(
-                    splashVM,
-                    (string)appSettings.Element("Printer").Attribute("Class"), (string)appSettings.Element("Printer").Attribute("Name"),
-                    Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("MainMenu").Attribute("Source") ?? "")),
-                    Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("OneTouchMenu").Attribute("Source") ?? "")));
+                appConnector = new AppConnector(splashVM)
+                {
+                    PrinterClass = (string)appSettings.Element("Printer").Attribute("Class"),
+                    PrinterName = (string)appSettings.Element("Printer").Attribute("Name"),
+
+                    MainMenuLayoutSourcePath = Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("MainMenu").Attribute("Source") ?? "")),
+                    OneTouchMenuLayoutSourcePath = Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("OneTouchMenu").Attribute("Source") ?? "")),
+                    MaintenanceMenuLayoutSourcePath = Path.GetFullPath(Path.Combine(AppDirectory, "Settings", (string)menuLayoutSources.Element("MaintenanceMenu").Attribute("Source") ?? "")),
+                };
             }
             catch
             {

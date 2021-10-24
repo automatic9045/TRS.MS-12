@@ -62,7 +62,10 @@ namespace TRS.TMS12
 
             MaintenanceClicked = new DelegateCommand(() =>
             {
-
+                m.UserControlHost.SetCurrentScreen(Screen.None);
+                DoEvents();
+                ((GroupMenuModel)m.UserControlHost.Models[Screen.GroupMenu]).CurrentGroup = m.MaintenanceMenuContentGroup;
+                m.UserControlHost.SetCurrentScreen(Screen.GroupMenu);
             });
 
             PowerOffClicked = new DelegateCommand(async () =>
@@ -118,9 +121,9 @@ namespace TRS.TMS12
             set { SetProperty(ref _GroupBoxes, value); }
         }
 
-        public DelegateCommand OneTouchClicked { get; set; }
-        public DelegateCommand MaintenanceClicked { get; set; }
-        public DelegateCommand PowerOffClicked { get; set; }
+        public DelegateCommand OneTouchClicked { get; private set; }
+        public DelegateCommand MaintenanceClicked { get; private set; }
+        public DelegateCommand PowerOffClicked { get; private set; }
     }
 
     /// <summary>

@@ -2,4 +2,5 @@
 <MenuLayoutSources>
 	<MainMenu Source="../LayoutDefinitions/MainMenu/MainMenuLayout.xml"/>
 	<OneTouchMenu Source="../LayoutDefinitions/OneTouchMenu/OneTouchMenuLayout.xml"/>
+	<MaintenanceMenu Source="../LayoutDefinitions/GroupMenu/MaintenanceMenu.xml"/>
 </MenuLayoutSources>
