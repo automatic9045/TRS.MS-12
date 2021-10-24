@@ -90,18 +90,9 @@ namespace TRS.TMS12
                 switch (e.PropertyName)
                 {
                     case nameof(m.CurrentGroup):
-                        List<string> contents = new List<string>();
-                        for (int i = 0; i < BUTTON_COUNT; i++)
-                        {
-                            if (i < m.CurrentGroup.Contents.Count && m.CurrentGroup.Contents[i].TypeName != "")
-                            {
-                                contents.Add(String.Format("{0:D2}", i + 1) + " " + m.CurrentGroup.Contents[i].TypeName);
-                            }
-                            else
-                            {
-                                contents.Add(string.Empty);
-                            }
-                        }
+                        int i = 0;
+                        List<string> contents = m.CurrentGroup.Contents.FindAll(content => content.TypeName != "").ConvertAll(content => $"{string.Format("{0:D2}", i + 1)} {content.TypeName}");
+                        contents.AddRange(Enumerable.Repeat(string.Empty, BUTTON_COUNT - contents.Count));
 
                         List<DelegateCommand> clicked = m.CurrentGroup.Contents.ConvertAll(c => new DelegateCommand(() =>
                         {
