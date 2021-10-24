@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\MS-12\MS-12\bin\Debug\Any CPU\Printers\Star\</OutputPath>
+    <OutputPath>..\..\..\MS-12\bin\Debug\Any CPU\Printers\Star\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,17 +27,17 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\MS-12\MS-12\bin\Release\Any CPU\Printers\Star\</OutputPath>
+    <OutputPath>..\..\..\MS-12\bin\Release\Any CPU\Printers\Star\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="StarIO, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MS-12\packages\StarMicronics.StarIO.Desktop.2.7.0\lib\net35\StarIO.dll</HintPath>
+      <HintPath>..\..\..\packages\StarMicronics.StarIO.Desktop.2.7.0\lib\net35\StarIO.dll</HintPath>
     </Reference>
     <Reference Include="StarIOExtension, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MS-12\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\lib\net35\StarIOExtension.dll</HintPath>
+      <HintPath>..\..\..\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\lib\net35\StarIOExtension.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,7 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\PluginHost\MS-12.PluginHost\MS-12.PluginHost.csproj">
+    <ProjectReference Include="..\..\..\PluginHost\MS-12.PluginHost.csproj">
       <Project>{31ff6588-aa25-4100-aafc-6d4c733a6eb8}</Project>
       <Name>MS-12.PluginHost</Name>
       <Private>False</Private>
@@ -67,13 +67,6 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\..\MS-12\packages\StarMicronics.StarIO.Desktop.2.7.0\build\net35\StarMicronics.StarIO.Desktop.targets" Condition="Exists('..\..\..\MS-12\packages\StarMicronics.StarIO.Desktop.2.7.0\build\net35\StarMicronics.StarIO.Desktop.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\MS-12\packages\StarMicronics.StarIO.Desktop.2.7.0\build\net35\StarMicronics.StarIO.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\MS-12\packages\StarMicronics.StarIO.Desktop.2.7.0\build\net35\StarMicronics.StarIO.Desktop.targets'))" />
-    <Error Condition="!Exists('..\..\..\MS-12\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\build\net35\StarMicronics.StarIOExtension.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\MS-12\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\build\net35\StarMicronics.StarIOExtension.Desktop.targets'))" />
-  </Target>
-  <Import Project="..\..\..\MS-12\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\build\net35\StarMicronics.StarIOExtension.Desktop.targets" Condition="Exists('..\..\..\MS-12\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\build\net35\StarMicronics.StarIOExtension.Desktop.targets')" />
+  <Import Project="..\..\..\packages\StarMicronics.StarIO.Desktop.2.7.0\build\net35\StarMicronics.StarIO.Desktop.targets" Condition="Exists('..\..\..\MS-12\packages\StarMicronics.StarIO.Desktop.2.7.0\build\net35\StarMicronics.StarIO.Desktop.targets')" />
+  <Import Project="..\..\..\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\build\net35\StarMicronics.StarIOExtension.Desktop.targets" Condition="Exists('..\..\..\packages\StarMicronics.StarIOExtension.Desktop.1.7.0\build\net35\StarMicronics.StarIOExtension.Desktop.targets')" />
 </Project>

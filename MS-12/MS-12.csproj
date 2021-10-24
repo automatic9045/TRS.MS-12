@@ -288,7 +288,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PluginHost\MS-12.PluginHost\MS-12.PluginHost.csproj">
+    <ProjectReference Include="..\PluginHost\MS-12.PluginHost.csproj">
       <Project>{31ff6588-aa25-4100-aafc-6d4c733a6eb8}</Project>
       <Name>MS-12.PluginHost</Name>
     </ProjectReference>
