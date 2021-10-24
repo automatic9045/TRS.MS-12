@@ -20,24 +20,24 @@ using System.Windows.Shapes;
 namespace TRS.TMS12.Interfaces
 {
     /// <summary>
-    /// 発信結果の種別を指定します。
+    /// 回答の種別を指定します。
     /// </summary>
     public enum SendResultType
     {
         /// <summary>
-        /// ＹＥＳ
+        /// ＹＥＳ。乗車券の発行や指定席の予約に成功した場合など、要求が正当であり、処理が成功したことを示します。
         /// </summary>
         Yes,
         /// <summary>
-        /// ＮＯ
+        /// ＮＯ。指定席の予約に満席の為失敗した場合など、要求は正当であったものの、処理に失敗したことを示します。
         /// </summary>
         No,
         /// <summary>
-        /// 再考
+        /// 再考。不正な経由地や存在しない号数を指定した場合など、要求が不正であり、処理が実行できなかったことを示します。
         /// </summary>
         Rethink,
         /// <summary>
-        /// 再送
+        /// 再送。システムがビジー状態であり、要求が棄却されたことを示します。
         /// </summary>
         Resend,
     }
