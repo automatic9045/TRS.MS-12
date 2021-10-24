@@ -36,5 +36,9 @@ namespace TRS.TMS12.Interfaces
         /// 再考
         /// </summary>
         Rethink,
+        /// <summary>
+        /// 再送
+        /// </summary>
+        Resend,
     }
 }

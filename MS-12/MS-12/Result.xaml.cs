@@ -82,7 +82,7 @@ namespace TRS.TMS12
                                 SendResultType.Rethink => "再考",
                                 _ => "",
                             };
-                            ErrorCode = m.SendResult.RethinkCode;
+                            ErrorCode = m.SendResult.Code;
                             Caption = m.SendResult.Message;
                             Text = m.SendResult.Text;
 

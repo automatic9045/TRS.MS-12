@@ -26,7 +26,7 @@ namespace TRS.TMS12.Interfaces
     {
         public bool IsFullScreen { get; set; } = false;
         public SendResultType? Result { get; set; } = null;
-        public string RethinkCode { get; set; } = "";
+        public string Code { get; set; } = "";
         public string Message { get; set; } = "";
         public string Text { get; set; } = "";
         public string JsonString { get; set; } = "";
@@ -64,12 +64,25 @@ namespace TRS.TMS12.Interfaces
         /// </summary>
         /// <param name="text">結果の詳細。</param>
         /// <param name="message">メッセージ。</param>
-        /// <param name="rethinkCode">再考コード。</param>
-        public static SendResult Rethink(string message = "", string rethinkCode = "??0000") => new SendResult()
+        /// <param name="code">再考コード。</param>
+        public static SendResult Rethink(string message = "", string code = "??0000") => new SendResult()
         {
             Result = SendResultType.Rethink,
             Message = message,
-            RethinkCode = rethinkCode,
+            Code = code,
+        };
+
+        /// <summary>
+        /// 再送の <see cref="SendResult"/> を作成します。
+        /// </summary>
+        /// <param name="text">結果の詳細。</param>
+        /// <param name="message">メッセージ。</param>
+        /// <param name="code">再送コード。</param>
+        public static SendResult Resend(string message = "", string code = "??0000") => new SendResult()
+        {
+            Result = SendResultType.Rethink,
+            Message = message,
+            Code = code,
         };
 
 
