@@ -119,7 +119,7 @@ namespace TRS.TMS12.Plugins.TRS
         {
             CompanyNumber = companyNumber;
             StationName = Strings.StrConv(stationName, VbStrConv.Wide);
-            TerminalName = Strings.StrConv(terminalName, VbStrConv.Wide);
+            TerminalName = terminalName;
             PrintSetting = printSetting switch
             {
                 "StarTSP100I" => PrintSetting.PrintByStarTSP100,

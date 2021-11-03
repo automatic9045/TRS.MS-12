@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TerminalSettings>
-	<CompanyNumber Value="1"/>
-	<StationName Value="名無駅"/>
-	<TerminalName Value="@1"/>
+	<CompanyNumber Value="3"/>
+	<StationName />
+	<TerminalName />
 </TerminalSettings>
