@@ -91,7 +91,12 @@ namespace TRS.TMS12
                 {
                     case nameof(m.CurrentGroup):
                         int i = 0;
-                        List<string> contents = m.CurrentGroup.Contents.FindAll(content => content.TypeName != "").ConvertAll(content => $"{string.Format("{0:D2}", i + 1)} {content.TypeName}");
+                        List<string> contents = m.CurrentGroup.Contents.FindAll(content => content.TypeName != "").ConvertAll(content =>
+                        {
+                            string text = $"{string.Format("{0:D2}", i + 1)} {content.TypeName}";
+                            i++;
+                            return text;
+                        });
                         contents.AddRange(Enumerable.Repeat(string.Empty, BUTTON_COUNT - contents.Count));
 
                         List<DelegateCommand> clicked = m.CurrentGroup.Contents.ConvertAll(c => new DelegateCommand(() =>
