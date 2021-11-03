@@ -13,32 +13,6 @@ using static TRS.TMS12.Static.App;
 
 namespace TRS.TMS12
 {
-    public struct LoadedPlugin<IPlugin>
-    {
-        public string Path { get; private set; }
-        public IPlugin Plugin { get; private set; }
-
-        public LoadedPlugin(IPlugin plugin, string path)
-        {
-            Path = path;
-            Plugin = plugin;
-        }
-    }
-
-    public struct PluginList
-    {
-        public List<LoadedPlugin<IPlugin>> Plugins { get; private set; }
-        public List<LoadedPlugin<ITicketPlugin>> TicketPlugins { get; private set; }
-        public List<LoadedPlugin<IPrinterPlugin>> PrinterPlugins { get; private set; }
-
-        public PluginList(List<LoadedPlugin<IPlugin>> plugins, List<LoadedPlugin<ITicketPlugin>> ticketPlugins, List<LoadedPlugin<IPrinterPlugin>> printerPlugins)
-        {
-            Plugins = plugins;
-            TicketPlugins = ticketPlugins;
-            PrinterPlugins = printerPlugins;
-        }
-    }
-
     public static class PluginsLoader
     {
         public static PluginList Load(AppConnector appConnector)
