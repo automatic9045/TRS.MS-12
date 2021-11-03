@@ -78,7 +78,7 @@ namespace TRS.TMS12
         public ResultControlModel FullScreenResultControlModel { get; private set; } = new ResultControlModel();
         public Dictionary<Screen, IModel> Models { get; private set; }
 
-        public PluginsInfo Plugins { get; private set; }
+        public PluginList Plugins { get; private set; }
 
         public Dictionary<FunctionKeys, DelegateCommand> FunctionKeyCommands { get; private set; }
         public ObservableDictionary<FunctionKeys, bool> FunctionKeyToggleButtonsIsChecked { get; private set; } = new ObservableDictionary<FunctionKeys, bool>();

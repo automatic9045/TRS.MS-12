@@ -25,13 +25,13 @@ namespace TRS.TMS12
         }
     }
 
-    public class PluginsInfo
+    public class PluginList
     {
         public List<LoadedPlugin<IPlugin>> Plugins { get; private set; }
         public List<LoadedPlugin<ITicketPlugin>> TicketPlugins { get; private set; }
         public List<LoadedPlugin<IPrinterPlugin>> PrinterPlugins { get; private set; }
 
-        public PluginsInfo(List<LoadedPlugin<IPlugin>> plugins, List<LoadedPlugin<ITicketPlugin>> ticketPlugins, List<LoadedPlugin<IPrinterPlugin>> printerPlugins)
+        public PluginList(List<LoadedPlugin<IPlugin>> plugins, List<LoadedPlugin<ITicketPlugin>> ticketPlugins, List<LoadedPlugin<IPrinterPlugin>> printerPlugins)
         {
             Plugins = plugins;
             TicketPlugins = ticketPlugins;
@@ -41,7 +41,7 @@ namespace TRS.TMS12
 
     public static class PluginsLoader
     {
-        public static PluginsInfo Load(AppConnector appConnector)
+        public static PluginList Load(AppConnector appConnector)
         {
             List<LoadedPlugin<IPlugin>> plugins = new List<LoadedPlugin<IPlugin>>();
             List<LoadedPlugin<ITicketPlugin>> ticketPlugins = new List<LoadedPlugin<ITicketPlugin>>();
@@ -55,7 +55,7 @@ namespace TRS.TMS12
             if (!Directory.Exists(pluginDirectory))
             {
                 appConnector.OnError($"フォルダ \"{pluginDirectory}\" が見つかりませんでした。", "プラグイン読込エラー", ErrorType.Error);
-                return new PluginsInfo(plugins, ticketPlugins, printerPlugins);
+                return new PluginList(plugins, ticketPlugins, printerPlugins);
             }
 
             List<string> pluginPaths = LoadPluginLists(pluginDirectory);
@@ -102,7 +102,7 @@ namespace TRS.TMS12
             if (!Directory.Exists(printerDirectory))
             {
                 appConnector.OnError($"フォルダ \"{printerDirectory}\" が見つかりませんでした。", "プラグイン読込エラー", ErrorType.Error);
-                return new PluginsInfo(plugins, ticketPlugins, printerPlugins);
+                return new PluginList(plugins, ticketPlugins, printerPlugins);
             }
 
             List<string> printerPaths = LoadPluginLists(printerDirectory);
@@ -135,7 +135,7 @@ namespace TRS.TMS12
                 { }
             }
 
-            return new PluginsInfo(plugins, ticketPlugins, printerPlugins);
+            return new PluginList(plugins, ticketPlugins, printerPlugins);
         }
 
         private static List<string> LoadPluginLists(string baseDirectory)
