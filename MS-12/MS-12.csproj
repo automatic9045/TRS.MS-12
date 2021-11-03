@@ -137,6 +137,8 @@
     <Compile Include="FullScreenResult.xaml.cs">
       <DependentUpon>FullScreenResult.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Loader\LoadedPlugin.cs" />
+    <Compile Include="Loader\PluginList.cs" />
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
@@ -152,9 +154,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow\KeyLayoutLoader.cs" />
+    <Compile Include="Loader\KeyLayoutLoader.cs" />
     <Compile Include="MainWindow\MainWindowModel.FunctionKeysInitializer.cs" />
-    <Compile Include="MainWindow\PluginsLoader.cs" />
+    <Compile Include="Loader\PluginsLoader.cs" />
     <Compile Include="MainWindow\PluginHost.cs" />
     <Compile Include="Private\Menus\GroupMenu.xaml.cs">
       <DependentUpon>GroupMenu.xaml</DependentUpon>
