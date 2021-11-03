@@ -8,7 +8,7 @@ using TRS.TMS12.Interfaces;
 
 namespace TRS.TMS12
 {
-    public struct LoadedPlugin<IPlugin>
+    public class LoadedPlugin<IPlugin>
     {
         public string Path { get; private set; }
         public IPlugin Plugin { get; private set; }
