@@ -18,7 +18,7 @@
             <Setter Property="Margin" Value="10,15"/>
         </Style>
         <Style TargetType="local:MainMenuButton">
-            <Setter Property="Margin" Value="10,15"/>
+            <Setter Property="Margin" Value="10,10"/>
             <Style.Triggers>
                 <Trigger Property="GroupName" Value="">
                     <Setter Property="IsEnabled" Value="False"/>
