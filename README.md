@@ -19,3 +19,9 @@ Wiki：https://github.com/Automatic9045/TRS.MS-12/wiki/
 - [Unity.Abstractions](https://www.nuget.org/packages/Unity.Abstractions) &copy; Unity Open Source Project (Apache-2.0)
 - [Unity.Container](https://www.nuget.org/packages/Unity.Container) &copy; Unity Open Source Project (Apache-2.0)
 - [Gayak.ObservableDictionary](https://github.com/gayaK/Gayak.ObservableDictionary) &copy; 2017 gaya_K (MIT)
+
+## 注意事項
+
+TRS.MS-12はLGPL v2.1に則り、**無保証**で提供されます。
+
+TRS.MS-12やその派生ソフトウェアを開発・使用したことにより何らかの損害（法的なトラブルを含む）を受けたとしても、製作者（Automatic9045）は一切の責任を負いませんのでご了承下さい。特にプラグインを開発する際は十分ご注意下さい。
